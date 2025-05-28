@@ -22,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'status',
+        'city',
+        'country',
+        'bio',
+
     ];
 
     /**
@@ -53,4 +60,27 @@ class User extends Authenticatable
     | Relationships
     ===========================================================
     */
+
+    /**
+     * Get the comments for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
+    /**
+     * Get the posts for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }
