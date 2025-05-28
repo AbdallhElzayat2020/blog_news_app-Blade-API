@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->text('comment');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('ip_address');
+
             $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('ip_address');
             $table->timestamps();
         });
     }

@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->longText('content');
+            $table->longText('description');
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('comment_able', ['yes', 'no'])->default('yes');
+
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
