@@ -25,10 +25,10 @@ class CategorySeeder extends Seeder
             'sports Category',
         ];
 
-        foreach ($data as $key) {
+        foreach ($data as $category_name) {
             Category::create([
-                'name' => $key,
-                'slug' => Str::slug($key),
+                'name' => $category_name,
+                'slug' => Str::slug($category_name),
                 'icon' => fake()->randomElement(['fa-solid fa-laptop', 'fa-solid fa-heart', 'fa-solid fa-book', 'fa-solid fa-briefcase', 'fa-solid fa-life-ring', 'fa-solid fa-plane', 'fa-solid fa-futbol']),
                 'description' => fake()->sentence(),
                 'status' => fake()->randomElement(['active', 'inactive']),

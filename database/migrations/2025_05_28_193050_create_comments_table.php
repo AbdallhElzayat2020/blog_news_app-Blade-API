@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('comment');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('ip_address');
 
             $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();

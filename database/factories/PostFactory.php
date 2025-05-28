@@ -22,13 +22,14 @@ class PostFactory extends Factory
 
         return [
             'title' => fake()->sentence(3),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(5),
             'status' => fake()->randomElement(['active', 'inactive']),
             'comment_able' => fake()->randomElement(['yes', 'no']),
             'user_id' => User::inRandomOrder()->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,
             'created_at' => $date,
             'updated_at' => $date,
+            // slug is comming dynamically from the package
         ];
     }
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->longText('message')->nullable();
             $table->string('subject');
+            $table->string('ip_address');
+            $table->enum('status', ['pending', 'read', 'replied'])->default('pending');
             $table->timestamps();
         });
     }
