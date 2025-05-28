@@ -32,9 +32,10 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class, 'post_id', 'id');
+        return $this->hasMany(Comment::class, 'category_id', 'id');
     }
 
     /**
@@ -45,5 +46,25 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the comments for the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function category(): HasMany
+    {
+        return $this->hasMany(Category::class, 'post_id', 'id');
+    }
+
+    /**
+     * Get all of the comments for the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class, 'post_id');
     }
 }

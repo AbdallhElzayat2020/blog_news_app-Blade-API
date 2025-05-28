@@ -28,6 +28,9 @@ class User extends Authenticatable
         'city',
         'country',
         'bio',
+        'username',
+        'email_verified_at',
+
 
     ];
 
@@ -69,7 +72,7 @@ class User extends Authenticatable
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'user_id');
     }
 
 

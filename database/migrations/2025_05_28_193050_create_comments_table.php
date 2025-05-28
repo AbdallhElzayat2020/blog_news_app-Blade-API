@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('comment');
+            $table->text('comment');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('ip_address')->nullable();
+            $table->string('ip_address');
             $table->timestamps();
         });
     }

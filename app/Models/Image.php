@@ -17,8 +17,8 @@ class Image extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function imageable()
+    public function post()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }
