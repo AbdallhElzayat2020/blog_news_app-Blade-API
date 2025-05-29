@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('site_logo')->nullable();
             $table->string('site_favicon')->nullable();
             $table->string('city')->nullable();
+            $table->string('street')->nullable();
             $table->string('country')->nullable();
             $table->string('facebook_link')->nullable();
             $table->string('x_link')->nullable();
