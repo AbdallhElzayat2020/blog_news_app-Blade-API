@@ -28,15 +28,13 @@
                <div class="col-lg-3 col-md-4">
                    <div class="b-logo">
                        <a href="index.html">
-                           <img src="img/logo.png" alt="Logo" />
+                           <img src="{{ asset('Frontend') }}/img/logo.png" alt="Logo" />
                        </a>
                    </div>
                </div>
                <div class="col-lg-6 col-md-4">
                    <div class="b-ads">
-                       <a href="https://htmlcodex.com">
-                           <img src="img/ads-1.jpg" alt="Ads" />
-                       </a>
+
                    </div>
                </div>
                <div class="col-lg-3 col-md-4">
