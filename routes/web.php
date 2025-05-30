@@ -6,7 +6,6 @@ use App\Http\Controllers\Frontend\NewsSubscribersController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::group(
     ['as' => 'frontend.'],
     function () {
@@ -16,9 +15,9 @@ Route::group(
         Route::post('/news-subscribers', [NewsSubscribersController::class, 'index'])->name('news-subscribers.store');
 
         Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
+
     }
 );
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');

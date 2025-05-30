@@ -58,6 +58,7 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+
                 <div class="navbar-nav mr-auto">
                     <a title="home" href="{{ route('frontend.home') }}" class="nav-item nav-link active">Home</a>
                     <div class="nav-item dropdown">
@@ -74,7 +75,9 @@
                     <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
                     <a title="contactUs" href="contact.html" class="nav-item nav-link">Contact Us</a>
                 </div>
+
                 <div class="social ml-auto">
+
                     <a title="x_link" href="{{ $getSetting->x_link }}">
                         <i class="fab fa-twitter"></i>
                     </a>
@@ -102,6 +105,7 @@
                     <a title="telegram_link" href="{{ $getSetting->telegram_link }}">
                         <i class="fab fa-telegram"></i>
                     </a>
+
                 </div>
             </div>
         </nav>

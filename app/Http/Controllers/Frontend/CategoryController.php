@@ -11,7 +11,6 @@ class CategoryController extends Controller
     public function index($slug)
     {
         $category = Category::whereSlug($slug)->firstOrFail();
-
         $posts = $category->posts()->with('images')->paginate(9);
 
 
