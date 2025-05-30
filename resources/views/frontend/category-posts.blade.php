@@ -11,9 +11,9 @@
                             <div class="col-md-4">
                                 <div class="mn-img">
                                     <img src="{{ $post->images->first()->path }}"
-                                         alt="{{ $post->images->first()->alt_text }}" />
+                                         alt="{{ $post->images->first()->alt_text }}"/>
                                     <div class="mn-title">
-                                        <a href="">{{ $post->title }}</a>
+                                        <a title="{{ $post->title }}" href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -32,9 +32,11 @@
                     <div class="mn-list">
                         <h2>Other Categories</h2>
                         <ul>
-                            @foreach ($read_more_posts as $post)
-                                <li><a title="{{ $post->title }}" href="">{{ $post->title }}</a></li>
-                            @endforeach
+                            @forelse ($read_more_posts as $post)
+                                <li><a title="{{ $post->title }}" href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a></li>
+                            @empty
+                                <li class="text-muted">No additional posts available.</li>
+                            @endforelse
                         </ul>
                     </div>
                 </div>

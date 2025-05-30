@@ -68,11 +68,11 @@ class Post extends Model
     /**
      * Get all of the comments for the Post
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Category::class, 'post_id', 'id');
+        return $this->belongsTo(Category::class);
     }
 
     /**

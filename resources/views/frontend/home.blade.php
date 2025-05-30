@@ -6,7 +6,7 @@
         $latest_posts = $posts->take(3);
     @endphp
 
-    <!-- Top News Start-->
+            <!-- Top News Start-->
     <div class="top-news">
         <div class="container">
             <div class="row">
@@ -16,9 +16,9 @@
                             <div class="col-md-6">
                                 <div class="tn-img">
                                     <img src="{{ $post->images->first()->path }}"
-                                        alt="{{ $post->images->first()->alt_text }}" />
+                                         alt="{{ $post->images->first()->alt_text }}"/>
                                     <div class="tn-title">
-                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
+                                        <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -35,9 +35,9 @@
                             <div class="col-md-6">
                                 <div class="tn-img">
                                     <img src="{{ $post->images->first()->path }}"
-                                        alt="{{ $post->images->first()->alt_text }}" />
+                                         alt="{{ $post->images->first()->alt_text }}"/>
                                     <div class="tn-title">
-                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
+                                        <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,9 +62,9 @@
                                 <div class="col-md-6">
                                     <div class="cn-img">
                                         <img src="{{ $post->images->first()->path }}"
-                                            alt="{{ $post->images->first()->alt_text }}" />
+                                             alt="{{ $post->images->first()->alt_text }}"/>
                                         <div class="cn-title">
-                                            <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
+                                            <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -100,10 +100,10 @@
                                 <div class="tn-news">
                                     <div class="tn-img">
                                         <img src="{{ $post->images->first()->path }}"
-                                            alt="{{ $post->images->first()->alt_text }}" />
+                                             alt="{{ $post->images->first()->alt_text }}"/>
                                     </div>
                                     <div class="tn-title">
-                                        <a title="{{ $post->title }}" href="">{{ $post->title }}</a>
+                                        <a title="{{ $post->title }}" href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -115,10 +115,10 @@
                                 <div class="tn-news">
                                     <div class="tn-img">
                                         <img src="{{ $post->images->first()->path }}"
-                                            alt="{{ $post->images->first()->alt_text }}" />
+                                             alt="{{ $post->images->first()->alt_text }}"/>
                                     </div>
                                     <div class="tn-title">
-                                        <a title="{{ $post->title }}" href="">{{ $post->title }}</a>
+                                        <a title="{{ $post->title }}" href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -145,10 +145,10 @@
                                 <div class="tn-news">
                                     <div class="tn-img">
                                         <img src="{{ $post->images->first()->path }}"
-                                            alt="{{ $post->images->first()->alt_text }}" />
+                                             alt="{{ $post->images->first()->alt_text }}"/>
                                     </div>
                                     <div class="tn-title">
-                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
+                                        <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -161,10 +161,10 @@
                                 <div class="tn-news">
                                     <div class="tn-img">
                                         <img src="{{ $post->images->first()->path }}"
-                                            alt="{{ $post->images->first()->alt_text }}" />
+                                             alt="{{ $post->images->first()->alt_text }}"/>
                                     </div>
                                     <div class="tn-title">
-                                        <a href="" title="{{ $post->title }}">
+                                        <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">
                                             {{ $post->title }} <i class="far fa-eye"></i> ({{ $post->number_of_views }})
                                         </a>
                                     </div>
@@ -188,9 +188,9 @@
                             <div class="col-md-4">
                                 <div class="mn-img">
                                     <img src="{{ $post->images->first()->path }}"
-                                        alt="{{ $post->images->first()->alt_text }}" />
+                                         alt="{{ $post->images->first()->alt_text }}"/>
                                     <div class="mn-title">
-                                        <a href="">{{ $post->title }}</a>
+                                        <a href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                         <h2>Read More</h2>
                         <ul>
                             @foreach ($read_more_posts as $post)
-                                <li><a title="{{ $post->title }}" href="">{{ $post->title }}</a></li>
+                                <li><a title="{{ $post->title }}" href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a></li>
                             @endforeach
 
                         </ul>

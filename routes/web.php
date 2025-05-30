@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsSubscribersController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\PostController;
 
 Route::group(
     ['as' => 'frontend.'],
@@ -15,6 +16,8 @@ Route::group(
         Route::post('/news-subscribers', [NewsSubscribersController::class, 'index'])->name('news-subscribers.store');
 
         Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
+
+        Route::get('show/post/{slug}', [PostController::class, 'index'])->name('post.show');
 
     }
 );
