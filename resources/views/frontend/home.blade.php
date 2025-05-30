@@ -6,18 +6,19 @@
         $latest_posts = $posts->take(3);
     @endphp
 
-            <!-- Top News Start-->
+    <!-- Top News Start-->
     <div class="top-news">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 tn-left">
                     <div class="row tn-slider">
-                        @foreach($latest_posts as $post)
+                        @foreach ($latest_posts as $post)
                             <div class="col-md-6">
                                 <div class="tn-img">
-                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <img src="{{ $post->images->first()->path }}"
+                                        alt="{{ $post->images->first()->alt_text }}" />
                                     <div class="tn-title">
-                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -30,12 +31,13 @@
                         @php
                             $four_posts = $posts->skip(3)->take(4);
                         @endphp
-                        @foreach($four_posts as $post)
+                        @foreach ($four_posts as $post)
                             <div class="col-md-6">
                                 <div class="tn-img">
-                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <img src="{{ $post->images->first()->path }}"
+                                        alt="{{ $post->images->first()->alt_text }}" />
                                     <div class="tn-title">
-                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -52,16 +54,17 @@
     <div class="cat-news">
         <div class="container">
             <div class="row">
-                @foreach($category_with_posts as $category)
+                @foreach ($category_with_posts as $category)
                     <div class="col-md-6">
-                        <h2>{{$category->name}}</h2>
+                        <h2>{{ $category->name }}</h2>
                         <div class="row cn-slider">
-                            @foreach($category->posts as $post)
+                            @foreach ($category->posts as $post)
                                 <div class="col-md-6">
                                     <div class="cn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{ $post->images->first()->path }}"
+                                            alt="{{ $post->images->first()->alt_text }}" />
                                         <div class="cn-title">
-                                            <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                            <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -93,14 +96,14 @@
                     <div class="tab-content">
 
                         <div id="featured" class="container tab-pane active">
-                            @foreach($oldest_posts as $post)
-
+                            @foreach ($oldest_posts as $post)
                                 <div class="tn-news">
                                     <div class="tn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{ $post->images->first()->path }}"
+                                            alt="{{ $post->images->first()->alt_text }}" />
                                     </div>
                                     <div class="tn-title">
-                                        <a title="{{$post->title}}" href="">{{$post->title}}</a>
+                                        <a title="{{ $post->title }}" href="">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -108,14 +111,14 @@
                         </div>
 
                         <div id="popular" class="container tab-pane fade">
-                            @foreach($popular_posts as $post)
-
+                            @foreach ($popular_posts as $post)
                                 <div class="tn-news">
                                     <div class="tn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{ $post->images->first()->path }}"
+                                            alt="{{ $post->images->first()->alt_text }}" />
                                     </div>
                                     <div class="tn-title">
-                                        <a title="{{$post->title}}" href="">{{$post->title}}</a>
+                                        <a title="{{ $post->title }}" href="">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -138,13 +141,14 @@
                     <div class="tab-content">
                         {{-- Most Viewed --}}
                         <div id="m-viewed" class="container tab-pane active">
-                            @foreach($latest_posts as $post)
+                            @foreach ($latest_posts as $post)
                                 <div class="tn-news">
                                     <div class="tn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{ $post->images->first()->path }}"
+                                            alt="{{ $post->images->first()->alt_text }}" />
                                     </div>
                                     <div class="tn-title">
-                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                        <a href="" title="{{ $post->title }}">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -153,14 +157,15 @@
 
                         {{-- Latest News --}}
                         <div id="m-read" class="container tab-pane fade">
-                            @foreach($greatest_post_views as $post)
+                            @foreach ($greatest_post_views as $post)
                                 <div class="tn-news">
                                     <div class="tn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{ $post->images->first()->path }}"
+                                            alt="{{ $post->images->first()->alt_text }}" />
                                     </div>
                                     <div class="tn-title">
-                                        <a href="" title="{{$post->title}}">
-                                            {{$post->title}} <i class="far fa-eye"></i> ({{$post->number_of_views}})
+                                        <a href="" title="{{ $post->title }}">
+                                            {{ $post->title }} <i class="far fa-eye"></i> ({{ $post->number_of_views }})
                                         </a>
                                     </div>
                                 </div>
@@ -179,18 +184,18 @@
             <div class="row">
                 <div class="col-lg-9">
                     <div class="row">
-                        @foreach($posts as $post)
-
+                        @foreach ($posts as $post)
                             <div class="col-md-4">
                                 <div class="mn-img">
-                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <img src="{{ $post->images->first()->path }}"
+                                        alt="{{ $post->images->first()->alt_text }}" />
                                     <div class="mn-title">
-                                        <a href="">{{$post->title}}</a>
+                                        <a href="">{{ $post->title }}</a>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                        {{$posts->links()}}
+                        {{ $posts->links() }}
 
                     </div>
                 </div>
@@ -199,20 +204,10 @@
                     <div class="mn-list">
                         <h2>Read More</h2>
                         <ul>
-                            <li><a href="">Lorem ipsum dolor sit amet</a></li>
-                            <li><a href="">Pellentesque tincidunt enim libero</a></li>
-                            <li><a href="">Morbi id finibus diam vel pretium enim</a></li>
-                            <li>
-                                <a href="">Duis semper sapien in eros euismod sodales</a>
-                            </li>
-                            <li><a href="">Vestibulum cursus lorem nibh</a></li>
-                            <li>
-                                <a href="">Morbi ullamcorper vulputate metus non eleifend</a>
-                            </li>
-                            <li><a href="">Etiam vitae elit felis sit amet</a></li>
-                            <li><a href="">Nullam congue massa vitae quam</a></li>
-                            <li><a href="">Proin sed ante rutrum</a></li>
-                            <li><a href="">Curabitur vel lectus</a></li>
+                            @foreach ($read_more_posts as $post)
+                                <li><a title="{{ $post->title }}" href="">{{ $post->title }}</a></li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>

@@ -4,16 +4,16 @@
            <div class="row">
                <div class="col-md-6">
                    <div class="tb-contact">
-                       <p><i class="fas fa-envelope"></i>info@mail.com</p>
-                       <p><i class="fas fa-phone-alt"></i>+012 345 6789</p>
+                       <p><i class="fas fa-envelope"></i>{{ $getSetting->site_email }}</p>
+                       <p><i class="fas fa-phone-alt"></i>{{ $getSetting->site_phone }}</p>
                    </div>
                </div>
                <div class="col-md-6">
                    <div class="tb-menu">
-                       <a href="">About</a>
-                       <a href="">Privacy</a>
-                       <a href="">Terms</a>
-                       <a href="">Contact</a>
+                       <a title="About" href="">About</a>
+                       <a title="Privacy" href="">Privacy</a>
+                       <a title="Terms" href="">Terms</a>
+                       <a title="Contact" href="">Contact</a>
                    </div>
                </div>
            </div>
@@ -27,8 +27,8 @@
            <div class="row align-items-center">
                <div class="col-lg-3 col-md-4">
                    <div class="b-logo">
-                       <a href="index.html">
-                           <img src="{{ asset('Frontend') }}/img/logo.png" alt="Logo" />
+                       <a href="{{ route('home') }}">
+                           <img src="{{ $getSetting->site_logo }}" alt="Logo" />
                        </a>
                    </div>
                </div>
@@ -59,7 +59,7 @@
 
                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                    <div class="navbar-nav mr-auto">
-                       <a href="index.html" class="nav-item nav-link active">Home</a>
+                       <a title="home" href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
                        <div class="nav-item dropdown">
                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
                            <div class="dropdown-menu">
@@ -69,14 +69,36 @@
                        </div>
                        <a href="single-page.html" class="nav-item nav-link">Single Page</a>
                        <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
-                       <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                       <a title="contactUs" href="contact.html" class="nav-item nav-link">Contact Us</a>
                    </div>
                    <div class="social ml-auto">
-                       <a href=""><i class="fab fa-twitter"></i></a>
-                       <a href=""><i class="fab fa-facebook-f"></i></a>
-                       <a href=""><i class="fab fa-linkedin-in"></i></a>
-                       <a href=""><i class="fab fa-instagram"></i></a>
-                       <a href=""><i class="fab fa-youtube"></i></a>
+                       <a title="x_link" href="{{ $getSetting->x_link }}">
+                           <i class="fab fa-twitter"></i>
+                       </a>
+
+                       <a title="facebook_link" href="{{ $getSetting->facebook_link }}">
+                           <i class="fab fa-facebook-f"></i>
+                       </a>
+
+                       <a title="linkedin_link" href="{{ $getSetting->linkedin_link }}">
+                           <i class="fab fa-linkedin-in"></i>
+                       </a>
+
+                       <a title="instagram_link" href="{{ $getSetting->instagram_link }}">
+                           <i class="fab fa-instagram"></i>
+                       </a>
+
+                       <a title="youtube_link" href="{{ $getSetting->youtube_link }}">
+                           <i class="fab fa-youtube"></i>
+                       </a>
+
+                       <a title="whatsapp_link" href="{{ $getSetting->whatsapp_link }}">
+                           <i class="fab fa-whatsapp"></i>
+                       </a>
+
+                       <a title="telegram_link" href="{{ $getSetting->telegram_link }}">
+                           <i class="fab fa-telegram"></i>
+                       </a>
                    </div>
                </div>
            </nav>
