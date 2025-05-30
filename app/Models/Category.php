@@ -35,7 +35,6 @@ class Category extends Model
     ];
 
 
-
     /*
     ===============================
     Relationships
@@ -50,7 +49,7 @@ class Category extends Model
      */
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class, 'post_id', 'id');
+        return $this->hasMany(Post::class);
     }
 
 

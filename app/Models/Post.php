@@ -37,9 +37,6 @@ class Post extends Model
     ];
 
 
-
-
-
     /*
     ===============================
     Relationships
@@ -55,7 +52,7 @@ class Post extends Model
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class, 'category_id', 'id');
+        return $this->hasMany(Comment::class);
     }
 
     /**

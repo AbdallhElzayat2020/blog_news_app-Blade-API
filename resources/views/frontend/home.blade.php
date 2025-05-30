@@ -2,64 +2,45 @@
 @section('title', 'Home Page')
 
 @section('content')
-    <!-- Top News Start-->
+    @php
+        $latest_posts = $posts->take(3);
+    @endphp
+
+            <!-- Top News Start-->
     <div class="top-news">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 tn-left">
                     <div class="row tn-slider">
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-450x350-1.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
+                        @foreach($latest_posts as $post)
+                            <div class="col-md-6">
+                                <div class="tn-img">
+                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <div class="tn-title">
+                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-450x350-2.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Integer hendrerit elit eget purus sodales maximus</a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
                 <div class="col-md-6 tn-right">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
+                        @php
+                            $four_posts = $posts->skip(3)->take(4);
+                        @endphp
+                        @foreach($four_posts as $post)
+                            <div class="col-md-6">
+                                <div class="tn-img">
+                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <div class="tn-title">
+                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -71,131 +52,25 @@
     <div class="cat-news">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h2>Sports</h2>
-                    <div class="row cn-slider">
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
+                @foreach($category_with_posts as $category)
+                    <div class="col-md-6">
+                        <h2>{{$category->name}}</h2>
+                        <div class="row cn-slider">
+                            @foreach($category->posts as $post)
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <div class="cn-title">
+                                            <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h2>Technology</h2>
-                    <div class="row cn-slider">
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Category News End-->
+                            @endforeach
 
-    <!-- Category News Start-->
-    <div class="cat-news">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Business</h2>
-                    <div class="row cn-slider">
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <h2>Entertainment</h2>
-                    <div class="row cn-slider">
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
-                                <div class="cn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </div>
@@ -208,7 +83,7 @@
                 <div class="col-md-6">
                     <ul class="nav nav-pills nav-justified">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#featured">Featured News</a>
+                            <a class="nav-link active" data-toggle="pill" href="#featured">Oldest News</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="pill" href="#popular">Popular News</a>
@@ -216,57 +91,35 @@
                     </ul>
 
                     <div class="tab-content">
+
                         <div id="featured" class="container tab-pane active">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
+                            @foreach($oldest_posts as $post)
+
+                                <div class="tn-news">
+                                    <div class="tn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    </div>
+                                    <div class="tn-title">
+                                        <a title="{{$post->title}}" href="">{{$post->title}}</a>
+                                    </div>
                                 </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
+
                         <div id="popular" class="container tab-pane fade">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
+                            @foreach($popular_posts as $post)
+
+                                <div class="tn-news">
+                                    <div class="tn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    </div>
+                                    <div class="tn-title">
+                                        <a title="{{$post->title}}" href="">{{$post->title}}</a>
+                                    </div>
                                 </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
 
                     </div>
@@ -282,9 +135,6 @@
                         </li>
                     </ul>
 
-                    @php
-                        $latest_posts = $posts->take(3);
-                    @endphp
                     <div class="tab-content">
                         {{-- Most Viewed --}}
                         <div id="m-viewed" class="container tab-pane active">
