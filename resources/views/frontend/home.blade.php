@@ -10,7 +10,7 @@
                     <div class="row tn-slider">
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-450x350-1.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-450x350-1.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
                                 </div>
@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-450x350-2.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-450x350-2.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Integer hendrerit elit eget purus sodales maximus</a>
                                 </div>
@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -76,7 +76,7 @@
                     <div class="row cn-slider">
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -105,7 +105,7 @@
                     <div class="row cn-slider">
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -143,7 +143,7 @@
                     <div class="row cn-slider">
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -151,7 +151,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -159,7 +159,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -172,7 +172,7 @@
                     <div class="row cn-slider">
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -188,7 +188,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="cn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
+                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
                                 <div class="cn-title">
                                     <a href="">Lorem ipsum dolor sit</a>
                                 </div>
@@ -213,16 +213,13 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="pill" href="#popular">Popular News</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#latest">Latest News</a>
-                        </li>
                     </ul>
 
                     <div class="tab-content">
                         <div id="featured" class="container tab-pane active">
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
@@ -230,7 +227,7 @@
                             </div>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
@@ -238,7 +235,7 @@
                             </div>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
@@ -248,7 +245,7 @@
                         <div id="popular" class="container tab-pane fade">
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
@@ -256,7 +253,7 @@
                             </div>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
@@ -264,39 +261,14 @@
                             </div>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
+                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg"/>
                                 </div>
                                 <div class="tn-title">
                                     <a href="">Lorem ipsum dolor sit amet</a>
                                 </div>
                             </div>
                         </div>
-                        <div id="latest" class="container tab-pane fade">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
@@ -306,91 +278,43 @@
                             <a class="nav-link active" data-toggle="pill" href="#m-viewed">Most Viewed</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#m-read">Most Read</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#m-recent">Most Recent</a>
+                            <a class="nav-link" data-toggle="pill" href="#m-read">Latest News</a>
                         </li>
                     </ul>
 
+                    @php
+                        $latest_posts = $posts->take(3);
+                    @endphp
                     <div class="tab-content">
+                        {{-- Most Viewed --}}
                         <div id="m-viewed" class="container tab-pane active">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
+                            @foreach($latest_posts as $post)
+                                <div class="tn-news">
+                                    <div class="tn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    </div>
+                                    <div class="tn-title">
+                                        <a href="" title="{{$post->title}}">{{$post->title}}</a>
+                                    </div>
                                 </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
+
+                        {{-- Latest News --}}
                         <div id="m-read" class="container tab-pane fade">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
+                            @foreach($greatest_post_views as $post)
+                                <div class="tn-news">
+                                    <div class="tn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    </div>
+                                    <div class="tn-title">
+                                        <a href="" title="{{$post->title}}">
+                                            {{$post->title}} <i class="far fa-eye"></i> ({{$post->number_of_views}})
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="m-recent" class="container tab-pane fade">
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
-                            <div class="tn-news">
-                                <div class="tn-img">
-                                    <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
-                                </div>
-                                <div class="tn-title">
-                                    <a href="">Lorem ipsum dolor sit amet</a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -405,78 +329,19 @@
             <div class="row">
                 <div class="col-lg-9">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
+                        @foreach($posts as $post)
+
+                            <div class="col-md-4">
+                                <div class="mn-img">
+                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                    <div class="mn-title">
+                                        <a href="">{{$post->title}}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-5.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-1.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-2.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-3.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mn-img">
-                                <img src="{{ asset('Frontend') }}/img/news-350x223-4.jpg" />
-                                <div class="mn-title">
-                                    <a href="">Lorem ipsum dolor sit</a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+                        {{$posts->links()}}
+
                     </div>
                 </div>
 

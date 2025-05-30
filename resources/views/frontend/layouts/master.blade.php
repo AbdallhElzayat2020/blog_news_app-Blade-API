@@ -6,6 +6,7 @@
 {{-- head --}}
 
 <body>
+
     {{-- header --}}
     @include('frontend.layouts.header')
     {{-- header --}}

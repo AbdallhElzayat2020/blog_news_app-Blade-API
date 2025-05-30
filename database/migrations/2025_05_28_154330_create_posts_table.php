@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('comment_able', ['yes', 'no'])->default('yes');
-
+            $table->integer('number_of_views')->default(0);
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

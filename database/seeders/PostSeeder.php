@@ -20,6 +20,7 @@ class PostSeeder extends Seeder
 
             Image::factory(3)->create([
                 'post_id' => $post->id,
+                'alt_text' => fake()->sentence(),
             ]);
         });
     }
