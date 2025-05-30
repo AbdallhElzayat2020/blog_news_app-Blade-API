@@ -12,15 +12,20 @@ class PostController extends Controller
     public function index($slug)
     {
         $post = Post::with(['category', 'images'])->whereSlug($slug)->firstOrFail();
-        $post->increment('number_of_views');
-
-        $category = $post->category;
-        $related_posts = $category->posts()->with('images')->latest()->take(4)->get();
-
-
         if (!$post) {
             abort(404, 'Post not found');
         }
+        $category = $post->category;
+        $related_posts = $category->posts()->select('id', 'title', 'slug', 'description')
+            ->where('id', '!=', $post->id)
+            ->with('images')
+            ->latest()
+            ->take(4)
+            ->get();
+
+
+        $post->increment('number_of_views');
+
 
         return view('frontend.show-single-post', compact('post', 'related_posts'));
     }

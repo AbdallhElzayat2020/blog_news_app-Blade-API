@@ -7,7 +7,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">News</a></li>
-                <li class="breadcrumb-item active">News details</li>
+                <li class="breadcrumb-item active">{{$post->title}}</li>
             </ul>
         </div>
     </div>
@@ -133,7 +133,7 @@
                                             <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
                                         </div>
                                         <div class="nl-title">
-                                            <a href="{{ route('frontend.post.show',$post->slug) }}">
+                                            <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
                                                 {{$post->title}}
                                             </a>
                                         </div>
@@ -143,205 +143,57 @@
                             </div>
                         </div>
 
-                        <div class="sidebar-widget">
-                            <div class="image">
-                                <a href="https://htmlcodex.com"
-                                ><img src="img/ads-2.jpg" alt="Image"
-                                    /></a>
-                            </div>
-                        </div>
 
                         <div class="sidebar-widget">
                             <div class="tab-news">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li class="nav-item">
-                                        <a
-                                                class="nav-link active"
-                                                data-toggle="pill"
-                                                href="#featured"
-                                        >Featured</a
-                                        >
+                                    <li class="nav-item active">
+                                        <a class="nav-link active" data-toggle="pill" href="#popular">Latest Posts</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="pill" href="#popular"
-                                        >Popular</a
-                                        >
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="pill" href="#latest"
-                                        >Latest</a
-                                        >
+                                        <a class="nav-link" data-toggle="pill" href="#latest">Popular Posts</a>
                                     </li>
                                 </ul>
 
                                 <div class="tab-content">
-                                    <div id="featured" class="container tab-pane active">
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-1.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-2.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-3.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-4.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-5.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{-- latest post --}}
                                     <div id="popular" class="container tab-pane fade">
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-4.jpg"/>
+                                        @foreach($latest_posts as $post)
+                                            <div class="tn-news">
+                                                <div class="tn-img">
+                                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                                </div>
+                                                <div class="tn-title">
+                                                    <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
+                                                        {{$post->title}}
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-3.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-2.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-1.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-2.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
+                                        @endforeach
+
                                     </div>
+
+
                                     <div id="latest" class="container tab-pane fade">
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-3.jpg"/>
+                                        @foreach($popular_posts as $post)
+
+                                            <div class="tn-news">
+                                                <div class="tn-img">
+                                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                                </div>
+                                                <div class="tn-title">
+                                                    <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
+                                                        {{$post->title}}
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-4.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-5.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-4.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="tn-news">
-                                            <div class="tn-img">
-                                                <img src="img/news-350x223-3.jpg"/>
-                                            </div>
-                                            <div class="tn-title">
-                                                <a href=""
-                                                >Lorem ipsum dolor sit amet consec adipis elit</a
-                                                >
-                                            </div>
-                                        </div>
+                                        @endforeach
+
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="sidebar-widget">
-                            <div class="image">
-                                <a href="https://htmlcodex.com"
-                                ><img src="img/ads-2.jpg" alt="Image"
-                                    /></a>
-                            </div>
-                        </div>
 
                         <div class="sidebar-widget">
                             <h2 class="sw-title">News Category</h2>

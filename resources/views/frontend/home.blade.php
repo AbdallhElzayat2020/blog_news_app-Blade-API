@@ -139,7 +139,7 @@
                     </ul>
 
                     <div class="tab-content">
-                        {{-- Most Viewed --}}
+                        {{-- latest_posts --}}
                         <div id="m-viewed" class="container tab-pane active">
                             @foreach ($latest_posts as $post)
                                 <div class="tn-news">
@@ -155,7 +155,7 @@
 
                         </div>
 
-                        {{-- Latest News --}}
+                        {{-- greatest_post_views --}}
                         <div id="m-read" class="container tab-pane fade">
                             @foreach ($greatest_post_views as $post)
                                 <div class="tn-news">
