@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\RelatedSite;
 use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
@@ -30,7 +31,7 @@ class CheckSettingServicesProvider extends ServiceProvider
                 'site_address' => '123 Default St, Default City, Default Country',
                 'site_description' => 'This is a default description for the site.',
                 'site_logo' => 'Frontend/img/logo.png',
-                'site_favicon' => 'default-favicon.ico',
+                'site_favicon' => 'Frontend/img/logo.png',
                 'city' => 'Default City',
                 'street' => 'Default Street',
                 'country' => 'Default Country',
@@ -45,11 +46,13 @@ class CheckSettingServicesProvider extends ServiceProvider
             ]);
         });
 
-        $links = RelatedSite::select('name','url')->get();
+        $links = RelatedSite::select('name', 'url')->get();
 
+        $categories = Category::latest()->select('name', 'id', 'slug')->limit(10)->get();
         view()->share([
             'getSetting' => $getSetting,
             'links' => $links,
+            'categories' => $categories,
         ]);
     }
 }

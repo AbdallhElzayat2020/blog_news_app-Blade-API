@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsSubscribersController;
 use App\Http\Controllers\ProfileController;
@@ -13,6 +14,8 @@ Route::group(
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
         Route::post('/news-subscribers', [NewsSubscribersController::class, 'index'])->name('news-subscribers.store');
+
+        Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
     }
 );
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Mail\NewsSubscriberMail;
+use App\Mail\Frontend\NewsSubscriberMail;
 use App\Models\NewsSubscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
