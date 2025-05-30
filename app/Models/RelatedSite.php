@@ -8,7 +8,7 @@ class RelatedSite extends Model
 {
     protected $fillable = [
         'name',
-        'url',
+        'url'
     ];
 
     protected $table = 'related_sites';

@@ -27,7 +27,7 @@
            <div class="row align-items-center">
                <div class="col-lg-3 col-md-4">
                    <div class="b-logo">
-                       <a href="{{ route('home') }}">
+                       <a href="{{ route('frontend.home') }}">
                            <img src="{{ $getSetting->site_logo }}" alt="Logo" />
                        </a>
                    </div>
@@ -59,7 +59,7 @@
 
                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                    <div class="navbar-nav mr-auto">
-                       <a title="home" href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
+                       <a title="home" href="{{ route('frontend.home') }}" class="nav-item nav-link active">Home</a>
                        <div class="nav-item dropdown">
                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
                            <div class="dropdown-menu">
