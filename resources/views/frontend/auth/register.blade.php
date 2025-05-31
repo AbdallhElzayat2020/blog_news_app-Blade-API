@@ -1,11 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title', 'Register')
 
-@section('breadcrumb')
-    @parent
-    <li class="breadcrumb-item active">Register</li>
-@endsection
-
 @section('content')
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -113,8 +108,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="formFileMultiple" class="form-label">Profile Picture <span class="text-danger">*</span></label>
-                                <input class="form-control" name="image" type="file" id="formFileMultiple" multiple>
+                                <label for="formFileMultiple" class="form-label">Profile Picture</label>
+                                <input class="form-control" name="image" type="file" id="formFileMultiple">
                                 @error('image')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror

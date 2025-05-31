@@ -1,11 +1,6 @@
 @extends('frontend.layouts.master')
 @section('title', 'Login')
 
-@section('breadcrumb')
-    @parent
-    <li class="breadcrumb-item active">Login</li>
-@endsection
-
 @section('content')
     <div class="container py-5">
         @if(session('success'))

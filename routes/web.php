@@ -9,6 +9,8 @@ use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\SocialLoginController;
+use App\Http\Controllers\Admin\DashboardController;
+
 Route::group(
     ['as' => 'frontend.'],
     function () {
@@ -38,6 +40,16 @@ Route::group(
 );
 
 
+Route::prefix('frontend/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('profile', [DashboardController::class, 'index'])->name('profile');
+});
+
+
+
+
+
+
 /*  ============= Social login Routes ============= */
 
 // Google Login
@@ -48,9 +60,10 @@ Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'
 
 
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {

@@ -1,37 +1,45 @@
 @extends('frontend.layouts.master')
 @section('title', 'Forgot Password')
+
+
 @section('content')
+    <br>
+    <br>
+    <br>
     <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-lg mt-5">
-                    <div class="card-header bg-warning text-white">
-                        <h3 class="text-center mb-0">Forgot Password</h3>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-4">
-                            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-                        </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Reset Password') }}</div>
 
-                        <!-- Session Status -->
-                        <x-auth-session-status class="mb-4" :status="session('status')"/>
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.email') }}" autocomplete="off">
                             @csrf
+                            <div class="mb-3">
+                                <p class="text-muted">
+                                    {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+                                </p>
+                            </div>
 
-                            <!-- Email Address -->
                             <div class="mb-3">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                       name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                                       value="{{ old('email') }}" required autocomplete="email" autofocus>
+
                                 @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
 
-                            <div class="d-flex justify-content-end">
+                            <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Email Password Reset Link') }}
                                 </button>
@@ -42,4 +50,7 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 @endsection

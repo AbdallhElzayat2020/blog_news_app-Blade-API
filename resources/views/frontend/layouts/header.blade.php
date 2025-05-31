@@ -10,10 +10,24 @@
             </div>
             <div class="col-md-6">
                 <div class="tb-menu">
-                    <a title="About" href="">About</a>
-                    <a title="Privacy" href="">Privacy</a>
-                    <a title="Terms" href="">Terms</a>
-                    <a title="Contact" href="">Contact</a>
+                    @guest
+                        <a href="{{ route('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+                        <a href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    @endguest
+
+                    {{-- logout --}}
+                    @auth('web')
+                        <div class="d-flex justify-content-end">
+
+                            <!-- Logout Modal -->
+                            @include('frontend.layouts.logout')
+
+                            <a href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                            <a href="{{ route('frontend.dashboard.profile') }}"><i class="fas fa-user"></i> {{auth()->user()->name}}</a>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </div>
