@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index($slug)
     {
-        $category = Category::whereSlug($slug)->firstOrFail();
+        $category = Category::active()->whereSlug($slug)->firstOrFail();
         $posts = $category->posts()->with('images')->paginate(9);
 
         return view('frontend.category-posts', compact('category', 'posts'));

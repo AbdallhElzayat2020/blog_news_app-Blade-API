@@ -12,33 +12,32 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('images')
+        $posts = Post::active()->with('images')
             ->latest()
             ->paginate(9);
 
-        $greatest_post_views = Post::with('images')
+        $greatest_post_views = Post::active()->with('images')
             ->orderBy('number_of_views', 'desc')
             ->limit(3)
             ->get();
 
-        $oldest_posts = Post::with('images')
+        $oldest_posts = Post::active()->with('images')
             ->oldest()
             ->limit(3)
             ->get();
 
 
-        $popular_posts = Post::with('images')
+        $popular_posts = Post::active()->with('images')
             ->withCount('comments')
             ->orderBy('comments_count', 'desc')
             ->take(3)
             ->get();
 
 
-        $category_with_posts = Category::with(['posts' => function($query) {
+        $category_with_posts = Category::active()->with(['posts' => function ($query) {
             $query->with('images')
                 ->limit(4);
         }])->get();
-
 
 
 //        $categories = Category::select('name', 'id', 'slug')->get();

@@ -15,7 +15,7 @@ class SearchController extends Controller
         ]);
 
         $keyword = strip_tags($request->search);
-        $posts = Post::with('images')->where('title', 'like', '%' . $keyword . '%')
+        $posts = Post::active()->with('images')->where('title', 'like', '%' . $keyword . '%')
             ->latest()->paginate(9)->withQueryString();
 
         return view('frontend.search-posts', compact('posts'));

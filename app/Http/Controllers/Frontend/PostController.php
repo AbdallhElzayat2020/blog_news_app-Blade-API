@@ -15,7 +15,7 @@ class PostController extends Controller
     {
 
 
-        $mainPost = Post::with(['category', 'images', 'comments' => function ($query) {
+        $mainPost = Post::active()->with(['category', 'images', 'comments' => function ($query) {
             $query->limit(3);
         }])->whereSlug($slug)->firstOrFail();
 
@@ -25,6 +25,7 @@ class PostController extends Controller
 
         $category = $mainPost->category;
         $related_posts = $category->posts()
+            ->active()
             ->select('id', 'title', 'slug', 'description')
             ->where('id', '!=', $mainPost->id)
             ->with('images')
