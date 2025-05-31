@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,35 @@ class PostController extends Controller
         }
         $comments = $post->comments()->with('user')->latest()->get();
         return response()->json($comments);
+    }
+
+    public function storeComment(Request $request)
+    {
+        $request->validate([
+            'comment' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'exists:users,id'],
+
+        ]);
+
+        $comment = Comment::create([
+            'comment' => $request->comment,
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id,
+            'ip_address' => $request->ip(),
+        ]);
+
+//        $comment->load('user');
+
+        if (!$comment) {
+            return response()->json([
+                'msg' => 'Failed to add comment',
+            ], 404);
+        }
+
+        return response()->json([
+            'msg' => 'Comment added successfully',
+            'comment' => $comment,
+
+        ], 201);
     }
 }

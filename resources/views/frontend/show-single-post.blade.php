@@ -51,10 +51,15 @@
                     <!-- Comment Section -->
                     <div class="comment-section">
                         <!-- Comment Input -->
-                        <div class="comment-input">
-                            <input type="text" placeholder="Add a comment..." id="commentBox"/>
-                            <button id="addCommentBtn">Post</button>
-                        </div>
+                        <form method="post" id="commentForm">
+                            @csrf
+                            <div class="comment-input">
+                                <input type="text" name="comment" placeholder="Add a comment..." id="commentBox"/>
+                                <input type="hidden" name="user_id" value="1">
+                                <input type="hidden" name="post_id" value="{{$mainPost->id}}">
+                                <button type="submit" id="addCommentBtn">Post</button>
+                            </div>
+                        </form>
 
                         <!-- Display Comments -->
                         <div class="comments">
@@ -196,6 +201,8 @@
 
 @push('scripts')
     <script>
+
+        // show more comments
         $(document).on('click', '#showMoreBtn', function (e) {
             e.preventDefault();
 
@@ -203,7 +210,6 @@
                 url: "{{route('frontend.post.comments', $mainPost->slug)}}",
                 type: "GET",
                 success: function (data) {
-                    console.log(data)
                     $('.comments').empty();
                     $.each(data, function (key, comment) {
                         $('.comments').append(`
@@ -214,15 +220,38 @@
                                     <p class="comment-text">${comment.comment}</p>
                                 </div>
                             </div>
-
                         `);
+                        $('#showMoreBtn').hide()
                     });
                 },
                 error: function (error) {
                     console.log(error)
                 }
             });
+        });
 
+        // Add comment
+        $(document).on('submit', '#commentForm', function (e) {
+            e.preventDefault();
+            let formDta = new FormData($(this)[0]);
+
+            $.ajax({
+                url: "{{route('frontend.post.comments.store')}}",
+                type: "POST",
+                data: formDta,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         })
+
     </script>
 @endpush
