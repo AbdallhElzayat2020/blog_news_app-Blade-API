@@ -26,6 +26,7 @@ class PostController extends Controller
         $category = $mainPost->category;
         $related_posts = $category->posts()
             ->active()
+            ->with('user')
             ->select('id', 'title', 'slug', 'description')
             ->where('id', '!=', $mainPost->id)
             ->with('images')
