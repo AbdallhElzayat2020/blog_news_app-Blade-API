@@ -54,13 +54,18 @@
                         <form method="post" id="commentForm">
                             @csrf
                             <div class="comment-input">
-                                <input type="text" name="comment" placeholder="Add a comment..." id="commentBox"/>
+                                <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..." id="commentBox"/>
                                 <input type="hidden" name="user_id" value="1">
                                 <input type="hidden" name="post_id" value="{{$mainPost->id}}">
+
                                 <button type="submit" id="addCommentBtn">Post</button>
                             </div>
                         </form>
 
+
+                        <div style="display: none" id="error_msg" class="alert alert-danger">
+
+                        </div>
                         <!-- Display Comments -->
                         <div class="comments">
                             @foreach($mainPost->comments as $comment)
@@ -230,6 +235,7 @@
             });
         });
 
+
         // Add comment
         $(document).on('submit', '#commentForm', function (e) {
             e.preventDefault();
@@ -245,10 +251,24 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
-
+                    $('.comments').prepend(`
+                        <div class="comment">
+                            <img src="${data.comment.user.avatar}" alt="${data.comment.user.name}" class="comment-img"/>
+                            <div class="comment-content">
+                                <span class="username">${data.comment.user.name}</span>
+                                <p class="comment-text">${data.comment.comment}</p>
+                            </div>
+                        </div>
+                    `);
+                    $('#commentBox').val('');
                 },
                 error: function (error) {
-                    console.log(error);
+                    let response = $.parseJSON(error.responseText);
+                    $('#error_msg').show();
+                    $('#error_msg').text(response.message);
+                    setTimeout(function () {
+                        $('#error_msg').hide();
+                    }, 3000);
                 }
             });
         })

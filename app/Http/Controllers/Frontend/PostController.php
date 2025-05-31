@@ -18,6 +18,7 @@ class PostController extends Controller
         $mainPost = Post::with(['category', 'images', 'comments' => function ($query) {
             $query->limit(3);
         }])->whereSlug($slug)->firstOrFail();
+
         if (!$mainPost) {
             abort(404, 'Post not found');
         }
@@ -40,11 +41,12 @@ class PostController extends Controller
 
     public function getAllComments(string $slug)
     {
-        $post = Post::whereSlug($slug)->first();
+        $post = Post::whereSlug($slug)->firstOrFail();
+
         if (!$post) {
             abort(404, 'Post not found');
         }
-        $comments = $post->comments()->with('user')->latest()->get();
+        $comments = $post->comments()->latest()->with('user')->get();
         return response()->json($comments);
     }
 
@@ -63,7 +65,7 @@ class PostController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-//        $comment->load('user');
+        $comment->load('user');
 
         if (!$comment) {
             return response()->json([
