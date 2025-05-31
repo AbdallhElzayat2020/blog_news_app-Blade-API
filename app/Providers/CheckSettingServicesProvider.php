@@ -48,11 +48,10 @@ class CheckSettingServicesProvider extends ServiceProvider
 
         $links = RelatedSite::select('name', 'url', 'id')->get();
 
-        $categories = Category::latest()->select('name', 'id', 'slug')->limit(10)->get();
+
         view()->share([
             'getSetting' => $getSetting,
             'links' => $links,
-            'categories' => $categories,
         ]);
     }
 }

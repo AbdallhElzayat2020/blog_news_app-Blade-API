@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,8 @@ class PostController extends Controller
     //
     public function index($slug)
     {
+
+
         $post = Post::with(['category', 'images'])->whereSlug($slug)->firstOrFail();
         if (!$post) {
             abort(404, 'Post not found');

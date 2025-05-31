@@ -194,40 +194,17 @@
                             </div>
                         </div>
 
-
                         <div class="sidebar-widget">
                             <h2 class="sw-title">News Category</h2>
                             <div class="category">
                                 <ul>
-                                    <li><a href="">National</a><span>(98)</span></li>
-                                    <li><a href="">International</a><span>(87)</span></li>
-                                    <li><a href="">Economics</a><span>(76)</span></li>
-                                    <li><a href="">Politics</a><span>(65)</span></li>
-                                    <li><a href="">Lifestyle</a><span>(54)</span></li>
-                                    <li><a href="">Technology</a><span>(43)</span></li>
-                                    <li><a href="">Trades</a><span>(32)</span></li>
+                                    @foreach($categories as $category)
+
+                                        <li><a title="{{$post->title}}" href="{{ route('frontend.post.show',$post->slug) }}">
+                                                {{$category->name}}</a><span>({{$category->posts->count()}})</span>
+                                        </li>
+                                    @endforeach
                                 </ul>
-                            </div>
-                        </div>
-
-                        <div class="sidebar-widget">
-                            <div class="image">
-                                <a href="https://htmlcodex.com"
-                                ><img src="img/ads-2.jpg" alt="Image"
-                                    /></a>
-                            </div>
-                        </div>
-
-                        <div class="sidebar-widget">
-                            <h2 class="sw-title">Tags Cloud</h2>
-                            <div class="tags">
-                                <a href="">National</a>
-                                <a href="">International</a>
-                                <a href="">Economics</a>
-                                <a href="">Politics</a>
-                                <a href="">Lifestyle</a>
-                                <a href="">Technology</a>
-                                <a href="">Trades</a>
                             </div>
                         </div>
                     </div>
