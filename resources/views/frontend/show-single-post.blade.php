@@ -34,8 +34,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
-                            <!-- Add more carousel-item blocks for additional slides -->
                         </div>
                         <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -60,20 +58,16 @@
 
                         <!-- Display Comments -->
                         <div class="comments">
-                            <div class="comment">
-                                <img src="./img/news-450x350-2.jpg" alt="User Image" class="comment-img"/>
-                                <div class="comment-content">
-                                    <span class="username">User1</span>
-                                    <p class="comment-text">This is an example comment.</p>
+                            @foreach($post->comments as $comment)
+                                <div class="comment">
+                                    <img src="{{$comment->user->avatar}}" alt="User Image" class="comment-img"/>
+                                    <div class="comment-content">
+                                        <span class="username">{{$comment->user->name}}</span>
+                                        <p class="comment-text">{{$comment->comment}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="comment">
-                                <img src="./img/news-450x350-2.jpg" alt="User Image" class="comment-img"/>
-                                <div class="comment-content">
-                                    <span class="username">User2</span>
-                                    <p class="comment-text">This is an example comment.</p>
-                                </div>
-                            </div>
+                            @endforeach
+
                             <!-- Add more comments here for demonstration -->
                         </div>
 
@@ -85,42 +79,25 @@
                     <div class="sn-related">
                         <h2>Related News</h2>
                         <div class="row sn-slider">
-                            <div class="col-md-4">
-                                <div class="sn-img">
-                                    <img src="img/news-350x223-1.jpg" class="img-fluid" alt="Related News 1"/>
-                                    <div class="sn-title">
-                                        <a href="#">Interdum et fames ac ante</a>
+                            @foreach($related_posts as $post)
+                                <div class="col-md-4">
+                                    <div class="sn-img">
+                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+
+                                        <div class="nl-title">
+                                            <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
+                                                {{$post->title}}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="sn-img">
-                                    <img src="img/news-350x223-2.jpg" class="img-fluid" alt="Related News 2"/>
-                                    <div class="sn-title">
-                                        <a href="#">Interdum et fames ac ante</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="sn-img">
-                                    <img src="img/news-350x223-3.jpg" class="img-fluid" alt="Related News 3"/>
-                                    <div class="sn-title">
-                                        <a href="#">Interdum et fames ac ante</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="sn-img">
-                                    <img src="img/news-350x223-4.jpg" class="img-fluid" alt="Related News 4"/>
-                                    <div class="sn-title">
-                                        <a href="#">Interdum et fames ac ante</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
 
+                {{-- in this category section --}}
                 <div class="col-lg-4">
                     <div class="sidebar">
                         <div class="sidebar-widget">

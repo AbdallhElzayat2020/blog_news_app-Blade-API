@@ -14,12 +14,16 @@ class PostController extends Controller
     {
 
 
-        $post = Post::with(['category', 'images'])->whereSlug($slug)->firstOrFail();
+        $post = Post::with(['category', 'images', 'comments' => function ($query) {
+            $query->limit(3);
+        }])->whereSlug($slug)->firstOrFail();
         if (!$post) {
             abort(404, 'Post not found');
         }
+
         $category = $post->category;
-        $related_posts = $category->posts()->select('id', 'title', 'slug', 'description')
+        $related_posts = $category->posts()
+            ->select('id', 'title', 'slug', 'description')
             ->where('id', '!=', $post->id)
             ->with('images')
             ->latest()
