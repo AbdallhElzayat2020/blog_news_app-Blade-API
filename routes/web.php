@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\SearchController;
-
+use App\Http\Controllers\Frontend\SocialLoginController;
 Route::group(
     ['as' => 'frontend.'],
     function () {
@@ -36,6 +36,17 @@ Route::group(
         Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
     }
 );
+
+
+/*  ============= Social login Routes ============= */
+
+// Google Login
+
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.socialite.callback');
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
