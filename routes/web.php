@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\NewsSubscribersController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\Frontend\ContactController;
 
 Route::group(
     ['as' => 'frontend.'],
@@ -13,14 +14,22 @@ Route::group(
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
+        Route::controller(ContactController::class)->prefix('contact')->name('contact.')->group(function () {
+            Route::get('/', 'index')->name('show');
+            Route::post('/store', 'submitForm')->name('form-submit');
+        });
+
         Route::post('/news-subscribers', [NewsSubscribersController::class, 'index'])->name('news-subscribers.store');
 
         Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
 
         Route::get('show/post/{slug}', [PostController::class, 'index'])->name('post.show');
 
-        Route::get('post/comments/{slug}', [PostController::class, 'getAllComments'])->name('post.comments');
-        Route::post('post/comments/store', [PostController::class, 'storeComment'])->name('post.comments.store');
+
+        Route::controller(PostController::class)->prefix('post')->name('post.')->group(function () {
+            Route::get('/comments/{slug}', 'getAllComments')->name('comments');
+            Route::post('/comments/store', 'storeComment')->name('comments.store');
+        });
 
     }
 );

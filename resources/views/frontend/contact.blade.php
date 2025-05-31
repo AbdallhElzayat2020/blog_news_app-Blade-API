@@ -7,7 +7,7 @@
     <div class="breadcrumb-wrap">
         <div class="container">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
                 <li class="breadcrumb-item active">Contact</li>
             </ul>
         </div>
@@ -20,20 +20,47 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="contact-form">
-                        <form>
+                        <form action="{{ route('frontend.contact.form-submit') }}" method="POST">
+                            @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" placeholder="Your Name" />
+                                    <input type="text" name="name" value="{{old('name')}}" class="form-control" placeholder="Your Name"/>
+                                    @error('name')
+                                    <span class="text-danger">
+                                            {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="email" class="form-control" placeholder="Your Email" />
+                                    <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Your Email"/>
+                                    @error('email')
+                                    <span class="text-danger">
+                                            {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Subject" />
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" placeholder="Your Phone"/>
+                                    @error('phone')
+                                    <span class="text-danger">
+                                            {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" name="subject" value="{{old('subject')}}" class="form-control" placeholder="Subject"/>
+                                    @error('subject')
+                                    <span class="text-danger">
+                                            {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
                             </div>
                             <div>
                                 <button class="btn" type="submit">Send Message</button>

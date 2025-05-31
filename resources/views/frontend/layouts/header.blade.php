@@ -73,7 +73,7 @@
                     </div>
                     <a href="single-page.html" class="nav-item nav-link">Single Page</a>
                     <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
-                    <a title="contactUs" href="contact.html" class="nav-item nav-link">Contact Us</a>
+                    <a title="contactUs" href="{{ route('frontend.contact.show') }}" class="nav-item nav-link">Contact Us</a>
                 </div>
 
                 <div class="social ml-auto">
