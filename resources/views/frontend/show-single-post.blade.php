@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', $post->title)
+@section('title', $mainPost->title)
 @section('content')
     <!-- Breadcrumb Start -->
     <div class="breadcrumb-wrap">
@@ -7,7 +7,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">News</a></li>
-                <li class="breadcrumb-item active">{{$post->title}}</li>
+                <li class="breadcrumb-item active">{{$mainPost->title}}</li>
             </ul>
         </div>
     </div>
@@ -26,11 +26,11 @@
                             <li data-target="#newsCarousel" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">
-                            @foreach($post->images as $image)
+                            @foreach($mainPost->images as $image)
                                 <div class="carousel-item {{$loop->index == 0 ? 'active' : ''}}">
                                     <img src="{{$image->path}}" class="d-block w-100" alt="First Slide">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>{!! $post->title !!}</h5>
+                                        <h5>{!! $mainPost->title !!}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -45,7 +45,7 @@
                         </a>
                     </div>
                     <div class="sn-content">
-                        {!! $post->description !!}
+                        {!! $mainPost->description !!}
                     </div>
 
                     <!-- Comment Section -->
@@ -58,7 +58,7 @@
 
                         <!-- Display Comments -->
                         <div class="comments">
-                            @foreach($post->comments as $comment)
+                            @foreach($mainPost->comments as $comment)
                                 <div class="comment">
                                     <img src="{{$comment->user->avatar}}" alt="User Image" class="comment-img"/>
                                     <div class="comment-content">
@@ -192,3 +192,37 @@
     <!-- Single News End-->
 
 @endsection
+
+
+@push('scripts')
+    <script>
+        $(document).on('click', '#showMoreBtn', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "{{route('frontend.post.comments', $mainPost->slug)}}",
+                type: "GET",
+                success: function (data) {
+                    console.log(data)
+                    $('.comments').empty();
+                    $.each(data, function (key, comment) {
+                        $('.comments').append(`
+                            <div class="comment">
+                                <img src="${comment.user.avatar}" alt="${comment.user.name}" class="comment-img"/>
+                                <div class="comment-content">
+                                    <span class="username">${comment.user.name}</span>
+                                    <p class="comment-text">${comment.comment}</p>
+                                </div>
+                            </div>
+
+                        `);
+                    });
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+
+        })
+    </script>
+@endpush

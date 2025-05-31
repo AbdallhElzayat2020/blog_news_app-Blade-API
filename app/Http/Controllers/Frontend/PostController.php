@@ -10,30 +10,40 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     //
-    public function index($slug)
+    public function index(string $slug)
     {
 
 
-        $post = Post::with(['category', 'images', 'comments' => function ($query) {
+        $mainPost = Post::with(['category', 'images', 'comments' => function ($query) {
             $query->limit(3);
         }])->whereSlug($slug)->firstOrFail();
-        if (!$post) {
+        if (!$mainPost) {
             abort(404, 'Post not found');
         }
 
-        $category = $post->category;
+        $category = $mainPost->category;
         $related_posts = $category->posts()
             ->select('id', 'title', 'slug', 'description')
-            ->where('id', '!=', $post->id)
+            ->where('id', '!=', $mainPost->id)
             ->with('images')
             ->latest()
             ->take(4)
             ->get();
 
 
-        $post->increment('number_of_views');
+        $mainPost->increment('number_of_views');
 
 
-        return view('frontend.show-single-post', compact('post', 'related_posts'));
+        return view('frontend.show-single-post', compact('mainPost', 'related_posts'));
+    }
+
+    public function getAllComments(string $slug)
+    {
+        $post = Post::whereSlug($slug)->first();
+        if (!$post) {
+            abort(404, 'Post not found');
+        }
+        $comments = $post->comments()->with('user')->latest()->get();
+        return response()->json($comments);
     }
 }

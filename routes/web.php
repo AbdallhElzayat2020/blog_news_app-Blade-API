@@ -19,6 +19,8 @@ Route::group(
 
         Route::get('show/post/{slug}', [PostController::class, 'index'])->name('post.show');
 
+        Route::get('post/comments/{slug}',[PostController::class, 'getAllComments'])->name('post.comments');
+
     }
 );
 
