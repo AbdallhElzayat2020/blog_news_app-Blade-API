@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\SearchController;
 
 Route::group(
     ['as' => 'frontend.'],
@@ -14,6 +15,7 @@ Route::group(
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
+        /* contact Routes */
         Route::controller(ContactController::class)->prefix('contact')->name('contact.')->group(function () {
             Route::get('/', 'index')->name('show');
             Route::post('/store', 'submitForm')->name('form-submit');
@@ -23,14 +25,15 @@ Route::group(
 
         Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
 
-        Route::get('show/post/{slug}', [PostController::class, 'index'])->name('post.show');
-
-
+        // Post Routes
         Route::controller(PostController::class)->prefix('post')->name('post.')->group(function () {
+            Route::get('/show/{slug}', 'index')->name('show');
             Route::get('/comments/{slug}', 'getAllComments')->name('comments');
             Route::post('/comments/store', 'storeComment')->name('comments.store');
         });
 
+        /* search  */
+        Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
     }
 );
 

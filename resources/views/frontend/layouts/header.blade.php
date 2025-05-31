@@ -38,10 +38,13 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
-                <div class="b-search">
-                    <input type="text" placeholder="Search"/>
-                    <button><i class="fa fa-search"></i></button>
-                </div>
+                <form action="{{ route('frontend.search') }}" method="post">
+                    @csrf
+                    <div class="b-search">
+                        <input type="text" name="search" placeholder="Search"/>
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
