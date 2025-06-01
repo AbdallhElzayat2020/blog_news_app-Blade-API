@@ -25,7 +25,7 @@
                             <a href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
-                            <a href="{{ route('frontend.dashboard.profile') }}"><i class="fas fa-user"></i> {{auth()->user()->name}}</a>
+                            <a href="{{ route('frontend.dashboard.profile') }}"><i class="fas fa-user"></i> {{auth('web')->user()->username}}</a>
                         </div>
                     @endauth
                 </div>

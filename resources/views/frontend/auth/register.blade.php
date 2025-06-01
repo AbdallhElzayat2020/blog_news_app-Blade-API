@@ -109,8 +109,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="formFileMultiple" class="form-label">Profile Picture</label>
-                                <input class="form-control" name="image" type="file" id="formFileMultiple">
-                                @error('image')
+                                <input class="form-control" name="avatar" type="file" id="formFileMultiple">
+                                @error('avatar')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
