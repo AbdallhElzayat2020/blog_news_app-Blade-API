@@ -4,7 +4,7 @@
     <!-- Profile Start -->
     <div class="dashboard container">
         <!-- Sidebar -->
-        @include('frontend.dashboard.sidebar')
+        @include('frontend.dashboard._sidebar')
 
         <!-- Main Content -->
         <div class="main-content">
@@ -59,9 +59,9 @@
                         <!-- Post Item -->
                         <div class="post-item mb-4 p-3 border rounded">
                             <div class="post-header d-flex align-items-center mb-2">
-                                <img src="" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px;"/>
+                                <img src="{{$user->avatar}}" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px;"/>
                                 <div class="ms-3">
-                                    <h5 class="mb-0">Salem Taha</h5>
+                                    <h5 class="mb-0">{{$user->name}}</h5>
                                     <small class="text-muted">2 hours ago</small>
                                 </div>
                             </div>
@@ -146,3 +146,17 @@
     </div>
     <!-- Profile End -->
 @endsection
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('#postImage').fileinput({
+                theme: 'fa5',
+                allowFileTypes: ['jpg', 'png', 'jpeg'],
+                maxFileCount: 5,
+                enableResumableUpload: false,
+                showUpload: false,
+            });
+        });
+    </script>
+@endpush

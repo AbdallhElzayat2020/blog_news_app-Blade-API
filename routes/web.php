@@ -41,10 +41,11 @@ Route::group(
     }
 );
 
-
+/*  Protected Routes Profile page for User  */
 Route::prefix('frontend/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('profile', [DashboardController::class, 'index'])->name('profile');
+
 
 });
 
