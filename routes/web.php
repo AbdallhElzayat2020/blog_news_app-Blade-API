@@ -12,7 +12,9 @@ use App\Http\Controllers\Frontend\SocialLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 
 Route::group(
-    ['as' => 'frontend.'],
+    [
+        'as' => 'frontend.'
+    ],
     function () {
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -30,8 +32,8 @@ Route::group(
         // Post Routes
         Route::controller(PostController::class)->prefix('post')->name('post.')->group(function () {
             Route::get('/show/{slug}', 'index')->name('show');
-            Route::get('/comments/{slug}', 'getAllComments')->name('comments');
-            Route::post('/comments/store', 'storeComment')->name('comments.store');
+            Route::get('/comments/{slug}', 'getAllComments')->name('comments')->middleware(['auth', 'verified']);
+            Route::post('/comments/store', 'storeComment')->name('comments.store')->middleware(['auth', 'verified']);
         });
 
         /* search  */
@@ -43,11 +45,8 @@ Route::group(
 Route::prefix('frontend/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('profile', [DashboardController::class, 'index'])->name('profile');
+
 });
-
-
-
-
 
 
 /*  ============= Social login Routes ============= */
@@ -56,9 +55,6 @@ Route::prefix('frontend/dashboard')->name('frontend.dashboard.')->middleware(['a
 
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.socialite.callback');
-
-
-
 
 
 Route::get('/dashboard', function () {

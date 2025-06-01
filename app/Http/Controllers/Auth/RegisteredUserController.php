@@ -62,14 +62,14 @@ class RegisteredUserController extends Controller
 
                 $path = $file->storeAs('uploads/users', $file_name, 'uploads');
 
-                $user->update(['avatar' => $path,]);
+                $user->update(['avatar' => $path]);
             }
 
             event(new Registered($user));
 
             Auth::login($user);
 
-            Session::flash('success', 'Registration successful!');
+            Session::flash('success', 'Registration successful verify your email to continue!');
 
             return redirect(route('frontend.dashboard.profile', absolute: false));
 

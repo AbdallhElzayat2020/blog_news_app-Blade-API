@@ -88,8 +88,9 @@
                             @endforeach
                         </div>
                     </div>
-                    <a href="single-page.html" class="nav-item nav-link">Single Page</a>
-                    <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
+                    @auth('web')
+                        <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
+                    @endauth
                     <a title="contactUs" href="{{ route('frontend.contact.show') }}" class="nav-item nav-link">Contact Us</a>
                 </div>
 
