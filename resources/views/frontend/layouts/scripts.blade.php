@@ -7,8 +7,11 @@
 <!-- Template Javascript -->
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 
-{{--  fileInput  --}}
+{{--  fileInput Plugine  --}}
 <script src="{{asset('vendor/fileinput/js/fileinput.min.js')}}"></script>
 <script src="{{asset('vendor/fileinput/themes/fa5/theme.min.js')}}"></script>
+
+{{-- summernote Plugine --}}
+<script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
 
 @stack('scripts')

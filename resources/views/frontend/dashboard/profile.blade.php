@@ -158,5 +158,11 @@
                 showUpload: false,
             });
         });
+        $(function () {
+            $('#postContent').summernote({
+                height: 300,
+            });
+        });
+
     </script>
 @endpush
