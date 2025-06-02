@@ -3,14 +3,22 @@
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsSubscribersController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\SocialLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Frontend\Dashboard\ProfileController;
+use App\Http\Controllers\Frontend\Dashboard\NotificationController;
+use App\Http\Controllers\Frontend\Dashboard\SettingController;
 
+
+/*
+ * =======================
+ *   Public Routes for User
+ *  =======================
+ */
 Route::group(
     [
         'as' => 'frontend.'
@@ -25,8 +33,10 @@ Route::group(
             Route::post('/store', 'submitForm')->name('form-submit');
         });
 
+        //send news subscribers
         Route::post('/news-subscribers', [NewsSubscribersController::class, 'index'])->name('news-subscribers.store');
 
+        // Category Route
         Route::get('category-post/{slug}', [CategoryController::class, 'index'])->name('category-posts');
 
         // Post Routes
@@ -36,15 +46,25 @@ Route::group(
             Route::post('/comments/store', 'storeComment')->name('comments.store')->middleware(['auth', 'verified']);
         });
 
-        /* search  */
+        /* search   */
         Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
     }
 );
 
-/*  Protected Routes Profile page for User  */
-Route::prefix('frontend/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('profile', [DashboardController::class, 'index'])->name('profile');
+/*
+ * =======================
+ *   Protected Routes for User
+ *  =======================
+ */
+Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
+
+    Route::controller(ProfileController::class)->group(function () {
+
+        Route::get('profile', 'index')->name('profile');
+        Route::post('/post/store', 'store')->name('post.store');
+
+    });
 
 
 });

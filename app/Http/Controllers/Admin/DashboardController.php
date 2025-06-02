@@ -11,7 +11,6 @@ class DashboardController extends Controller
     //
     public function index()
     {
-        $user = auth()->guard('web')->user();
-        return view('frontend.dashboard.profile', compact('user'));
+
     }
 }

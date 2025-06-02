@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     @auth('web')
-                        <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
+                        <a href="{{ route('frontend.dashboard.profile') }}" class="nav-item nav-link">Dashboard</a>
                     @endauth
                     <a title="contactUs" href="{{ route('frontend.contact.show') }}" class="nav-item nav-link">Contact Us</a>
                 </div>

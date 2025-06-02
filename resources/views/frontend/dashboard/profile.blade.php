@@ -19,38 +19,42 @@
                 <br>
 
                 <!-- Add Post Section -->
-                <section id="add-post" class="add-post-section mb-5">
-                    <h2>Add Post</h2>
-                    <div class="post-form p-3 border rounded">
-                        <!-- Post Title -->
-                        <input type="text" id="postTitle" class="form-control mb-2" placeholder="Post Title"/>
+                <form action="{{ route('frontend.dashboard.post.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <section id="add-post" class="add-post-section mb-5">
+                        <h2>Add Post</h2>
+                        <div class="post-form p-3 border rounded">
+                            <!-- Post Title -->
+                            <input type="text" id="postTitle" name="title" class="form-control mb-2" placeholder="Post Title"/>
 
-                        <!-- Post Content -->
-                        <textarea id="postContent" class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
+                            <!-- Post Content -->
+                            <textarea id="postContent" name="description" class="form-control mb-2" rows="3"
+                                      placeholder="What's on your mind?"></textarea>
 
-                        <!-- Image Upload -->
-                        <input type="file" id="postImage" class="form-control mb-2" accept="image/*" multiple/>
-                        <div class="tn-slider mb-2">
-                            <div id="imagePreview" class="slick-slider"></div>
+                            <!-- Image Upload -->
+                            <input type="file" name="images[]" id="postImage" class="form-control mb-2" accept="image/*" multiple/>
+                            <div class="tn-slider mb-2">
+                                <div id="imagePreview" class="slick-slider"></div>
+                            </div>
+
+                            <!-- Category Dropdown -->
+                            <select id="postCategory" name="category" class="form-select mb-2">
+                                <option value="" selected>Select Category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+
+                            <!-- Enable Comments Checkbox -->
+                            <label class="form-check-label ml-3 my-3">
+                                <input type="checkbox" name="comment_able" class="form-check-input"/> Enable Comments
+                            </label><br>
+
+                            <!-- Post Button -->
+                            <button type="submit" class="btn btn-primary post-btn">Save</button>
                         </div>
-
-                        <!-- Category Dropdown -->
-                        <select id="postCategory" class="form-select mb-2">
-                            <option value="">Select Category</option>
-                            <option value="general">General</option>
-                            <option value="tech">Tech</option>
-                            <option value="life">Life</option>
-                        </select>
-
-                        <!-- Enable Comments Checkbox -->
-                        <label class="form-check-label ml-3 my-3">
-                            <input type="checkbox" class="form-check-input"/> Enable Comments
-                        </label><br>
-
-                        <!-- Post Button -->
-                        <button class="btn btn-primary post-btn">Post</button>
-                    </div>
-                </section>
+                    </section>
+                </form>
 
                 <!-- Posts Section -->
                 <section id="posts" class="posts-section">
@@ -149,6 +153,7 @@
 
 @push('scripts')
     <script>
+        {{--  for uploading file plugne --}}
         $(function () {
             $('#postImage').fileinput({
                 theme: 'fa5',
@@ -158,6 +163,8 @@
                 showUpload: false,
             });
         });
+
+        {{--  for text editor plugne --}}
         $(function () {
             $('#postContent').summernote({
                 height: 300,
