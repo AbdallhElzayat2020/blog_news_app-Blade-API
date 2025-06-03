@@ -31,11 +31,14 @@ class Post extends Model
 
 
     protected $fillable = [
-        'title',
-        'slug',
-        'content',
-        'category_id',
         'user_id',
+        'category_id',
+        'number_of_views',
+        'comment_able',
+        'status',
+        'description',
+        'slug',
+        'title',
     ];
 
 

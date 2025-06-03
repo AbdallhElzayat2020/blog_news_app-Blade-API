@@ -1,6 +1,7 @@
 @extends('frontend.layouts.master')
 @section('title', 'Profile')
 @section('content')
+
     <!-- Profile Start -->
     <div class="dashboard container">
         <!-- Sidebar -->
@@ -12,12 +13,24 @@
             <section id="profile" class="content-section active">
                 <h2>User Profile</h2>
                 <div class="user-profile mb-3">
-                    <img src="{{asset($user->avatar)}}" alt="User Image" class="profile-img rounded-circle"
+                    <img src="{{ asset($user->avatar) }}" alt="User Image" class="profile-img rounded-circle"
                          style="width: 100px; height: 100px;"/>
-                    <span class="username">{{$user->username}}</span>
+                    <span class="username">{{ $user->name }}</span>
                 </div>
                 <br>
 
+                @if(session()->has('errors'))
+                    @foreach(session('errors')->all() as $error)
+                        <div class="alert error_alert alert-danger alert-dismissible fade show" role="alert">
+                            <li>{{ $error }}</li>
+                            <script>
+                                setTimeout(function () {
+                                    $('.error_alert').alert('close');
+                                }, 10000);
+                            </script>
+                        </div>
+                    @endforeach
+                @endif
                 <!-- Add Post Section -->
                 <form action="{{ route('frontend.dashboard.post.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -25,29 +38,36 @@
                         <h2>Add Post</h2>
                         <div class="post-form p-3 border rounded">
                             <!-- Post Title -->
-                            <input type="text" id="postTitle" name="title" class="form-control mb-2" placeholder="Post Title"/>
+                            <input type="text" name="title" value="{{ old('title') }}" id="postTitle"
+                                   class="form-control mb-2" placeholder="Post Title"/>
+
 
                             <!-- Post Content -->
                             <textarea id="postContent" name="description" class="form-control mb-2" rows="3"
-                                      placeholder="What's on your mind?"></textarea>
+                                      placeholder="Description for the post">{{ old('description') }}</textarea>
 
                             <!-- Image Upload -->
-                            <input type="file" name="images[]" id="postImage" class="form-control mb-2" accept="image/*" multiple/>
+                            <input type="file" name="images[]" id="postImage" class="form-control mb-2" accept="image/*"
+                                   multiple/>
+
                             <div class="tn-slider mb-2">
                                 <div id="imagePreview" class="slick-slider"></div>
                             </div>
 
                             <!-- Category Dropdown -->
-                            <select id="postCategory" name="category" class="form-select mb-2">
-                                <option value="" selected>Select Category</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <select id="postCategory" name="category_id" class="form-select mb-2">
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
 
                             <!-- Enable Comments Checkbox -->
-                            <label class="form-check-label ml-3 my-3">
-                                <input type="checkbox" name="comment_able" class="form-check-input"/> Enable Comments
+                            <label class="form-check-label ml-4" style="margin: 10px 0;">
+                                <input type="checkbox" {{old('comment_able', 'off') == 'on' ? 'checked' : ''}} name="comment_able"
+                                       class="form-check-input"/> Enable Comments
                             </label><br>
 
                             <!-- Post Button -->
@@ -63,14 +83,16 @@
                         <!-- Post Item -->
                         <div class="post-item mb-4 p-3 border rounded">
                             <div class="post-header d-flex align-items-center mb-2">
-                                <img src="{{$user->avatar}}" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px;"/>
+                                <img src={{ asset($user->avatar) }}"" alt="User Image" class="rounded-circle"
+                                     style="width: 50px; height: 50px;"/>
                                 <div class="ms-3">
-                                    <h5 class="mb-0">{{$user->name}}</h5>
+                                    <h5 class="mb-0">{{ $user->username }}</h5>
                                     <small class="text-muted">2 hours ago</small>
                                 </div>
                             </div>
                             <h4 class="post-title">Post Title Here</h4>
-                            <p class="post-content">This is an example post content. The user can share their thoughts, upload images, and more.</p>
+                            <p class="post-content">This is an example post content. The user can share their thoughts,
+                                upload images, and more.</p>
 
                             <div id="newsCarousel" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
@@ -113,7 +135,9 @@
                             <div class="post-actions d-flex justify-content-between">
                                 <div class="post-stats">
                                     <!-- View Count -->
-                                    <span class="me-3"><i class="fas fa-eye"></i> 123 views</span>
+                                    <span class="me-3">
+                                        <i class="fas fa-eye"></i> 123 views
+                                    </span>
                                 </div>
 
                                 <div>
@@ -149,6 +173,7 @@
         </div>
     </div>
     <!-- Profile End -->
+
 @endsection
 
 @push('scripts')
@@ -170,6 +195,5 @@
                 height: 300,
             });
         });
-
     </script>
 @endpush
