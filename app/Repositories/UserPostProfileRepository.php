@@ -4,38 +4,35 @@ namespace App\Repositories;
 
 use App\Interfaces\UserPostProfileInterface;
 use App\Models\Post;
+use App\Utils\ImageManager;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class UserPostProfileRepository implements UserPostProfileInterface
 {
-    public function index()
+    public function index():View
     {
         $user = auth()->guard('web')->user();
         return view('frontend.dashboard.profile', compact('user'));
     }
 
-    public function store($request)
+    public function store($request): \Illuminate\Http\RedirectResponse
     {
         try {
             DB::beginTransaction();
             $request->validated();
+
             $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
+
             $request->merge(['user_id' => auth()->guard('web')->id()]);
 
             $post = Post::create($request->except('images'));
 
-            // Handle the image upload
-            if ($request->hasFile('images')) {
-                foreach ($request->images as $image) {
-                    $filename = Str::slug($request->title) . '_' . Str::uuid() . '.' . $image->getClientOriginalExtension();
-                    $path = $image->storeAs('uploads/posts', $filename, 'uploads');
-                    $post->images()->create([
-                        'patssh' => $path,
-                        'alt_text' => Str::slug($request->title) . '_' . Str::uuid(),
-                    ]);
-                }
-            }
+            // Handle image upload
+            ImageManager::uploadImage($request, $post);
+
+            Cache::forget('read_more_posts');
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

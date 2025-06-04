@@ -28,9 +28,8 @@
                         <div class="carousel-inner">
                             @foreach($mainPost->images as $image)
                                 <div class="carousel-item {{$loop->index == 0 ? 'active' : ''}}">
-                                    <img src="{{$image->path}}" class="d-block w-100" alt="First Slide">
+                                    <img style="width:730px; height: 450px; " src="{{asset($image->path)}}" class="d-block w-100" alt="First Slide">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>{!! $mainPost->title !!}</h5>
                                     </div>
                                 </div>
                             @endforeach
@@ -45,7 +44,12 @@
                         </a>
                     </div>
                     <div class="sn-content">
-                        {!! $mainPost->description !!}
+                        <h3 style="word-wrap: break-word; word-break: break-all; overflow-wrap: break-word;">
+                            {!! $mainPost->title !!}
+                        </h3>
+                        <div style="word-wrap: break-word; word-break: break-all; overflow-wrap: break-word;">
+                            {!! substr($mainPost->description ,0,80) !!}
+                        </div>
                     </div>
 
                     <!-- Comment Section -->
@@ -92,7 +96,7 @@
                             @foreach($related_posts as $post)
                                 <div class="col-md-4">
                                     <div class="sn-img">
-                                        <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                        <img src="{{asset(@$post->images->first()->path)}}" alt="{{@$post->images->first()->alt_text}}"/>
 
                                         <div class="nl-title">
                                             <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -117,7 +121,7 @@
 
                                     <div class="nl-item">
                                         <div class="nl-img">
-                                            <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                            <img src="{{@$post->images->first()->path}}" alt="{{@$post->images->first()->alt_text}}"/>
                                         </div>
                                         <div class="nl-title">
                                             <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -148,7 +152,7 @@
                                         @foreach($latest_posts as $post)
                                             <div class="tn-news">
                                                 <div class="tn-img">
-                                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                                    <img src="{{asset($post->images)}}" alt="{{$post->images}}"/>
                                                 </div>
                                                 <div class="tn-title">
                                                     <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -166,7 +170,7 @@
 
                                             <div class="tn-news">
                                                 <div class="tn-img">
-                                                    <img src="{{$post->images->first()->path}}" alt="{{$post->images->first()->alt_text}}"/>
+                                                    <img src="{{@$post->images->first()->path}}" alt="{{@$post->images->first()->alt_text}}"/>
                                                 </div>
                                                 <div class="tn-title">
                                                     <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">

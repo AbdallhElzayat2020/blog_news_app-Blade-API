@@ -5,12 +5,7 @@ namespace App\Http\Controllers\Frontend\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Dashboard\PostRequest;
 use App\Interfaces\UserPostProfileInterface;
-use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
@@ -21,7 +16,7 @@ class ProfileController extends Controller
         $this->postProfile = $postProfile;
     }
 
-    public function index(): View
+    public function index()
     {
         return $this->postProfile->index();
     }
