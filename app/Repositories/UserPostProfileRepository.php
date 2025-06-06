@@ -11,10 +11,13 @@ use Illuminate\View\View;
 
 class UserPostProfileRepository implements UserPostProfileInterface
 {
-    public function index():View
+    public function index()
     {
-        $user = auth()->guard('web')->user();
-        return view('frontend.dashboard.profile', compact('user'));
+        $user = auth()->user();
+
+        $posts = $user->posts()->with(['images', 'category', 'user', 'comments'])->active()->latest()->get();
+
+        return view('frontend.dashboard.profile', compact('user', 'posts'));
     }
 
     public function store($request): \Illuminate\Http\RedirectResponse
@@ -23,8 +26,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
             DB::beginTransaction();
             $request->validated();
 
-            $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
-
+            $this->commentAble($request);
             $request->merge(['user_id' => auth()->guard('web')->id()]);
 
             $post = Post::create($request->except('images'));
@@ -33,7 +35,11 @@ class UserPostProfileRepository implements UserPostProfileInterface
             ImageManager::uploadImage($request, $post);
 
             Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
+
             DB::commit();
+            Cache::forget('read_more_posts');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
@@ -41,5 +47,44 @@ class UserPostProfileRepository implements UserPostProfileInterface
 
         return redirect()->back()->with('success', 'created successfully!');
 
+    }
+
+    public function edit($slug)
+    {
+        $post = Post::whereSlug($slug)->firstOrFail();
+        $user = auth()->user();
+        if ($post->user_id != $user->id) {
+            abort(403, 'Unauthorized action.');
+        }
+        $posts = $user->posts()->with(['images', 'category', 'user', 'comments'])->active()->latest()->get();
+        return view('frontend.dashboard.profile', compact('user', 'posts', 'post'));
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findorFail($id);
+        $user = auth()->user();
+        if ($post->user_id != $user->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+//        try {
+//            DB::beginTransaction();
+//            $post->delete();
+//            ImageManager::deleteImage($post);
+//            Cache::forget('read_more_posts');
+//            Cache::forget('popular_posts');
+//            Cache::forget('latest_posts');
+//            DB::commit();
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//            return redirect()->back()->with('error', $e->getMessage());
+//        }
+//        return redirect()->back()->with('success', 'Post deleted successfully!');
+    }
+
+    public function commentAble($request)
+    {
+        return $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
     }
 }

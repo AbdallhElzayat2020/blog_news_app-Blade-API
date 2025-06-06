@@ -26,5 +26,14 @@ class ProfileController extends Controller
         return $this->postProfile->store($request);
     }
 
+    public function edit($slug)
+    {
+        
+    }
+
+    public function delete($id)
+    {
+        
+    }
 
 }

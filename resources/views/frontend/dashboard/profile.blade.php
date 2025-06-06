@@ -81,90 +81,108 @@
                     <h2>Recent Posts</h2>
                     <div class="post-list">
                         <!-- Post Item -->
-                        <div class="post-item mb-4 p-3 border rounded">
-                            <div class="post-header d-flex align-items-center mb-2">
-                                <img src={{ asset($user->avatar) }}"" alt="User Image" class="rounded-circle"
-                                     style="width: 50px; height: 50px;"/>
-                                <div class="ms-3">
-                                    <h5 class="mb-0">{{ $user->username }}</h5>
-                                    <small class="text-muted">2 hours ago</small>
-                                </div>
-                            </div>
-                            <h4 class="post-title">Post Title Here</h4>
-                            <p class="post-content">This is an example post content. The user can share their thoughts,
-                                upload images, and more.</p>
-
-                            <div id="newsCarousel" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#newsCarousel" data-slide-to="0" class="active"></li>
-                                    <li data-target="#newsCarousel" data-slide-to="1"></li>
-                                    <li data-target="#newsCarousel" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item  active">
-                                        <img src="" class="d-block w-100" alt="First Slide">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>dsfdk</h5>
-                                            <p>
-                                                oookok
-                                            </p>
-                                        </div>
+                        @forelse($posts as $post)
+                            <div class="post-item mb-4 p-3 border rounded">
+                                <div class="post-header d-flex align-items-center mb-2">
+                                    <img src="{{ asset($post->user->avatar) }}" alt="User Image" class="rounded-circle"
+                                         style="width: 50px; height: 50px;"/>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0">{{ $post->user->username }}</h5>
                                     </div>
-                                    <div class="carousel-item ">
-                                        <img src="" class="d-block w-100" alt="First Slide">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>dsfdk</h5>
-                                            <p>
-                                                oookok
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Add more carousel-item blocks for additional slides -->
                                 </div>
-                                <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#newsCarousel" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
+                                <h4 class="post-title">{{$post->title}}</h4>
+                                <p class="post-content">
+                                    {!! $post->description !!}
+                                </p>
 
-                            <div class="post-actions d-flex justify-content-between">
-                                <div class="post-stats">
-                                    <!-- View Count -->
-                                    <span class="me-3">
-                                        <i class="fas fa-eye"></i> 123 views
+                                @if($post->images->count() > 0)
+                                    <div id="carousel-{{$post->id}}" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            @foreach($post->images as $key => $image)
+                                                <li data-target="#carousel-{{$post->id}}" data-slide-to="{{$key}}"
+                                                    class="{{ $key == 0 ? 'active' : '' }}">
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            @foreach($post->images as $key => $image)
+                                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                    <img src="{{ asset($image->path) }}" class="d-block w-100" alt="Post Image">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carousel-{{$post->id}}" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carousel-{{$post->id}}" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                @endif
+
+                                <div class="post-actions d-flex justify-content-between">
+                                    <div class="post-stats">
+                                        <!-- View Count -->
+                                        <span class="me-3">
+                                        <i class="fas fa-eye"></i> {{ $post->number_of_views }} views
                                     </span>
-                                </div>
+                                    </div>
 
-                                <div>
-                                    <a href="" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a href="" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-thumbs-up"></i> Delete
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-secondary">
-                                        <i class="fas fa-comment"></i> Comments
-                                    </button>
-                                </div>
-                            </div>
+                                    <div>
+                                        <a title="editBtn" href="{{ route('frontend.dashboard.profile.edit',$post->slug) }}"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
 
-                            <!-- Display Comments -->
-                            <div class="comments">
-                                <div class="comment">
-                                    <img src="" alt="User Image" class="comment-img"/>
-                                    <div class="comment-content">
-                                        <span class="username"></span>
-                                        <p class="comment-text">first comment</p>
+                                        <a title="deleteBtn" onclick="if (confirm('Are you sure to delete this post?')) {
+                                                 document.getElementById('deleteForm_{{$post->id}}').submit();
+                                            } return false;"
+                                           href="javascript:void(0)" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+
+                                        <button title="ShowCommentsBtn" id="commentbtn_{{$post->id}}" post-id="{{$post->id}}"
+                                                class="btn getComments btn-sm btn-outline-secondary">
+                                            <i class="fas fa-comment"></i> Comments
+                                        </button>
+
+                                        <button title="hideCommentBtn" style="display: none" id="hideCommentId_{{$post->id}}"
+                                                class="btn hideComments btn-sm btn-outline-danger"
+                                                post-id="{{$post->id}}">
+                                            <i class="fas fa-comment"></i> Hide Comments
+                                        </button>
+
+                                        <form id="deleteForm_{{$post->id}}" action="{{ route('frontend.dashboard.profile.delete',$post->id) }}"
+                                              method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                     </div>
                                 </div>
-                                <!-- Add more comments here for demonstration -->
+
+                                <!-- Display Comments -->
+                                <div class="comments">
+                                    @forelse($post->comments as $comment)
+                                        <div class="comment">
+                                            <img src="{{ asset($comment->user->avatar) }}" alt="User Image" class="comment-img"/>
+                                            <div class="comment-content">
+                                                <span class="username">{{ $comment->user->username }}</span>
+                                                <p class="comment-text">{{ $comment->content }}</p>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <p class="text-muted">No comments yet</p>
+                                    @endforelse
+                                </div>
                             </div>
-                        </div>
+                        @empty
+                            <div class="alert alert-danger">
+                                No posts
+                            </div>
+                        @endforelse
+
 
                         <!-- Add more posts here dynamically -->
                     </div>

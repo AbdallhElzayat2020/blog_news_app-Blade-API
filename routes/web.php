@@ -59,14 +59,14 @@ Route::group(
  */
 Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::controller(ProfileController::class)->group(function () {
+    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
 
-        Route::get('profile', 'index')->name('profile');
+        Route::get('', 'index')->name('profile');
         Route::post('/post/store', 'store')->name('post.store');
+        Route::post('/edit/{slug}', 'edit')->name('profile.edit');
+        Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
 
     });
-
-
 });
 
 

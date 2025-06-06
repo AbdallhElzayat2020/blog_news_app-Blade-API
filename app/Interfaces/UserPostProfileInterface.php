@@ -7,4 +7,8 @@ interface UserPostProfileInterface
     public function index();
 
     public function store($request);
+
+    public function edit($slug);
+
+    public function destroy($id);
 }

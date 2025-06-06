@@ -53,41 +53,48 @@
                     </div>
 
                     <!-- Comment Section -->
-                    <div class="comment-section">
-                        <!-- Comment Input -->
-                        <form method="post" id="commentForm">
-                            @csrf
-                            <div class="comment-input">
-                                <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..." id="commentBox"/>
-                                <input type="hidden" name="user_id" value="1">
-                                <input type="hidden" name="post_id" value="{{$mainPost->id}}">
+                    @if($mainPost->comment_able == 'yes')
+                        <div class="comment-section">
+                            <!-- Comment Input -->
+                            <form method="post" id="commentForm">
+                                @csrf
+                                <div class="comment-input">
+                                    <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..." id="commentBox"/>
+                                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                    <input type="hidden" name="post_id" value="{{$mainPost->id}}">
 
-                                <button type="submit" id="addCommentBtn">Post</button>
-                            </div>
-                        </form>
-
-
-                        <div style="display: none" id="error_msg" class="alert alert-danger">
-
-                        </div>
-                        <!-- Display Comments -->
-                        <div class="comments">
-                            @foreach($mainPost->comments as $comment)
-                                <div class="comment">
-                                    <img src="{{$comment->user->avatar}}" alt="User Image" class="comment-img"/>
-                                    <div class="comment-content">
-                                        <span class="username">{{$comment->user->name}}</span>
-                                        <p class="comment-text">{{$comment->comment}}</p>
-                                    </div>
+                                    <button type="submit" id="addCommentBtn">Post</button>
                                 </div>
-                            @endforeach
+                            </form>
 
-                            <!-- Add more comments here for demonstration -->
+                            <div style="display: none" id="error_msg" class="alert alert-danger">
+
+                            </div>
+                            <!-- Display Comments -->
+                            <div class="comments">
+                                @foreach($mainPost->comments as $comment)
+                                    <div class="comment">
+                                        <img src="{{$comment->user->avatar}}" alt="User Image" class="comment-img"/>
+                                        <div class="comment-content">
+                                            <span class="username">{{$comment->user->name}}</span>
+                                            <p class="comment-text">{{$comment->comment}}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <!-- Add more comments here for demonstration -->
+                            </div>
+
+                            <!-- Show More Button -->
+                            @if($mainPost->comments->count() > 2)
+                                <button id="showMoreBtn" class="show-more-btn">Show more</button>
+                            @endif
                         </div>
-
-                        <!-- Show More Button -->
-                        <button id="showMoreBtn" class="show-more-btn">Show more</button>
-                    </div>
+                    @else
+                        <div class="alert alert-info">
+                            <a href="{{ route('login') }}">Login</a> to access comments
+                        </div>
+                    @endif
 
                     <!-- Related News -->
                     <div class="sn-related">
@@ -96,7 +103,8 @@
                             @foreach($related_posts as $post)
                                 <div class="col-md-4">
                                     <div class="sn-img">
-                                        <img src="{{asset(@$post->images->first()->path)}}" alt="{{@$post->images->first()->alt_text}}"/>
+                                        <img style="width: 270px; height: 150px" src="{{asset(@$post->images->first()->path)}}"
+                                             alt="{{@$post->images->first()->alt_text}}"/>
 
                                         <div class="nl-title">
                                             <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -121,7 +129,8 @@
 
                                     <div class="nl-item">
                                         <div class="nl-img">
-                                            <img src="{{@$post->images->first()->path}}" alt="{{@$post->images->first()->alt_text}}"/>
+                                            <img style="width: 270px; height: 150px" src="{{asset(@$post->images->first()->path)}}"
+                                                 alt="{{@$post->images->first()->alt_text}}"/>
                                         </div>
                                         <div class="nl-title">
                                             <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -152,7 +161,8 @@
                                         @foreach($latest_posts as $post)
                                             <div class="tn-news">
                                                 <div class="tn-img">
-                                                    <img src="{{asset($post->images)}}" alt="{{$post->images}}"/>
+                                                    <img style="width: 270px; height: 150px" src="{{asset(@$post->images->first()->path)}}"
+                                                         alt="{{$post->images}}"/>
                                                 </div>
                                                 <div class="tn-title">
                                                     <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -170,7 +180,8 @@
 
                                             <div class="tn-news">
                                                 <div class="tn-img">
-                                                    <img src="{{@$post->images->first()->path}}" alt="{{@$post->images->first()->alt_text}}"/>
+                                                    <img style="width: 270px; height: 150px" src="{{asset(@$post->images->first()->path)}}"
+                                                         alt="{{@$post->images->first()->alt_text}}"/>
                                                 </div>
                                                 <div class="tn-title">
                                                     <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">

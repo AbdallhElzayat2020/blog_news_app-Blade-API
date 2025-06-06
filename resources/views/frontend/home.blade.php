@@ -23,7 +23,6 @@
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
                 <div class="col-md-6 tn-right">
@@ -61,7 +60,7 @@
                             @foreach ($category->posts as $post)
                                 <div class="col-md-6">
                                     <div class="cn-img">
-                                        <img src="{{ @$post->images->first()->path }}"
+                                        <img style="width: 270px; height: 150px" src="{{ @$post->images->first()->path }}"
                                              alt="{{ @$post->images->first()->alt_text }}"/>
                                         <div class="cn-title">
                                             <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{ $post->title }}">{{ $post->title }}</a>
@@ -187,7 +186,7 @@
                         @foreach ($posts as $post)
                             <div class="col-md-4">
                                 <div class="mn-img">
-                                    <img src="{{ @$post->images->first()->path }}"
+                                    <img style="width: 270px; height: 150px" src="{{ @$post->images->first()->path }}"
                                          alt="{{ @$post->images->first()->alt_text }}"/>
                                     <div class="mn-title">
                                         <a href="{{ route('frontend.post.show',$post->slug) }}">{{ $post->title }}</a>
