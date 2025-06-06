@@ -60,13 +60,12 @@ Route::group(
 Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
-
-        Route::get('', 'index')->name('profile');
-        Route::post('/post/store', 'store')->name('post.store');
+        Route::get('/', 'index')->name('profile');
+        Route::post('/store', 'store')->name('post.store');
         Route::get('/edit/{slug}', 'edit')->name('profile.edit');
         Route::post('/edit/{slug}', 'update')->name('profile.update');
         Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
-
+        Route::get('/get-comments/{id}', 'getComments')->name('profile.get-comments');
     });
 });
 

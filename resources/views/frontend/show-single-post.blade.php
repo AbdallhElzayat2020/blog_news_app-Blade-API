@@ -74,7 +74,7 @@
                             <div class="comments">
                                 @foreach($mainPost->comments as $comment)
                                     <div class="comment">
-                                        <img src="{{$comment->user->avatar}}" alt="User Image" class="comment-img"/>
+                                        <img src="{{asset($comment->user->avatar)}}" alt="User Image" class="comment-img"/>
                                         <div class="comment-content">
                                             <span class="username">{{$comment->user->name}}</span>
                                             <p class="comment-text">{{$comment->comment}}</p>

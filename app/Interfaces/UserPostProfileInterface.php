@@ -13,4 +13,6 @@ interface UserPostProfileInterface
     public function update($slug);
 
     public function destroy($id);
+
+    public function getComments($id);
 }

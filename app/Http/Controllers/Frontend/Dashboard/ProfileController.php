@@ -41,4 +41,8 @@ class ProfileController extends Controller
         return $this->postProfile->destroy($id);
     }
 
+    public function getComments($id)
+    {
+        return $this->postProfile->getComments($id);
+    }
 }

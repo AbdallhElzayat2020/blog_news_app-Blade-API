@@ -90,10 +90,9 @@
                                         <h5 class="mb-0">{{ $post->user->username }}</h5>
                                     </div>
                                 </div>
+
                                 <h4 class="post-title">{{$post->title}}</h4>
-                                <p>
-                                    {{ chunk_split($post->description , 50) }}
-                                </p>
+                                <p>{!! chunk_split($post->description , 50) !!}</p>
 
                                 @if($post->images->count() > 0)
                                     <div id="carousel-{{$post->id}}" class="carousel slide" data-ride="carousel">
@@ -108,7 +107,7 @@
                                         <div class="carousel-inner">
                                             @foreach($post->images as $key => $image)
                                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                    <img src="{{ asset($image->path) }}" class="d-block w-100" alt="Post Image">
+                                                    <img style="height: 320px!important; object-fit: cover" src="{{ asset($image->path) }}" class="d-block w-100" alt="Post Image">
                                                 </div>
                                             @endforeach
                                         </div>
@@ -165,18 +164,15 @@
                                 </div>
 
                                 <!-- Display Comments -->
-                                <div class="comments">
-                                    @forelse($post->comments as $comment)
-                                        <div class="comment">
-                                            <img src="{{ asset($comment->user->avatar) }}" alt="User Image" class="comment-img"/>
-                                            <div class="comment-content">
-                                                <span class="username">{{ $comment->user->username }}</span>
-                                                <p class="comment-text">{{ $comment->content }}</p>
-                                            </div>
+                                <div id="displayComments_{{$post->id}}" class="comments mt-3" style="display: none">
+                                    <div class="comment">
+                                        <img src="{{asset('')}}" alt="User Image" class="comment-img"/>
+                                        <div class="comment-content">
+                                            <span class="username"></span>
+                                            <p class="comment-text">first comment</p>
                                         </div>
-                                    @empty
-                                        <p class="text-muted">No comments yet</p>
-                                    @endforelse
+                                    </div>
+                                    <!-- Add more comments here for demonstration -->
                                 </div>
                             </div>
                         @empty
@@ -214,6 +210,58 @@
             $('#postContent').summernote({
                 height: 300,
             });
+        });
+
+        {{-- get post comments --}}
+
+        /* Show Comments */
+        $(document).on('click', '.getComments', function (e) {
+            e.preventDefault();
+            let postId = $(this).attr('post-id');
+
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('frontend.dashboard.profile.get-comments', ':postId') }}'.replace(':postId', postId),
+                success: function (response) {
+                    let commentContainer = $('#displayComments_' + postId);
+                    commentContainer.empty();
+
+                    if (response.data.length > 0) {
+                        $.each(response.data, function (index, comment) {
+                            commentContainer.append(`
+                                <div class="comment mt-4">
+                                    <img src="{{ asset('') }}${comment.user.image}" alt="User Image" class="comment-img"/>
+                                    <div class="comment-content">
+                                        <span class="username">${comment.user.name}</span>
+                                        <p class="comment-text">${comment.comment}</p>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                    } else {
+                        commentContainer.append(`
+                            <div class="alert alert-info">No comments found for this post.</div>
+                        `);
+                    }
+
+                    commentContainer.slideDown();
+                    $('#commentbtn_' + postId).hide();
+                    $('#hideCommentId_' + postId).show();
+                },
+                error: function () {
+                    alert('Error loading comments.');
+                }
+            });
+        });
+
+        /* Hide Comments */
+        $(document).on('click', '.hideComments', function (e) {
+            e.preventDefault();
+            const postId = $(this).attr('post-id');
+
+            $('#displayComments_' + postId).slideUp();
+            $('#hideCommentId_' + postId).hide();
+            $('#commentbtn_' + postId).show();
         });
     </script>
 @endpush

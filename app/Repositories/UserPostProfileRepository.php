@@ -66,34 +66,60 @@ class UserPostProfileRepository implements UserPostProfileInterface
         // TODO: Implement update() method.
     }
 
+
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
 
-        $user = auth()->user();
-
-        if ($user->id != $post->user_id) {
-            abort(403);
+        if (auth()->id() !== $post->user_id) {
+            abort(403, 'You are not authorized to delete this post.');
         }
 
         try {
             DB::beginTransaction();
 
-            /* delete files  */
+            // Delete images
             ImageManager::deleteImages($post);
 
+            // Delete the post itself
             $post->delete();
 
+            // Clear relevant cache
             Cache::forget('read_more_posts');
             Cache::forget('popular_posts');
             Cache::forget('latest_posts');
+
             DB::commit();
 
+            return redirect()->back()->with('success', 'Post deleted successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', $e->getMessage());
+
+            // Optionally: log the error
+            // Log::error('Post deletion failed: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Post deleted successfully!');
+    }
+
+    public function getComments($id)
+    {
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->with('user')->latest()->get();
+
+        if (!$comments) {
+            return response()->json([
+                'data' => null,
+                'message' => 'No comments found for this post.'
+            ], 404);
+        }
+        return response()->json(
+            [
+                'data' => $comments,
+                'message' => 'Comments retrieved successfully.'
+            ],
+        );
+
     }
 
     public function commentAble($request)
