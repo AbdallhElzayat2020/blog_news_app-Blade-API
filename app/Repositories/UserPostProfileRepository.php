@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 class UserPostProfileRepository implements UserPostProfileInterface
 {
-    public function index()
+    public function index(): View
     {
         $user = auth()->user();
 
@@ -67,7 +67,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
     }
 
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
         $post = Post::findOrFail($id);
 
@@ -102,7 +102,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
         }
     }
 
-    public function getComments($id)
+    public function getComments($id): \Illuminate\Http\JsonResponse
     {
         $post = Post::findOrFail($id);
         $comments = $post->comments()->with('user')->latest()->get();

@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
 
-                                <h4 class="post-title">{{$post->title}}</h4>
+                                <h4 class="post-title">{!! $post->title !!}</h4>
                                 <p>{!! chunk_split($post->description , 50) !!}</p>
 
                                 @if($post->images->count() > 0)
@@ -107,7 +107,8 @@
                                         <div class="carousel-inner">
                                             @foreach($post->images as $key => $image)
                                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                    <img style="height: 320px!important; object-fit: cover" src="{{ asset($image->path) }}" class="d-block w-100" alt="Post Image">
+                                                    <img style="height: 320px!important; object-fit: cover" src="{{ asset($image->path) }}"
+                                                         class="d-block w-100" alt="Post Image">
                                                 </div>
                                             @endforeach
                                         </div>
@@ -225,12 +226,11 @@
                 success: function (response) {
                     let commentContainer = $('#displayComments_' + postId);
                     commentContainer.empty();
-
                     if (response.data.length > 0) {
                         $.each(response.data, function (index, comment) {
                             commentContainer.append(`
                                 <div class="comment mt-4">
-                                    <img src="{{ asset('') }}${comment.user.image}" alt="User Image" class="comment-img"/>
+                                    <img src="{{ asset('') }}${comment.user.avatar}" alt="User Image" class="comment-img"/>
                                     <div class="comment-content">
                                         <span class="username">${comment.user.name}</span>
                                         <p class="comment-text">${comment.comment}</p>
