@@ -91,12 +91,13 @@
                                     </div>
                                 </div>
                                 <h4 class="post-title">{{$post->title}}</h4>
-                                <p class="post-content">
-                                    {!! $post->description !!}
+                                <p>
+                                    {{ chunk_split($post->description , 50) }}
                                 </p>
 
                                 @if($post->images->count() > 0)
                                     <div id="carousel-{{$post->id}}" class="carousel slide" data-ride="carousel">
+
                                         <ol class="carousel-indicators">
                                             @foreach($post->images as $key => $image)
                                                 <li data-target="#carousel-{{$post->id}}" data-slide-to="{{$key}}"
@@ -119,6 +120,7 @@
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
+
                                     </div>
                                 @endif
 

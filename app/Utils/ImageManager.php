@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ImageManager
@@ -16,6 +17,17 @@ class ImageManager
                     'path' => $path,
                     'alt_text' => Str::slug($request->title) . '_' . Str::uuid(),
                 ]);
+            }
+        }
+    }
+
+    public static function deleteImages($post): void
+    {
+        if ($post->images->count() > 0) {
+            foreach ($post->images as $image) {
+                if (File::exists(public_path($image->path))) {
+                    File::delete(public_path($image->path));
+                }
             }
         }
     }

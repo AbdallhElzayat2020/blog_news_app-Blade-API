@@ -28,12 +28,17 @@ class ProfileController extends Controller
 
     public function edit($slug)
     {
-        
+        return $this->postProfile->edit($slug);
     }
 
-    public function delete($id)
+    public function update($slug)
     {
-        
+        return $this->postProfile->update($slug);
+    }
+
+    public function destroy($id)
+    {
+        return $this->postProfile->destroy($id);
     }
 
 }

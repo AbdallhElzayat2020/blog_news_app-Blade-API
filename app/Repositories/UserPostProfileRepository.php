@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Utils\ImageManager;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 class UserPostProfileRepository implements UserPostProfileInterface
@@ -49,7 +50,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
 
     }
 
-    public function edit($slug)
+    public function edit($slug): View
     {
         $post = Post::whereSlug($slug)->firstOrFail();
         $user = auth()->user();
@@ -60,27 +61,39 @@ class UserPostProfileRepository implements UserPostProfileInterface
         return view('frontend.dashboard.profile', compact('user', 'posts', 'post'));
     }
 
+    public function update($slug)
+    {
+        // TODO: Implement update() method.
+    }
+
     public function destroy($id)
     {
-        $post = Post::findorFail($id);
+        $post = Post::findOrFail($id);
+
         $user = auth()->user();
-        if ($post->user_id != $user->id) {
-            abort(403, 'Unauthorized action.');
+
+        if ($user->id != $post->user_id) {
+            abort(403);
         }
 
-//        try {
-//            DB::beginTransaction();
-//            $post->delete();
-//            ImageManager::deleteImage($post);
-//            Cache::forget('read_more_posts');
-//            Cache::forget('popular_posts');
-//            Cache::forget('latest_posts');
-//            DB::commit();
-//        } catch (\Exception $e) {
-//            DB::rollBack();
-//            return redirect()->back()->with('error', $e->getMessage());
-//        }
-//        return redirect()->back()->with('success', 'Post deleted successfully!');
+        try {
+            DB::beginTransaction();
+
+            /* delete files  */
+            ImageManager::deleteImages($post);
+
+            $post->delete();
+
+            Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+        return redirect()->back()->with('success', 'Post deleted successfully!');
     }
 
     public function commentAble($request)

@@ -63,7 +63,8 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
 
         Route::get('', 'index')->name('profile');
         Route::post('/post/store', 'store')->name('post.store');
-        Route::post('/edit/{slug}', 'edit')->name('profile.edit');
+        Route::get('/edit/{slug}', 'edit')->name('profile.edit');
+        Route::post('/edit/{slug}', 'update')->name('profile.update');
         Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
 
     });
