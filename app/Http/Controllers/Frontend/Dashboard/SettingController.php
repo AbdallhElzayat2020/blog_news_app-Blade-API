@@ -27,6 +27,8 @@ class SettingController extends Controller
 
         $user->update($request->except('avatar'));
 
+        ImageManager::uploadImage($request, null, $user);
+
         return redirect()->back()->with('success', 'updated successfully!');
 
 

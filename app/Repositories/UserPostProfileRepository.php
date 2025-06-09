@@ -33,7 +33,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
             $post = Post::create($request->except('images'));
 
             // Handle image upload
-            ImageManager::uploadImage($request, $post);
+            ImageManager::uploadImage($request, $post, null);
 
             Cache::forget('read_more_posts');
             Cache::forget('popular_posts');

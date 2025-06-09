@@ -134,8 +134,8 @@
                     </div>
                     <div class="form-group">
                         <label for="profile-image">Profile Image:</label>
-                        <input name="image" type="file" id="profile-image" accept="image/*"/>
-                        @error('image')
+                        <input name="avatar" type="file" id="profile-image" accept="image/*"/>
+                        @error('avatar')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
