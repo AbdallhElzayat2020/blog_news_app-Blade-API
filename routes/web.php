@@ -46,6 +46,7 @@ Route::group(
             Route::post('/comments/store', 'storeComment')->name('comments.store')->middleware(['auth', 'verified']);
         });
 
+
         /* search   */
         Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
     }
@@ -59,6 +60,7 @@ Route::group(
  */
 Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
 
+    /* Dashboard && profile */
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index')->name('profile');
         Route::post('/store', 'store')->name('post.store');
@@ -66,6 +68,12 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
         Route::post('/edit/{slug}', 'update')->name('profile.update');
         Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
         Route::get('/get-comments/{id}', 'getComments')->name('profile.get-comments');
+    });
+
+    /* Settings */
+    Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/update', 'update')->name('update');
     });
 });
 
