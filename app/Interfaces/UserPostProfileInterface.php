@@ -8,11 +8,11 @@ interface UserPostProfileInterface
 
     public function store($request);
 
-    public function edit($slug);
-
-    public function update($slug);
-
     public function destroy($id);
 
     public function getComments($id);
+
+    public function editPost($slug);
+
+    public function updatePost($slug, $request);
 }

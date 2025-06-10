@@ -50,17 +50,6 @@ class UserPostProfileRepository implements UserPostProfileInterface
 
     }
 
-    public function edit($slug): View
-    {
-        $post = Post::whereSlug($slug)->firstOrFail();
-        $user = auth()->user();
-        if ($post->user_id != $user->id) {
-            abort(403, 'Unauthorized action.');
-        }
-        $posts = $user->posts()->with(['images', 'category', 'user', 'comments'])->active()->latest()->get();
-        return view('frontend.dashboard.profile', compact('user', 'posts', 'post'));
-    }
-
     public function update($slug)
     {
         // TODO: Implement update() method.
@@ -125,5 +114,22 @@ class UserPostProfileRepository implements UserPostProfileInterface
     public function commentAble($request)
     {
         return $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
+    }
+
+    public function editPost($slug): View
+    {
+        $post = Post::whereSlug($slug)->firstOrFail();
+        $user = auth()->user();
+        if ($post->user_id != $user->id) {
+            abort(403, 'Unauthorized action.');
+        }
+        $posts = $user->posts()->with(['images', 'category'])->active()->latest()->get();
+        return view('frontend.dashboard.edit-post', compact('user', 'posts', 'post'));
+
+    }
+
+    public function updatePost($slug, $request)
+    {
+        return $slug;
     }
 }

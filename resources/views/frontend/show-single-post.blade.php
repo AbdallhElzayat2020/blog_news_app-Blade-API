@@ -162,7 +162,7 @@
                                             <div class="tn-news">
                                                 <div class="tn-img">
                                                     <img style="width: 270px; height: 150px" src="{{asset(@$post->images->first()->path)}}"
-                                                         alt="{{$post->images}}"/>
+                                                         alt="{{$post->images->first()->alt_text}}"/>
                                                 </div>
                                                 <div class="tn-title">
                                                     <a href="{{ route('frontend.post.show',$post->slug) }}" title="{{$post->title}}">
@@ -173,7 +173,6 @@
                                         @endforeach
 
                                     </div>
-
 
                                     <div id="latest" class="container tab-pane fade">
                                         @foreach($popular_posts as $post)

@@ -133,7 +133,7 @@
                                     </div>
 
                                     <div>
-                                        <a title="editBtn" href="{{ route('frontend.dashboard.profile.edit',$post->slug) }}"
+                                        <a title="editBtn" href="{{ route('frontend.dashboard.profile.post-edit',$post->slug) }}"
                                            class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>

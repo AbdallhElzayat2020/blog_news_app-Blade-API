@@ -64,10 +64,11 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index')->name('profile');
         Route::post('/store', 'store')->name('post.store');
-        Route::get('/edit/{slug}', 'edit')->name('profile.edit');
-        Route::post('/edit/{slug}', 'update')->name('profile.update');
         Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
         Route::get('/get-comments/{id}', 'getComments')->name('profile.get-comments');
+
+        Route::get('post/{slug}/edit', 'editPost')->name('profile.post-edit');
+        Route::post('post/{slug}/edit', 'updatePost')->name('profile.post-update');
     });
 
     /* Settings */
