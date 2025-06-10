@@ -12,7 +12,4 @@ interface UserPostProfileInterface
 
     public function getComments($id);
 
-    public function editPost($slug);
-
-    public function updatePost($slug, $request);
 }

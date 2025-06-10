@@ -21,7 +21,7 @@
                 </div>
             @endif
             <!-- Show/Edit Post Section -->
-            <form action="{{ route('frontend.dashboard.profile.post-update',$post->slug) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('frontend.dashboard.profile.post-update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <section id="posts-section" class="posts-section">
@@ -43,13 +43,9 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" name="meta_description" class="form-control my-2 post-title"
-                                   value="{{old('title',$post->meta_description ?? '')}}"/>
-                            @error('meta_description')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
                             <!-- Image Upload Input for Editing -->
-                            <input id="postImage" type="file" name="images[]" class="form-control mt-2 edit-post-image" accept="image/*" multiple/>
+                            <input id="postImage" type="file" name="images[]" class="form-control mt-2 edit-post-image" accept="image/*"
+                                   multiple/>
 
                             <!-- Editable Category Dropdown -->
                             <select name="category_id" class="form-control mb-2 post-category mt-3">
@@ -80,10 +76,9 @@
                             </div>
 
                             <div class="post-actions mt-2">
-                                <button class="btn btn-primary edit-post-btn">Save</button>
+                                <button type="submit" class="btn btn-primary edit-post-btn">Save</button>
                                 <a href="{{ route('frontend.dashboard.profile') }}" class="btn btn-secondary">Cancel</a>
                             </div>
-
                         </li>
                         <!-- Additional posts will be added dynamically -->
                     </ul>
@@ -106,6 +101,27 @@
                 maxFileCount: 5,
                 enableResumableUpload: false,
                 showUpload: false,
+                initialPreviewAsData: true,
+                initialPreview: [
+                    @if($post->images->count() > 0)
+                        @foreach($post->images as $image)
+                            "{{asset($image->path)}}",
+                        @endforeach
+                    @endif
+                ],
+                initialPreviewConfig: [
+                    @if($post->images->count() > 0)
+                        @foreach($post->images as $image)
+                            {
+                                caption: '{{$image->path}}',
+                                width: '120px',
+                                url: '{{route('frontend.dashboard.post.image.delete',[$image->id , '_token'=>csrf_token()])}}',
+                                key: {{$image->id}},
+                            },
+                        @endforeach
+                    @endif
+
+                ]
             });
         });
 

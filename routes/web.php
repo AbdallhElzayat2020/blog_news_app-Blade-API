@@ -68,8 +68,11 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
         Route::get('/get-comments/{id}', 'getComments')->name('profile.get-comments');
 
         Route::get('post/{slug}/edit', 'editPost')->name('profile.post-edit');
-        Route::post('post/{slug}/edit', 'updatePost')->name('profile.post-update');
+        Route::put('post/update', 'updatePost')->name('profile.post-update');
+
+        Route::post('post/image/delete/{image_id}', 'deletePostImage')->name('post.image.delete');
     });
+
 
     /* Settings */
     Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {

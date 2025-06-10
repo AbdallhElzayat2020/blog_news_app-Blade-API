@@ -33,7 +33,7 @@ class UserPostProfileRepository implements UserPostProfileInterface
             $post = Post::create($request->except('images'));
 
             // Handle image upload
-            ImageManager::uploadImage($request, $post, null);
+            ImageManager::uploadImage($request, $post);
 
             Cache::forget('read_more_posts');
             Cache::forget('popular_posts');
@@ -50,12 +50,6 @@ class UserPostProfileRepository implements UserPostProfileInterface
 
     }
 
-    public function update($slug)
-    {
-        // TODO: Implement update() method.
-    }
-
-
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {
         $post = Post::findOrFail($id);
@@ -70,7 +64,6 @@ class UserPostProfileRepository implements UserPostProfileInterface
             // Delete images
             ImageManager::deleteImages($post);
 
-            // Delete the post itself
             $post->delete();
 
             // Clear relevant cache
@@ -114,22 +107,5 @@ class UserPostProfileRepository implements UserPostProfileInterface
     public function commentAble($request)
     {
         return $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
-    }
-
-    public function editPost($slug): View
-    {
-        $post = Post::whereSlug($slug)->firstOrFail();
-        $user = auth()->user();
-        if ($post->user_id != $user->id) {
-            abort(403, 'Unauthorized action.');
-        }
-        $posts = $user->posts()->with(['images', 'category'])->active()->latest()->get();
-        return view('frontend.dashboard.edit-post', compact('user', 'posts', 'post'));
-
-    }
-
-    public function updatePost($slug, $request)
-    {
-        return $slug;
     }
 }

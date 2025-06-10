@@ -13,7 +13,7 @@ class ImageManager
         if ($request->hasFile('images')) {
             foreach ($request->images as $image) {
                 $filename = self::generateImageName($image);
-                $path = self::storeImageLocal($image, 'users', $filename);
+                $path = self::storeImageLocal($image, 'posts', $filename);
                 $post->images()->create([
                     'path' => $path,
                     'alt_text' => Str::slug($request->title) . '_' . Str::uuid(),
@@ -42,6 +42,7 @@ class ImageManager
         if ($post->images->count() > 0) {
             foreach ($post->images as $image) {
                 self::deleteImageLocal($image->path);
+                $image->delete();
             }
         }
     }
@@ -62,7 +63,7 @@ class ImageManager
         if (File::exists(public_path($imagePath))) {
             File::delete(public_path($imagePath));
         }
+
+
     }
-
-
 }
