@@ -21,7 +21,7 @@ class SettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->user()->id;
+        $id = auth()->user()->id;
         return [
 
             'name' => ['required', 'string', 'max:255'],

@@ -165,7 +165,7 @@
 
                 <hr class="my-4"/>
 
-                <form action="" method="post" class="change-password-form">
+                <form action="{{ route('frontend.dashboard.settings.change-password') }}" method="post" class="change-password-form">
                     @csrf
                     <h2>Change Password</h2>
                     <div class="form-group">

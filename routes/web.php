@@ -74,6 +74,7 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
     Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/update', 'update')->name('update');
+        Route::post('change-password', 'changePassword')->name('change-password');
     });
 });
 
