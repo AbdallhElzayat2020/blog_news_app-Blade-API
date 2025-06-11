@@ -96,6 +96,26 @@
 
                 <div class="social ml-auto">
 
+                    <!-- Notification Dropdown -->
+                    <a href="#" class="nav-link dropdown-toggle" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge badge-danger">99</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown" style="width: 300px;">
+                        <h6 class="dropdown-header">Notifications</h6>
+
+                        <div class="dropdown-item d-flex justify-content-between align-items-center">
+                            <span>new comment</span>
+                            <form action="" method="POST">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+
+                        <!-- <div class="dropdown-item text-center">No notifications</div>  -->
+
+                    </div>
+
                     <a title="x_link" href="{{ $getSetting->x_link }}">
                         <i class="fab fa-twitter"></i>
                     </a>
@@ -123,6 +143,7 @@
                     <a title="telegram_link" href="{{ $getSetting->telegram_link }}">
                         <i class="fab fa-telegram"></i>
                     </a>
+
 
                 </div>
             </div>

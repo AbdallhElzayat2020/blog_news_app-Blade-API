@@ -46,6 +46,10 @@ Route::group(
             Route::post('/comments/store', 'storeComment')->name('comments.store')->middleware(['auth', 'verified']);
         });
 
+        Route::get('test', function () {
+            $user = auth()->user();
+            return view('frontend.dashboard.notifications', compact('user'));
+        });
 
         /* search   */
         Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
@@ -73,13 +77,18 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
         Route::post('post/image/delete/{image_id}', 'deletePostImage')->name('post.image.delete');
     });
 
-
     /* Settings */
     Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/update', 'update')->name('update');
         Route::post('change-password', 'changePassword')->name('change-password');
     });
+
+    /*  Notifications */
+    Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', 'index')->name('index');
+    });
+
 });
 
 
