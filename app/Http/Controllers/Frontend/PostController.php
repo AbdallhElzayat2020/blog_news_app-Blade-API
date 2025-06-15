@@ -80,7 +80,6 @@ class PostController extends Controller
 
         $comment->load('user');
 
-
         return response()->json([
             'msg' => 'Comment added successfully',
             'comment' => $comment,

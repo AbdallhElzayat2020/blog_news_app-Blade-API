@@ -42,7 +42,6 @@ class NewCommentNotification extends Notification
         return [
             'user_id' => $this->comment->user_id,  // 'user_id' => auth()->user()->id,
             'user_name' => auth()->user()->name,
-//            'post_id' => $this->post->id,
             'post_title' => $this->post->title,
             'comment' => $this->comment->comment,
             'link' => route('frontend.post.show', $this->post->slug),
