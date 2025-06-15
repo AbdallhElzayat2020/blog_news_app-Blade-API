@@ -116,8 +116,7 @@
                                         <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                                         <span class="d-block">New Comment: {{substr($notification->data['post_title'],0,7 )}}...</span>
                                         <div class="mt-2 align-items-end">
-                                            {{--                                             <a href="{{$notification->data['link']}}?notify" class="btn btn-sm btn-primary text-white">--}}
-                                            <a href="{{$notification->data['link']}}"
+                                            <a href="{{$notification->data['link']}}?notify={{$notification->id}}"
                                                class="btn btn-sm btn-primary">
                                                 <i style="font-size: 17px" class="fa fa-eye"></i>
                                             </a>

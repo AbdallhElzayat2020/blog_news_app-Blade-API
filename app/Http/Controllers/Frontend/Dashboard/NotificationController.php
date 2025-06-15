@@ -10,6 +10,7 @@ class NotificationController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $user->unreadNotifications->markAsRead();
         return view('frontend.dashboard.notifications', compact('user'));
     }
 }

@@ -11,32 +11,34 @@
             <div class="container">
                 <h2 class="mb-4">Notifications</h2>
 
-                <a href="">
-                    <div class="notification alert alert-info">
-                        <strong>Info!</strong> This is an informational notification.
-                        <div class="float-right">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                @forelse(auth()->user()->notifications as $notification)
+                    <div class="notification alert alert-info d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ $notification->data['post_title'] ?? 'Info' }}</strong> {{ $notification->data['comment'] ?? 'Notification' }}
+                            <small class="d-block text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                         </div>
-                    </div>
-                </a>
 
-                <a href="">
-                    <div class="notification alert alert-warning">
-                        <strong>Warning!</strong> This is a warning notification.
-                        <div class="float-right">
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </div>
-                    </div>
-                </a>
+                        <div class="d-flex align-items-center">
+                            <a href="{{$notification->data['link']}}" class="btn btn-sm btn-primary mr-2"
+                               title="View">
+                                <i class="fa fa-eye"></i>
+                            </a>
 
-                <a href="">
-                    <div class="notification alert alert-success">
-                        <strong>Success!</strong> This is a success notification.
-                        <div class="float-right">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <form action="" method="POST">
+                                @csrf
+                                <input type="hidden" name="notification_id" value="{{ $notification->id }}">
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                    <i class="fa fa-trash-alt"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
-                </a>
+                @empty
+                    <div class="alert alert-info">
+                        <strong>No notifications available.</strong>
+                    </div>
+                @endforelse
 
             </div>
         </div>
