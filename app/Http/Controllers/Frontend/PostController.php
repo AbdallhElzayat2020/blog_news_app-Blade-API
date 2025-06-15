@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Notifications\NewCommentNotification;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -57,7 +58,6 @@ class PostController extends Controller
         $request->validate([
             'comment' => ['required', 'string', 'max:255'],
             'user_id' => ['required', 'exists:users,id'],
-
         ]);
 
         $comment = Comment::create([
@@ -67,13 +67,19 @@ class PostController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $comment->load('user');
-
         if (!$comment) {
             return response()->json([
                 'msg' => 'Failed to add comment',
             ], 404);
         }
+
+        // get post and user for send notification
+        $post = Post::findOrFail($request->post_id);
+        $user = $post->user;
+        $user->notify(new NewCommentNotification($comment, $post));
+
+        $comment->load('user');
+
 
         return response()->json([
             'msg' => 'Comment added successfully',

@@ -32,7 +32,6 @@ class SettingController extends Controller
         ImageManager::uploadImage($request, null, $user);
 
         return redirect()->back()->with('success', 'updated successfully!');
-
     }
 
     public function changePassword(Request $request)

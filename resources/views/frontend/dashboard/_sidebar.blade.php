@@ -8,6 +8,7 @@
 
     <!-- Sidebar Menu -->
     <div class="list-group profile-sidebar-menu">
+
         <a title="Profile" href="{{ route('frontend.dashboard.profile') }}"
            class="list-group-item list-group-item-action menu-item {{ request()->routeIs('frontend.dashboard.profile') ? 'active' : '' }}"
            data-section="profile"> <i class="fas fa-user"></i> Profile

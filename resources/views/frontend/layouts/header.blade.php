@@ -100,21 +100,57 @@
                     <a href="#" class="nav-link dropdown-toggle" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         <i class="fas fa-bell"></i>
-                        <span class="badge badge-danger">99</span>
+                        <span class="badge badge-danger">
+                            {{auth()->user()->unreadNotifications()->count() ?? 0}}
+                        </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown" style="width: 300px;">
-                        <h6 class="dropdown-header">Notifications</h6>
 
-                        <div class="dropdown-item d-flex justify-content-between align-items-center">
-                            <span>new comment</span>
-                            <form action="" method="POST">
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
+
+                    @if(auth()->check())
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown" style="width: 300px;">
+                            <h6 class="dropdown-header">Notifications</h6>
+
+                            @forelse(auth()->user()->unreadNotifications->take(4) as $notification)
+                                <div class="dropdown-item d-flex justify-content-between align-items-center border-bottom py-2">
+                                    <div>
+                                        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                        <span class="d-block">New Comment: {{substr($notification->data['post_title'],0,7 )}}...</span>
+                                        <div class="mt-2 align-items-end">
+                                            {{--                                             <a href="{{$notification->data['link']}}?notify" class="btn btn-sm btn-primary text-white">--}}
+                                            <a href="{{$notification->data['link']}}"
+                                               class="btn btn-sm btn-primary">
+                                                <i style="font-size: 17px" class="fa fa-eye"></i>
+                                            </a>
+                                            <form action="" method="POST"
+                                                  style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Delete Notification">
+                                                    <input type="hidden" name="notification_id" value="{{ $notification->id }}">
+                                                    <i style="font-size: 17px" class="fa fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="dropdown-item text-center">No notifications</div>
+                            @endforelse
+
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <div class="dropdown-item text-center border-top">
+                                    <form action="" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-success">Mark All as Read</button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
-
-                        <!-- <div class="dropdown-item text-center">No notifications</div>  -->
-
-                    </div>
+                    @else
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationDropdown" style="width: 300px;">
+                            <div class="dropdown-item text-center">Please log in to see notifications</div>
+                        </div>
+                    @endif
 
                     <a title="x_link" href="{{ $getSetting->x_link }}">
                         <i class="fab fa-twitter"></i>

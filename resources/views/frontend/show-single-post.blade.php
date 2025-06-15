@@ -60,7 +60,9 @@
                                 @csrf
                                 <div class="comment-input">
                                     <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..." id="commentBox"/>
-                                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                    @auth
+                                        <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                    @endauth
                                     <input type="hidden" name="post_id" value="{{$mainPost->id}}">
 
                                     <button type="submit" id="addCommentBtn">Post</button>
