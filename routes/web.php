@@ -8,7 +8,6 @@ use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\SocialLoginController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Frontend\Dashboard\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\NotificationController;
 use App\Http\Controllers\Frontend\Dashboard\SettingController;
@@ -87,6 +86,9 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
     /*  Notifications */
     Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::post('/mark-all-read', 'markAllRead')->name('mark-all-read');
+        Route::delete('/delete', 'delete')->name('delete');
+        Route::get('/delete-all', 'deleteAll')->name('delete-all');
     });
 
 });

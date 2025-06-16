@@ -10,7 +10,7 @@
         <div class="main-content">
             <div class="container">
                 <h2 class="mb-4">Notifications</h2>
-
+                <a href="{{ route('frontend.dashboard.notifications.delete-all') }}" class="btn btn-danger my-3">DeleteAll</a>
                 @forelse(auth()->user()->notifications as $notification)
                     <div class="notification alert alert-info d-flex justify-content-between align-items-center">
                         <div>
@@ -24,11 +24,13 @@
                                 <i class="fa fa-eye"></i>
                             </a>
 
-                            <form action="" method="POST">
+                            <form id="delete_notify" action="{{ route('frontend.dashboard.notifications.delete') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="notification_id" value="{{ $notification->id }}">
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                <button type="submit"
+                                        onclick="if (confirm('are you sure delete')){ document.getElementById('delete_notify').submit(); } return false;"
+                                        class="btn btn-sm btn-danger" title="Delete">
                                     <i class="fa fa-trash-alt"></i>
                                 </button>
                             </form>

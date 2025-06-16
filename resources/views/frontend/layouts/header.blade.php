@@ -100,9 +100,7 @@
                     <a href="#" class="nav-link dropdown-toggle" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
                         <i class="fas fa-bell"></i>
-                        <span class="badge badge-danger">
-                            {{auth()->user()->unreadNotifications()->count() ?? 0}}
-                        </span>
+                        <span class="badge badge-danger">{{ auth()->check() ? auth()->user()->unreadNotifications()->count() : 0 }}</span>
                     </a>
 
 
@@ -138,7 +136,7 @@
 
                             @if(auth()->user()->unreadNotifications->count() > 0)
                                 <div class="dropdown-item text-center border-top">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('frontend.dashboard.notifications.mark-all-read') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-success">Mark All as Read</button>
                                     </form>
