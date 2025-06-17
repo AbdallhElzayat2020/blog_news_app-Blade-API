@@ -100,7 +100,7 @@
     <!-- Dashboard Start-->
 
     <!-- Settings Content Start -->
-    <div class="container mt-4">
+    <div class="container my-5">
         <div class="dashboard">
             <!-- Sidebar -->
             @include('frontend.dashboard._sidebar')

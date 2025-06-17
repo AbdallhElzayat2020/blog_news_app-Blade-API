@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Profile Start -->
-    <div class="dashboard container">
+    <div class="dashboard container my-5">
         <!-- Sidebar -->
         @include('frontend.dashboard._sidebar')
 

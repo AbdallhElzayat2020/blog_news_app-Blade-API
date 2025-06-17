@@ -26,7 +26,7 @@
             <i class="fas fa-cog"></i> Settings
         </a>
 
-        <a title="Settings" href="https://wa.me/201212484233" target="_blank" data-section="support"
+        <a title="Settings" href="{{$getSetting->whatsapp}}" target="_blank" data-section="support"
            class="list-group-item list-group-item-action menu-item">
             <i class="fas fa-phone"></i> Support
         </a>

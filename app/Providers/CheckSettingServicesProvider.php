@@ -46,6 +46,8 @@ class CheckSettingServicesProvider extends ServiceProvider
             ]);
         });
 
+        $getSetting->whatsapp = "https://wa.me/" . $getSetting->site_phone;
+
         $links = RelatedSite::select('name', 'url', 'id')->get();
 
 

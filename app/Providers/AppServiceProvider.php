@@ -13,7 +13,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // add paginate
+        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         Paginator::useBootstrap();
+
     }
 
     /**

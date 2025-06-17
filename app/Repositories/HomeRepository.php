@@ -32,10 +32,17 @@ class HomeRepository implements HomeInterface
             ->get();
 
 
-        $category_with_posts = Category::active()->select('name', 'id', 'slug')->with(['posts' => function ($query) {
-            $query->with('images')
-                ->limit(4);
-        }])->get();
+//        $category_with_posts = Category::has('posts', '>=', 2)
+//            ->active()->select('name', 'id', 'slug')->with(['posts' => function ($query) {
+//                $query->with('images')
+//                    ->limit(4);
+//            }])->get();
+
+        $categories = Category::active()->select('id', 'name', 'slug')->latest()->get();
+        $category_with_posts = $categories->map(function (Category $category) {
+            $category->posts = $category->posts()->active()->with('images')->limit(3)->get();
+            return $category;
+        });
 
 //        $categories = Category::select('name', 'id', 'slug')->get();
 //

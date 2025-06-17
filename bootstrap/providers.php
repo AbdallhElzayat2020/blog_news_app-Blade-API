@@ -9,6 +9,7 @@ return [
     App\Providers\FrontendHomeProvider::class,
     App\Providers\FrontendSearchProvider::class,
     App\Providers\FrontendSubscribersProvider::class,
+    App\Providers\TelescopeServiceProvider::class,
     App\Providers\UserPostProfileProvider::class,
     App\Providers\ViewServicesProvider::class,
 ];

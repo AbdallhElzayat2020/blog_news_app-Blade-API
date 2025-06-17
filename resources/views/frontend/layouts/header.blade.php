@@ -134,7 +134,7 @@
                                 <div class="dropdown-item text-center">No notifications</div>
                             @endforelse
 
-                            @if(auth()->user()->unreadNotifications->count() > 0)
+                            @if(auth()->user()->unreadNotifications->count() > 2)
                                 <div class="dropdown-item text-center border-top">
                                     <form action="{{ route('frontend.dashboard.notifications.mark-all-read') }}" method="POST">
                                         @csrf
