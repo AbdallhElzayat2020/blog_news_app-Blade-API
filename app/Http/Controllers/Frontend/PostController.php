@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\CommentEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comment;
@@ -59,7 +60,6 @@ class PostController extends Controller
             'comment' => ['required', 'string', 'max:255'],
             'user_id' => ['required', 'exists:users,id'],
         ]);
-
         $comment = Comment::create([
             'comment' => $request->comment,
             'user_id' => $request->user_id,
@@ -67,13 +67,14 @@ class PostController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
+        CommentEvent::dispatch();
         if (!$comment) {
             return response()->json([
                 'msg' => 'Failed to add comment',
             ], 404);
         }
 
-        // get post and user for send notification
+        // get post and user for sent notification
         $post = Post::findOrFail($request->post_id);
         $user = $post->user;
         $user->notify(new NewCommentNotification($comment, $post));

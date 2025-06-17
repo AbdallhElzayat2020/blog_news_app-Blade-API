@@ -11,6 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
+
+//    ->withProviders([
+//        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+//    ])
+
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'check_notification_read_at' => CheckNotificationReadAt::class,
