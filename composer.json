@@ -14,7 +14,8 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "php-flasher/flasher-laravel": "^2.1",
-        "predis/predis": "^2.0"
+        "predis/predis": "^2.0",
+        "pusher/pusher-php-server": "^7.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
