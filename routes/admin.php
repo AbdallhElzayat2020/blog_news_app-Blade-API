@@ -5,15 +5,19 @@ use Illuminate\Support\Facades\Route;
 
 /* Public Routes */
 
-Route::prefix('admin')->middleware(['guest'])->group(function () {
-    //
-});
+// admin/
+Route::middleware(['guest'])->group(function () {}); // admin.
 
 
 /* Protected Routes */
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     //
 
 });
+
+
+Route::get('dashboard', function () {
+    return view('admin.index');
+})->name('admin.dashboard');
