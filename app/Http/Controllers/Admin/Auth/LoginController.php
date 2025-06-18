@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.auth.login');
+        return view('admin.layouts.auth.login');
     }
 
     public function handleLogin(Request $request)
@@ -24,7 +24,6 @@ class LoginController extends Controller
             ]);
         }
         return redirect()->intended(route('admin.dashboard.index'))->with('success', 'Welcome back');
-
     }
 
     public function logout()

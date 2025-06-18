@@ -6,14 +6,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuthMiddleware
+class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->guard('admin')->check()) {
-            return redirect()->route('admin.show-login-form')->with('error', 'You must be logged in to access this page.');
+        if (auth()->guard('admin')->check()) {
+            return redirect()->intended(route('admin.dashboard.index'))->with('success', 'You are already logged in.');
         }
-
         return $next($request);
     }
 }

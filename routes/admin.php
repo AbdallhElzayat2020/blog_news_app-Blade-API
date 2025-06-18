@@ -6,15 +6,15 @@ use Illuminate\Support\Facades\Route;
 
 /* Public Routes */
 
-Route::prefix('admin')->name('admin.')->middleware(['guest'])->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::controller(LoginController::class)->prefix('login')->group(function () {
+    Route::controller(LoginController::class)->group(function () {
 
-        Route::get('/', 'showLoginForm')->name('show-login-form')->middleware('guest_admin');
+        Route::get('/login', 'showLoginForm')->name('show-login-form')->middleware('guest.admin');
 
-        Route::post('/handle', 'handleLogin')->name('handle-login')->middleware('guest_admin');
+        Route::post('handle/login', 'handleLogin')->name('handle-login')->middleware('guest.admin');
 
-        Route::post('/logout', 'logout')->name('logout')->middleware('auth:admin');
+        Route::post('/logout', 'logout')->name('logout')->middleware('auth.admin');
     });
 
 });
@@ -22,7 +22,8 @@ Route::prefix('admin')->name('admin.')->middleware(['guest'])->group(function ()
 
 /* Protected Routes */
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'verified'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])->group(function () {
+
 
     Route::get('dashboard', function () {
         return view('admin.index');

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title_admin', 'Dashboard || Admin Panel')
+@section('title_admin', 'Home Dashboard || Admin Panel')
 @section('content')
     <div class="container-fluid">
 
