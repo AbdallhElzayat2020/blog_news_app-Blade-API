@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\Auth\PasswordController;
 
 /* Public Routes */
 
@@ -17,8 +17,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', 'logout')->name('logout')->middleware('auth.admin');
     });
 
+    Route::controller(PasswordController::class)->middleware('guest.admin')->group(function () {
+        Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
+        Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
+
+    });
 });
 
+
+Route::get('test', function () {
+    return view('admin.layouts.auth.password.reset-password');
+});
 
 /* Protected Routes */
 
