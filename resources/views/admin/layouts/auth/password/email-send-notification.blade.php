@@ -16,10 +16,10 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Enter Verification Code</h1>
                                 </div>
-                                <form class="user" method="post" action="{{ route('admin.handle-login') }}">
+                                <form class="user" method="post" action="">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email" name="email" disabled value="{{old('email',request()->email)}}"
+                                        <input type="email" hidden="" name="email" disabled value="{{old('email',request()->email)}}"
                                                class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
                                                placeholder="Enter Email Address...">

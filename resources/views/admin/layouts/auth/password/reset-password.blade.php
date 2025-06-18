@@ -42,7 +42,7 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Send
+                                        Reset
                                     </button>
                                 </form>
                                 <hr>
