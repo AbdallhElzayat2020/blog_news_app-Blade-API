@@ -13,5 +13,3 @@
 <!-- Page level custom scripts -->
 <script src="{{asset('Dashboard/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{asset('Dashboard/js/demo/chart-pie-demo.js')}}"></script>
-
-@stack('js')
