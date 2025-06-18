@@ -15,7 +15,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Forgot Password</h1>
                                 </div>
-                                <form class="user" method="post" action="{{ route('admin.password.email') }}">
+                                <form class="user" method="post" action="{{ route('admin.password.password.email') }}">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email" name="email" value="{{old('email')}}" class="form-control form-control-user"
@@ -26,7 +26,7 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Send Password Reset Link
+                                        Send OTP
                                     </button>
                                 </form>
                                 <hr>

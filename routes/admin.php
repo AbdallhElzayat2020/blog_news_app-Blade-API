@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Auth\PasswordController;
 
 /* Public Routes */
 
@@ -17,11 +17,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', 'logout')->name('logout')->middleware('auth.admin');
     });
 
-    Route::controller(PasswordController::class)->middleware('guest.admin')->group(function () {
-        Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
-        Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
+    Route::prefix('password')->name('password.')
+        ->controller(ForgetPasswordController::class)->middleware('guest.admin')
+        ->group(function () {
+            Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
+            Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
 
-    });
+            Route::get('show-otp-form/{email}', 'showOtpForm')->name('show-otp-form');
+            Route::post('show-otp-form', 'verifyOtpForm')->name('verify-otp-form');
+        });
 });
 
 

@@ -14,15 +14,13 @@
                         <div class="col-lg-12">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Enter Verification Code</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Enter Verification Code OTP</h1>
                                 </div>
-                                <form class="user" method="post" action="">
+                                <form class="user" method="post" action="{{ route('admin.password.verify-otp-form') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email" hidden="" name="email" disabled value="{{old('email',request()->email)}}"
-                                               class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp"
-                                               placeholder="Enter Email Address...">
+                                        <input hidden type="email" name="email" value="{{$email}}" class="form-control form-control-user"
+                                               id="exampleInputEmail" aria-describedby="emailHelp">
                                         @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -31,7 +29,7 @@
                                         <input type="text" name="otp"
                                                class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                               placeholder="Enter OTP...">
+                                               placeholder="Enter OTP From your email...">
                                         @error('otp')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -42,7 +40,7 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="{{ route('admin.forgot-password') }}">Forgot Password?</a>
+                                    <a class="small" href="{{ route('admin.password.forgot-password') }}">Forgot Password?</a>
                                 </div>
                             </div>
                         </div>

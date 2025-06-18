@@ -16,7 +16,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Confirm Password Reset</h1>
                                 </div>
-                                <form class="user" method="post" action="{{ route('admin.handle-login') }}">
+                                <form class="user" method="post" action="">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email" name="email" disabled value="{{old('email',request()->email)}}"
@@ -47,7 +47,7 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="{{ route('admin.forgot-password') }}">Back to Login?</a>
+                                    <a class="small" href="{{ route('admin.password.forgot-password') }}">Back to Login?</a>
                                 </div>
                             </div>
                         </div>
