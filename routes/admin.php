@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
 
 /* Public Routes */
 
@@ -17,15 +18,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', 'logout')->name('logout')->middleware('auth.admin');
     });
 
-    Route::prefix('password')->name('password.')
-        ->controller(ForgetPasswordController::class)->middleware('guest.admin')
-        ->group(function () {
+    Route::prefix('password')->name('password.')->middleware('guest.admin')->group(function () {
+        /* Forget Password */
+        Route::controller(ForgetPasswordController::class)->group(function () {
             Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
             Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
 
             Route::get('show-otp-form/{email}', 'showOtpForm')->name('show-otp-form');
-            Route::post('show-otp-form', 'verifyOtpForm')->name('verify-otp-form');
+            Route::post('verify-otp-form', 'verifyOtpForm')->name('verify-otp-form');
         });
+
+        /* Reset Password */
+        Route::controller(ResetPasswordController::class)->group(function () {
+            Route::get('/reset-password/{email}', 'showResetPasswordForm')->name('show-reset-password-form');
+            Route::post('/reset-password', 'ResetPassword')->name('reset-password');
+        });
+
+    });
+
 });
 
 
