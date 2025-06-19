@@ -15,35 +15,33 @@ class LoginController extends Controller
 
     public function handleLogin(Request $request)
     {
-        $data = $this->filterData($request);
+        $request->validate($this->filterData());
+
         $credentials = $request->only('email', 'password');
-        // Attempt to log the user in
-        if (!Auth::guard('admin')->attempt($credentials, $data['remember'])) {
-            return redirect()->back()->withErrors([
-                'error' => 'The provided credentials do not match our records.',
-            ]);
+
+        if (Auth::guard('admin')->attempt($credentials, $request->has('remember'))) {
+
+            session()->flash('success', 'Welcome back, ' . Auth::guard('admin')->user()->name);
+            return redirect()->intended(route('admin.dashboard.index'));
         }
-        return redirect()->intended(route('admin.dashboard.index'))->with('success', 'Welcome back');
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
+    private function filterData(): array
+    {
+        return [
+            'email' => ['required', 'email', 'exists:admins,email'],
+            'password' => ['required', 'string', 'min:8'],
+            'remember' => ['in:on,off'],
+        ];
     }
 
     public function logout()
     {
         Auth::guard('admin')->logout();
         return redirect()->route('admin.show-login-form')->with('success', 'You have been logged out successfully.');
-    }
-
-
-    /*
-     *============================
-        * Filter Data for Validation
-     *============================
-     */
-    private function filterData($request): array
-    {
-        return $request->validate([
-            'email' => ['required', 'email', 'max:255', 'exists:admins,email'],
-            'password' => ['required', 'string', 'min:8'],
-            'remember' => ['in:on,off', 'nullable'],
-        ]);
     }
 }

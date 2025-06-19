@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
+use App\Http\Controllers\Admin\User\UserController;
 
 /* Public Routes */
 
@@ -36,6 +37,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     });
 
+    /* users */
+    Route::resource('users', UserController::class);
 });
 
 
