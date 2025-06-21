@@ -46,23 +46,18 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $request->validated();
-        $request->merge([
-            'email_verified_at' => $request->email_verified_at == 'active' ? now() : null,
-        ]);
-//        $user = User::create([
-//            'name' => $request->name,
-//            'username' => $request->username,
-//            'phone' => $request->phone,
-//            'email' => $request->email,
-//            'password' => Hash::make($request->password),
-//            'status' => $request->status,
-//            'city' => $request->city,
-//            'country' => $request->country,
-//            'street' => $request->street,
-//        ]);
-        $user = User::create($request->except('avatar'));
-        ImageManager::uploadImage($request, null, $user);
-
+        try {
+            DB::beginTransaction();
+            $request->merge([
+                'email_verified_at' => $request->email_verified_at == 'active' ? now() : null,
+            ]);
+            $user = User::create($request->except('avatar'));
+            ImageManager::uploadImage($request, null, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to create user, please try again later.');
+        }
         return redirect()->back()->with('success', 'created successfully.');
     }
 
@@ -71,7 +66,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.users.show_user', compact('user'));
     }
 
     /**
@@ -79,7 +75,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
