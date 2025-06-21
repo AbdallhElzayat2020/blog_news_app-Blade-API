@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
 use App\Http\Controllers\Admin\User\UserController;
+use App\Http\Controllers\Admin\Category\CategoryController;
 
 /* Public Routes */
 
@@ -48,6 +49,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     /* users */
     Route::resource('users', UserController::class);
     Route::post('user/block/status/{id}', [UserController::class, 'changeStatus'])->name('users.change-status');
+
+    /* categories */
+    Route::resource('categories', CategoryController::class);
+    Route::post('category/block/status/{id}', [CategoryController::class, 'changeStatus'])->name('users.change-status');
+
+
+
     Route::get('dashboard', function () {
         return view('admin.index');
     })->name('dashboard.index');

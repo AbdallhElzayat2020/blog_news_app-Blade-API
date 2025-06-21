@@ -94,12 +94,12 @@ class UserController extends Controller
             $user->update([
                 'status' => 'inactive',
             ]);
-            return redirect()->back()->with('success', 'User blocked successfully');
+            return redirect()->back()->with('success', 'blocked successfully');
         } else {
             $user->update([
                 'status' => 'active',
             ]);
-            return redirect()->back()->with('success', 'User Activated successfully');
+            return redirect()->back()->with('success', 'Activated successfully');
         }
     }
 

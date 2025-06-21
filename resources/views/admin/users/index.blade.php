@@ -67,7 +67,7 @@
                             @include('admin.users.change_status')
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No users found</td>
+                                <td colspan="8" class="text-center alert alert-danger">No users found</td>
                             </tr>
                         @endforelse
                         </tbody>

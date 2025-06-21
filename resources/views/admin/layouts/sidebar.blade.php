@@ -26,7 +26,21 @@
         Pages
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categories"
+           aria-expanded="true" aria-controls="categories">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Categories</span>
+        </a>
+        <div id="categories" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Users</h6>
+                <a class="collapse-item" href="{{ route('admin.categories.index') }}">Categories</a>
+                <a class="collapse-item" href="{{ route('admin.categories.create') }}">Add Category</a>
+            </div>
+        </div>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
