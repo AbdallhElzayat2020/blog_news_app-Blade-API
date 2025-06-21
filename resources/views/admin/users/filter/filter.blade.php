@@ -42,6 +42,7 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control" name="status" id="status">
+                        <option value="">All</option>
                         <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
                         <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Not Active
                         </option>
@@ -53,7 +54,7 @@
                 <div class="form-group">
                     <label for="keyword">Search</label>
                     <input type="search" name="keyword" class="form-control" placeholder="search here" id="keyword"
-                        value="{{ request('keyword') }}">
+                           value="{{ request('keyword') }}">
                 </div>
             </div>
 

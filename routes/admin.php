@@ -37,20 +37,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     });
 
-    /* users */
-    Route::resource('users', UserController::class);
+
 });
 
-
-Route::get('test', function () {
-    return view('admin.layouts.auth.password.reset-password');
-});
 
 /* Protected Routes */
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])->group(function () {
 
-
+    /* users */
+    Route::resource('users', UserController::class);
+    Route::post('user/block/status/{id}', [UserController::class, 'changeStatus'])->name('users.change-status');
     Route::get('dashboard', function () {
         return view('admin.index');
     })->name('dashboard.index');

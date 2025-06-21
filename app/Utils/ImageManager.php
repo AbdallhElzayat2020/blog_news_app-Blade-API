@@ -24,8 +24,6 @@ class ImageManager
         // upload single image
         if ($request->hasFile('avatar')) {
 
-            self::deleteImageLocal($user->avatar);
-
             $image = $request->file('avatar');
             $filename = self::generateImageName($image);
             $path = self::storeImageLocal($image, 'users', $filename);
@@ -63,7 +61,5 @@ class ImageManager
         if (File::exists(public_path($imagePath))) {
             File::delete(public_path($imagePath));
         }
-
-
     }
 }
