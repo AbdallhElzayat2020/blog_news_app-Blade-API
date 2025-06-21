@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Utils\ImageManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -55,13 +57,6 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -76,7 +71,31 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $request->validate([
+            'name' => ['required', 'string', 'unique:categories,name,' . $category->id, 'max:255'],
+            'status' => ['required', 'in:active,inactive'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'icon' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:3000'],
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'status' => $request->status,
+            'description' => $request->description,
+        ]);
+        if ($request->hasFile('icon')) {
+            ImageManager::deleteImageLocal($category->icon);
+
+            $file = $request->file('icon');
+            $filename = '_' . Str::uuid() . time() . '.' . $file->getClientOriginalExtension();
+            $path = ImageManager::storeImageLocal($file, 'categories', $filename);
+            $category->update([
+                'icon' => $path,
+            ]);
+        }
+        return redirect()->back()->with('success', 'Category updated successfully');
     }
 
     /**
@@ -84,8 +103,19 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+
+        try {
+            DB::beginTransaction();
+            $category = Category::findOrFail($id);
+            ImageManager::deleteImageLocal($category->icon);
+
+            $category->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to delete category, please try again later.');
+        }
+
         return redirect()->back()->with('success', 'deleted successfully');
     }
 

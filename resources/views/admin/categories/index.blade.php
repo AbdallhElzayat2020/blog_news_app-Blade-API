@@ -59,7 +59,7 @@
                                        class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="{{ route('admin.categories.edit',$category->id) }}" class="btn btn-primary">
+                                    <a href="#" data-toggle="modal" data-target="#edit_category_{{$category->id}}" class="btn btn-primary">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" data-toggle="modal" data-target="#change_status_{{ $category->id }}" class="btn btn-warning">
@@ -76,6 +76,7 @@
                             </tr>
                             {{-- Delete & changeStatus Popup--}}
                             @include('admin.categories.delete')
+                            @include('admin.categories.edit')
                             @include('admin.categories.change_status')
                         @empty
                             <tr>
