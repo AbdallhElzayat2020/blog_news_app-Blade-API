@@ -14,8 +14,13 @@
                     <i class="fas fa-plus"></i> Create
                 </a>
             </div>
+
+            {{-- Filter Data --}}
             @include('admin.categories.filter.filter')
+
+            {{-- Create Popup --}}
             @include('admin.categories.create')
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -74,10 +79,11 @@
                                     </a>
                                 </td>
                             </tr>
-                            {{-- Delete & changeStatus Popup--}}
+                            {{-- Delete & changeStatus & Edit Popup--}}
                             @include('admin.categories.delete')
                             @include('admin.categories.edit')
                             @include('admin.categories.change_status')
+
                         @empty
                             <tr>
                                 <td colspan="8" class="text-center alert alert-danger">No categories found</td>

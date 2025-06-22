@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Category\CategoryRequest;
 use App\Models\Category;
 use App\Utils\ImageManager;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,27 +34,27 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'unique:categories,name', 'max:255'],
-            'status' => ['required', 'in:active,inactive'],
-            'description' => ['nullable', 'string', 'max:1000'],
-            'icon' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:3000'],
-        ]);
+        try {
+            $category = Category::create($request->except('icon'));
 
+            if ($request->hasFile('icon')) {
+                $file = $request->file('icon');
+                $filename = ImageManager::generateImageName($file);
+                $path = ImageManager::storeImageLocal($file, 'categories', $filename);
+                $category->update([
+                    'icon' => $path,
+                ]);
+            }
 
-        $category = Category::create($request->except('icon'));
-
-        if ($request->hasFile('icon')) {
-            $file = $request->file('icon');
-            $filename = '_' . Str::uuid() . time() . '.' . $file->getClientOriginalExtension();
-            $path = ImageManager::storeImageLocal($file, 'categories', $filename);
-            $category->update([
-                'icon' => $path,
-            ]);
+            if (!$category) {
+                return redirect()->back()->with('error', 'Failed to create category, please try again later.');
+            }
+            return redirect()->back()->with('success', 'Category created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred while creating the category.');
         }
-        return redirect()->back()->with('success', 'Category created successfully');
 
     }
 
@@ -69,33 +70,33 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        $category = Category::findOrFail($id);
-        $request->validate([
-            'name' => ['required', 'string', 'unique:categories,name,' . $category->id, 'max:255'],
-            'status' => ['required', 'in:active,inactive'],
-            'description' => ['nullable', 'string', 'max:1000'],
-            'icon' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:3000'],
-        ]);
+        try {
+            $category = Category::findOrFail($id);
 
-        $category->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'status' => $request->status,
-            'description' => $request->description,
-        ]);
-        if ($request->hasFile('icon')) {
-            ImageManager::deleteImageLocal($category->icon);
-
-            $file = $request->file('icon');
-            $filename = '_' . Str::uuid() . time() . '.' . $file->getClientOriginalExtension();
-            $path = ImageManager::storeImageLocal($file, 'categories', $filename);
             $category->update([
-                'icon' => $path,
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+                'status' => $request->status,
+                'description' => $request->description,
             ]);
+
+            if ($request->hasFile('icon')) {
+                ImageManager::deleteImageLocal($category->icon);
+
+                $file = $request->file('icon');
+                $filename = ImageManager::generateImageName($file);
+                $path = ImageManager::storeImageLocal($file, 'categories', $filename);
+                $category->update([
+                    'icon' => $path,
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Category updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update category: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Category updated successfully');
     }
 
     /**
@@ -107,7 +108,9 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             $category = Category::findOrFail($id);
-            ImageManager::deleteImageLocal($category->icon);
+            if ($category->icon) {
+                ImageManager::deleteImageLocal($category->icon);
+            }
 
             $category->delete();
             DB::commit();
