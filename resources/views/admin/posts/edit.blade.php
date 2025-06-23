@@ -154,7 +154,8 @@
                     {
                         caption: '{{$image->path}}',
                         width: '120px',
-                        url: '{{route('frontend.dashboard.post.image.delete',[$image->id , '_token'=>csrf_token()])}}',
+                        url: '{{route('admin.post.image.delete',[$image->id, '_token'=>csrf_token()])}}',
+{{--                        url: '{{route('admin.post.image.delete',[$image->id , '_token'=>csrf_token()])}}',--}}
                         key: {{$image->id}},
                     },
                     @endforeach

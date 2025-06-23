@@ -58,6 +58,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     /* categories */
     Route::resource('posts', PostController::class);
     Route::post('post/block/status/{id}', [PostController::class, 'changeStatus'])->name('post.change-status');
+    Route::post('post/image/delete/{image_id}', [PostController::class, 'deletePostImage'])->name('post.image.delete');
+
 
     Route::get('dashboard', function () {
         return view('admin.index');

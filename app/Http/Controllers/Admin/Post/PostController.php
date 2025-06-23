@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Post\PostRequest;
+use App\Http\Requests\Frontend\Dashboard\UpdatePostRequest;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Post;
 use App\Utils\ImageManager;
 use Illuminate\Database\Eloquent\Builder;
@@ -93,9 +95,26 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
-        return $request;
+        $request->validated();
+
+        try {
+            DB::beginTransaction();
+            $post = Post::findOrFail($id);
+            $post->update($request->except(['images']));
+
+            if ($request->hasFile('images')) {
+                ImageManager::deleteImages($post);
+                ImageManager::uploadImage($request, $post);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors('errors', $e->getMessage());
+        }
+
+        return to_route('admin.posts.index')->with('success', 'updated successfully');
     }
 
     /**
@@ -142,6 +161,21 @@ class PostController extends Controller
 
     }
 
+    public function deletePostImage(Request $request)
+    {
+        $image = Image::find($request->key);
+        if (!$image) {
+            return response()->json([
+                'message' => 'Image not found'
+            ], 404);
+        }
+
+        ImageManager::deleteImageLocal($image->path);
+        $image->delete();
+        return response()->json([
+            'message' => 'Image deleted successfully'
+        ], 200);
+    }
 
     /*
      * Private methods can be added here for internal logic
