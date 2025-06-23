@@ -48,29 +48,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($post->user)
-                                        <div class="d-flex align-items-center">
-                                            <div class="mr-2">
-                                                <img class="rounded-circle" width="30" height="30"
-                                                     src="{{ $post->user->avatar ?? asset('admin/img/undraw_profile.svg') }}" alt="Author">
-                                            </div>
-                                            <div>
-                                                <span class="font-weight-bold">{{ $post->user->name }}</span>
-                                                <small class="d-block text-muted">User</small>
-                                            </div>
-                                        </div>
-                                    @elseif($post->admin)
-                                        <div class="d-flex align-items-center">
-                                            <div class="mr-2">
-                                                <img class="rounded-circle" width="30" height="30"
-                                                     src="{{ asset('admin/img/undraw_profile.svg') }}" alt="Admin">
-                                            </div>
-                                            <div>
-                                                <span class="font-weight-bold">{{ $post->admin->name }}</span>
-                                                <small class="d-block text-primary">Admin</small>
-                                            </div>
-                                        </div>
-                                    @endif
+                                    {{ $post->user->name ?? $post->admin->name }}
                                 </td>
                                 <td>{{ $post->number_of_views }}</td>
                                 <td>{{ $post->created_at->diffForHumans() }}</td>
@@ -79,15 +57,17 @@
                                        class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="{{ route('admin.posts.edit',$post->id) }}" title="edit" class="btn btn-primary">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    @if($post->admin_id != null)
+                                        <a href="{{ route('admin.posts.edit',$post->id) }}" title="edit" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @endif
                                     <a href="#" data-toggle="modal" title="change_status" data-target="#change_status_{{ $post->id }}"
-                                       class="btn btn-warning">
+                                       class="btn {{ $post->status == 'active' ? 'btn-warning' : 'btn-success' }}">
                                         @if ($post->status == 'active')
-                                            <i class="fas fa-ban"></i>
+                                            <i class="fas fa-ban"></i> Block
                                         @else
-                                            <i class="fas fa-play"></i>
+                                            <i class="fas fa-play"></i> Activate
                                         @endif
                                     </a>
                                     <a href="{{ route('admin.posts.show',$post->id) }}" title="show_post" class="btn btn-info">
