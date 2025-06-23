@@ -13,3 +13,13 @@
 <!-- Page level custom scripts -->
 <script src="{{asset('Dashboard/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{asset('Dashboard/js/demo/chart-pie-demo.js')}}"></script>
+
+
+{{--  fileInput Plugine  --}}
+<script src="{{asset('vendor/fileinput/js/fileinput.min.js')}}"></script>
+<script src="{{asset('vendor/fileinput/themes/fa5/theme.min.js')}}"></script>
+
+{{-- summernote Plugine --}}
+<script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
+
+@stack('js')

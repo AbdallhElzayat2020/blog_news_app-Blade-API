@@ -67,7 +67,6 @@ class PostController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        CommentEvent::dispatch();
         if (!$comment) {
             return response()->json([
                 'msg' => 'Failed to add comment',

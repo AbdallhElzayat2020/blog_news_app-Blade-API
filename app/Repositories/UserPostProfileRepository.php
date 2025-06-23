@@ -23,27 +23,25 @@ class UserPostProfileRepository implements UserPostProfileInterface
 
     public function store($request): \Illuminate\Http\RedirectResponse
     {
+        $request->validated();
         try {
             DB::beginTransaction();
-            $request->validated();
 
             $this->commentAble($request);
-            $request->merge(['user_id' => auth()->guard('web')->id()]);
 
-            $post = Post::create($request->except('images'));
-
+            $post = auth()->user()->posts()->create($request->except('images'));
             // Handle image upload
             ImageManager::uploadImage($request, $post);
 
             Cache::forget('read_more_posts');
             Cache::forget('popular_posts');
             Cache::forget('latest_posts');
+            Cache::forget('read_more_posts');
 
             DB::commit();
-            Cache::forget('read_more_posts');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('errors', $e->getMessage());
         }
 
         return redirect()->back()->with('success', 'created successfully!');

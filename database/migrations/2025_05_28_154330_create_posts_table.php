@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->enum('comment_able', ['yes', 'no'])->default('yes');
             $table->integer('number_of_views')->default(0);
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('admin_id')->nullable()->constrained('admins')->cascadeOnDelete();
             $table->timestamps();
         });
     }

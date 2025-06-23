@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Post\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Utils\ImageManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -34,15 +38,38 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+//        return $request;
+        $request->validated();
+        try {
+            DB::beginTransaction();
+
+            $this->commentAble($request);
+
+            $post = auth()->guard('admin')->user()->posts()->create($request->except('images'));
+            // Handle image upload
+            ImageManager::uploadImage($request, $post);
+
+            Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
+            Cache::forget('read_more_posts');
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'created successfully!');
+
     }
 
     /**
@@ -50,7 +77,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -82,6 +110,9 @@ class PostController extends Controller
                 ImageManager::deleteImages($post);
             }
             $post->delete();
+            Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
             DB::commit();
 
         } catch (\Exception $e) {
@@ -108,5 +139,14 @@ class PostController extends Controller
             return redirect()->back()->with('success', 'Activated successfully');
         }
 
+    }
+
+
+    /*
+     * Private methods can be added here for internal logic
+     * */
+    public function commentAble($request)
+    {
+        return $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
     }
 }

@@ -90,6 +90,14 @@ class Post extends Model
         return $this->hasMany(Image::class, 'post_id');
     }
 
+    /*
+    * Admin
+    */
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     #[Scope]
     protected function active(Builder $query): Builder
     {

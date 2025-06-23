@@ -17,4 +17,12 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('Dashboard/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+    {{--  fileInput Plugine  --}}
+    <link rel="stylesheet" href="{{asset('vendor/fileinput/css/fileinput.min.css')}}">
+
+    {{-- summernote Plugine --}}
+
+    <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.min.css')}}">
+
+    @stack('css')
 </head>

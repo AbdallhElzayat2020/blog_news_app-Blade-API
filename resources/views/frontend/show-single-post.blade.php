@@ -50,6 +50,9 @@
                         <div style="word-wrap: break-word; word-break: break-all; overflow-wrap: break-word;">
                             {!! substr($mainPost->description ,0,80) !!}
                         </div>
+                        <div class="alert alert-info p-1 ">
+                            <h5 class="mt-2"> Created By {{$mainPost->user->name ?? $mainPost->admin->name}}</h5>
+                        </div>
                     </div>
 
                     <!-- Comment Section -->

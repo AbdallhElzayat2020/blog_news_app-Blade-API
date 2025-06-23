@@ -8,14 +8,13 @@
             <div class="alert alert-danger">
                 <ul>
                     @foreach(session('errors')->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="text-black">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
         <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-
             <div class="card-body">
                 <div class="row shadow-sm p-3 mb-5 bg-white rounded">
 
@@ -34,7 +33,8 @@
                         <div class="form-group">
                             <label for="description">Description<span class="text-danger">*</span></label>
                             <textarea id="postContent" class="form-control" placeholder="Enter Description" name="description" cols="30"
-                                      rows="10"></textarea>
+                                      rows="10">{{ old('description') }}</textarea>
+
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -45,9 +45,9 @@
                         <div class="form-group">
                             <label for="status">Status <span class="text-danger">*</span></label>
                             <select class="form-control" name="status" id="status">
-                                <option selected value="">Select Status</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Not Active</option>
+                                <option value="">Select Status</option>
+                                <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Yes</option>
+                                <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>No</option>
                             </select>
                             @error('status')
                             <span class="text-danger">{{ $message }}</span>
@@ -59,9 +59,11 @@
                         <div class="form-group">
                             <label for="category_id">Category <span class="text-danger">*</span></label>
                             <select class="form-control" name="category_id" id="category_id">
-                                <option selected value="">Select Category</option>
+                                <option value="">Select Category</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('category_id')
@@ -70,34 +72,34 @@
                         </div>
                     </div>
 
-{{--                    <div class="col-md-4">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="meta_description">Meta Description<span class="text-danger">*</span></label>--}}
-{{--                            <input type="text" class="form-control" id="meta_description" value="{{old('meta_description')}}" name="meta_description"--}}
-{{--                                   placeholder="Enter meta_description">--}}
-{{--                            @error('meta_description')--}}
-{{--                            <span class="text-danger">{{ $message }}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="meta_description">Meta Description<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="meta_description" value="{{old('meta_description')}}" name="meta_description"
+                                   placeholder="Enter meta_description">
+                            @error('meta_description')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
 
-{{--                    <div class="col-md-4">--}}
-{{--                        <div class="form-group">--}}
-{{--                            <label for="meta_title">Meta Title<span class="text-danger">*</span></label>--}}
-{{--                            <input type="text" class="form-control" id="meta_title" value="{{old('meta_title')}}" name="meta_title"--}}
-{{--                                   placeholder="Enter meta_title">--}}
-{{--                            @error('meta_title')--}}
-{{--                            <span class="text-danger">{{ $message }}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="meta_title">Meta Title<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="meta_title" value="{{old('meta_title')}}" name="meta_title"
+                                   placeholder="Enter meta_title">
+                            @error('meta_title')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="comment_able">Enable Comments<span class="text-danger">*</span></label>
                             <select class="form-control" name="comment_able" id="comment_able">
-                                <option value="1">Yes</option>
-                                <option value="0">Not</option>
+                                <option value="yes" {{ old('comment_able') == 'yes' ? 'selected' : '' }}>Yes</option>
+                                <option value="no" {{ old('comment_able') == 'no' ? 'selected' : '' }}>No</option>
                             </select>
                             @error('comment_able')
                             <span class="text-danger">{{ $message }}</span>
@@ -129,6 +131,8 @@
 @push('js')
     <script>
         $(document).ready(function () {
+
+            // Summernote initialization
             $('#postContent').summernote({
                 height: 300,
                 toolbar: [
@@ -142,6 +146,7 @@
                 ]
             });
 
+            // file input initialization
             $('#postImage').fileinput({
                 theme: 'fa5',
                 allowFileTypes: ['jpg', 'png', 'jpeg'],

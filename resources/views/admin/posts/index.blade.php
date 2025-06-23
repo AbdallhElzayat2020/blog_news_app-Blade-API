@@ -10,7 +10,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="#" data-toggle="modal" data-target="#create_post" class="btn btn-primary  float-right">
+                <a href="{{ route('admin.posts.create') }}" class="btn btn-primary  float-right">
                     <i class="fas fa-plus"></i> Create
                 </a>
             </div>
@@ -47,7 +47,31 @@
                                         <span class="badge badge-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td>{{ $post->user->name }}</td>
+                                <td>
+                                    @if($post->user)
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-2">
+                                                <img class="rounded-circle" width="30" height="30"
+                                                     src="{{ $post->user->avatar ?? asset('admin/img/undraw_profile.svg') }}" alt="Author">
+                                            </div>
+                                            <div>
+                                                <span class="font-weight-bold">{{ $post->user->name }}</span>
+                                                <small class="d-block text-muted">User</small>
+                                            </div>
+                                        </div>
+                                    @elseif($post->admin)
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-2">
+                                                <img class="rounded-circle" width="30" height="30"
+                                                     src="{{ asset('admin/img/undraw_profile.svg') }}" alt="Admin">
+                                            </div>
+                                            <div>
+                                                <span class="font-weight-bold">{{ $post->admin->name }}</span>
+                                                <small class="d-block text-primary">Admin</small>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </td>
                                 <td>{{ $post->number_of_views }}</td>
                                 <td>{{ $post->created_at->diffForHumans() }}</td>
                                 <td>
