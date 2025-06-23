@@ -43,8 +43,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-/* Protected Routes */
-
+/* Protected Routes for Dashboard */
 Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])->group(function () {
 
     /* users */
