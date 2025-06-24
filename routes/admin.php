@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Post\PostController;
+use App\Http\Controllers\Admin\Setting\SettingController;
 
 /* Public Routes */
 
@@ -38,8 +39,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
     });
-
-
 });
 
 
@@ -59,6 +58,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     Route::post('post/block/status/{id}', [PostController::class, 'changeStatus'])->name('post.change-status');
     Route::post('post/image/delete/{image_id}', [PostController::class, 'deletePostImage'])->name('post.image.delete');
 
+
+    /* Setting Routes */
+    Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/update', 'update')->name('update');
+    });
 
     Route::get('dashboard', function () {
         return view('admin.index');

@@ -80,12 +80,11 @@
     </div>
 
 
-
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ route('admin.settings.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+            <span>Settings</span></a>
     </li>
 
     <!-- Divider -->
