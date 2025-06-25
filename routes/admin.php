@@ -62,7 +62,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     /* Setting Routes */
     Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::post('/update', 'update')->name('update');
+        Route::put('/update', 'update')->name('update');
     });
 
     Route::get('dashboard', function () {

@@ -208,6 +208,7 @@
             @method('PUT')
 
             <div class="row">
+                <input type="hidden" name="setting_id" value="{{ $getSetting->id }}">
                 <!-- Site Identity Section -->
                 <div class="col-lg-6 mb-4">
                     <div class="card settings-card h-100">
