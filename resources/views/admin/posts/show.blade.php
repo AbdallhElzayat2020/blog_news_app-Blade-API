@@ -622,7 +622,6 @@
                                         </span>
                                     </h6>
                                 @endauth
-
                                 <p>
                                     <i class="fas fa-clock mr-1"></i>Posted
                                     <span class="text-primary">{{ $post->created_at->diffForHumans() }}</span>

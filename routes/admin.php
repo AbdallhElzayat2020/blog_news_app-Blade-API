@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Post\PostController;
 use App\Http\Controllers\Admin\Setting\SettingController;
+use App\Http\Controllers\Admin\Admin\AdminController;
 
 /* Public Routes */
 
@@ -55,7 +56,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
 
     /* posts */
     Route::resource('posts', PostController::class);
-    Route::delete('delete/comment/{id}' , [PostController::class, 'deleteComment'])->name('delete.comment');
+    Route::delete('delete/comment/{id}', [PostController::class, 'deleteComment'])->name('delete.comment');
     Route::post('post/block/status/{id}', [PostController::class, 'changeStatus'])->name('post.change-status');
     Route::post('post/image/delete/{image_id}', [PostController::class, 'deletePostImage'])->name('post.image.delete');
 
@@ -65,6 +66,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::get('/', 'index')->name('index');
         Route::put('/update', 'update')->name('update');
     });
+
+    /* categories */
+    Route::resource('admins', AdminController::class);
+    Route::post('admins/block/status/{id}', [AdminController::class, 'changeStatus'])->name('admins.change-status');
+
 
     Route::get('dashboard', function () {
         return view('admin.index');
