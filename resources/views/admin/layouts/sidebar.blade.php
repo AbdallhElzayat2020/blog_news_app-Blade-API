@@ -81,13 +81,30 @@
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Admins Managements:</h6>
-                {{--                    @can('view_admins')--}}
-                <a class="collapse-item" href="{{ route('admin.admins.index') }}">All Admins</a>
-                {{--                    @endcan--}}
 
-                {{--                    @can('create_admins')--}}
+                <a class="collapse-item" href="{{ route('admin.admins.index') }}">All Admins</a>
+
                 <a class="collapse-item" href="{{ route('admin.admins.create') }}">Add New Admin</a>
-                {{--                    @endcan--}}
+
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#roles"
+           aria-expanded="true" aria-controls="roles">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Authorization</span>
+        </a>
+        <div id="roles" class="collapse" aria-labelledby="headingUtilities"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Authorization</h6>
+
+                <a class="collapse-item" href="{{ route('admin.roles.index') }}">All Roles</a>
+
+                <a class="collapse-item" href="{{ route('admin.roles.create') }}">Add New Role</a>
+
             </div>
         </div>
     </li>

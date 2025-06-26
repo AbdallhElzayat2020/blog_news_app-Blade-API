@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Post\PostController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Admin\AdminController;
+use App\Http\Controllers\Admin\Role\RoleController;
 
 /* Public Routes */
 
@@ -66,6 +67,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::get('/', 'index')->name('index');
         Route::put('/update', 'update')->name('update');
     });
+
+    /* Setting Routes */
+    Route::resource('roles', RoleController::class);
 
     /* categories */
     Route::resource('admins', AdminController::class);
