@@ -10,46 +10,48 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="{{ route('admin.admins.create') }}" class="btn btn-primary float-right">Create User</a>
+                <a href="{{ route('admin.roles.create') }}" class="btn btn-primary float-right">Create User</a>
             </div>
-            @include('admin.admins.filter.filter')
+            @include('admin.roles.filter.filter')
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Name</th>
-                            <th>UserName</th>
-                            <th>Email</th>
                             <th>Status</th>
+                            <th>Permissions</th>
+                            <th>Related roles</th>
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @forelse($admins as $index=> $admin)
+                        @forelse($roles as $index=> $role)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->username }}</td>
-                                <td>{{ $admin->email }}</td>
+                                <td>{{ $role->role_name }}</td>
                                 <td>
-                                    @if ($admin->status == 'active')
+                                    @if ($role->status == 'active')
                                         <span class="badge badge-success">Active</span>
                                     @else
                                         <span class="badge badge-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td>{{ $admin->created_at->diffForHumans() }}</td>
                                 <td>
-                                    <a href="#" data-toggle="modal" data-target="#delete_admin_{{ $admin->id }}"
+                                    @foreach($role->permissions as $permission)
+                                        <span class="badge badge-info">{{ $permission->name }}</span>
+                                    @endforeach
+                                </td>
+                                <td>{{ $role->created_at->diffForHumans() }}</td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#delete_role_{{ $role->id }}"
                                        class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="#" data-toggle="modal" data-target="#change_status_{{ $admin->id }}" class="btn btn-warning">
-                                        @if ($admin->status == 'active')
+                                    <a href="#" data-toggle="modal" data-target="#change_status_{{ $role->id }}" class="btn btn-warning">
+                                        @if ($role->status == 'active')
                                             <i class="fas fa-ban"></i>
                                         @else
                                             <i class="fas fa-play"></i>
@@ -61,16 +63,16 @@
                                 </td>
                             </tr>
                             {{-- Delete & changeStatus Popup--}}
-                            @include('admin.admins.delete')
-                            @include('admin.admins.change_status')
+                            @include('admin.roles.delete')
+                            @include('admin.roles.change_status')
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center alert alert-danger">No admin found</td>
+                                <td colspan="8" class="text-center alert alert-danger">No Roles found</td>
                             </tr>
                         @endforelse
                         </tbody>
                     </table>
-                    {{ $admins->links() }}
+                    {{ $roles->links() }}
                 </div>
             </div>
         </div>
