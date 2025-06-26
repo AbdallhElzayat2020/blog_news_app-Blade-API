@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Post\PostRequest;
 use App\Http\Requests\Frontend\Dashboard\UpdatePostRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Image;
 use App\Models\Post;
 use App\Utils\ImageManager;
@@ -183,5 +184,26 @@ class PostController extends Controller
     public function commentAble($request)
     {
         return $request->comment_able == 'on' ? $request->merge(['comment_able' => 'yes']) : $request->merge(['comment_able' => 'no']);
+    }
+
+    public function deleteComment(string $id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        if (! Auth::guard('admin')->check()) {
+            if (Auth::id() !== $comment->user_id) {
+                return back()->with('error', 'غير مسموح لك بحذف هذا التعليق.');
+            }
+        }
+
+        try {
+            DB::beginTransaction();
+            $comment->delete();
+            DB::commit();
+            return back()->with('success', 'تم حذف التعليق بنجاح.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'فشل الحذف، حاول لاحقاً.');
+        }
     }
 }

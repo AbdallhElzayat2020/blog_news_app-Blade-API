@@ -618,7 +618,7 @@
                                 @auth
                                     <h6>Publisher:
                                         <span class="text-primary">
-                                            {{ auth()->guard('web')->user()->name ? auth()->guard('admin')->user()->name : 'By Admin' }}
+                                            {{$post->user->name ?? $post->admin->name}}
                                         </span>
                                     </h6>
                                 @endauth
@@ -666,17 +666,20 @@
 
                         <!-- Post Actions -->
                         <div class="post-actions">
-                            <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">
-                                <i class="fas fa-edit"></i>
-                                <span>Edit Post</span>
-                            </a>
+                            @if($post->admin_id != null)
+                                <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Edit Post</span>
+                                </a>
+                            @endif
+
 
                             <a href="#" data-toggle="modal" title="change_status" data-target="#change_status_{{ $post->id }}"
                                class="btn btn-warning">
                                 @if ($post->status == 'active')
-                                    <i class="fas fa-ban"></i>
+                                    <i class="fas fa-ban"></i> Block
                                 @else
-                                    <i class="fas fa-play"></i>
+                                    <i class="fas fa-play"></i> Activate
                                 @endif
                             </a>
 
@@ -709,7 +712,7 @@
                                         </div>
                                         @auth('admin')
                                             <div class="comment-actions">
-                                                <form action=""
+                                                <form action="{{ route('admin.delete.comment',$post->id) }}"
                                                       method="POST" style="display: inline;"
                                                       onsubmit="return confirm('Are you sure you want to delete this comment?');">
                                                     @csrf

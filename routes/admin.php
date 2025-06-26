@@ -53,8 +53,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     Route::resource('categories', CategoryController::class);
     Route::post('category/block/status/{id}', [CategoryController::class, 'changeStatus'])->name('users.change-status');
 
-    /* categories */
+    /* posts */
     Route::resource('posts', PostController::class);
+    Route::delete('delete/comment/{id}' , [PostController::class, 'deleteComment'])->name('delete.comment');
     Route::post('post/block/status/{id}', [PostController::class, 'changeStatus'])->name('post.change-status');
     Route::post('post/image/delete/{image_id}', [PostController::class, 'deletePostImage'])->name('post.image.delete');
 

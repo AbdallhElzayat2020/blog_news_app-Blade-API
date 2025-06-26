@@ -30,7 +30,6 @@ class SettingController extends Controller
             if ($request->hasFile('site_logo')) {
                 $this->updateLogo($request, $logo_path, $setting);
             }
-
             if ($request->hasFile('site_favicon')) {
                 $this->updateFavicon($request, $favicon_path, $setting);
             }
@@ -44,7 +43,6 @@ class SettingController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', $exception->getMessage());
         }
-
         return redirect()->back()->with('success', 'Settings updated successfully');
     }
 
