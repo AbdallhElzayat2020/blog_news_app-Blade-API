@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Admin\AdminRequest;
 use App\Models\Admin;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,9 +41,14 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdminRequest $request)
     {
-        return $request;
+        $request->validated();
+        $admin = Admin::create($request->validated());
+        if (!$admin) {
+            return redirect()->back()->with('error', 'Failed to create admin');
+        }
+        return redirect()->route('admin.admins.index')->with('success', 'Admin created successfully');
     }
 
     /**
