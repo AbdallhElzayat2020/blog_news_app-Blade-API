@@ -1,14 +1,14 @@
-<div class="modal fade" id="delete_admin_{{ $admin->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" id="delete_role_{{ $role->id }}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('admin.admins.destroy', $admin->id) }}" method="post">
+            <form action="{{ route('admin.roles.destroy', $role->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
                     <div class="">
                         <h5 class="modal-title" id="exampleModalLabel"> delete this <span
-                                    class="text-danger">{{ $admin->name }}</span>
+                                    class="text-danger">{{ $role->name }}</span>
                         </h5>
                     </div>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">

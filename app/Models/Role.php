@@ -13,4 +13,11 @@ class Role extends Model
     ];
 
     protected $table = 'roles';
+
+
+    // Accessor to decode JSON permissions
+    public function getPermissionsAttribute($permissions)
+    {
+        return json_decode($permissions, true);
+    }
 }

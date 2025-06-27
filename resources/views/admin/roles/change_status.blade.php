@@ -1,14 +1,14 @@
-<div class="modal fade" id="change_status_{{ $admin->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" id="change_status_{{ $role->id }}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('admin.admins.change-status', $admin->id) }}" method="post">
+            <form action="{{ route('admin.roles.change-status', $role->id) }}" method="post">
                 @csrf
                 @method('POST')
                 <div class="modal-header">
                     <h5 class="modal-title">
                         Are you want to change Status for This admin
-                        <span class="text-danger">{{ $admin->name }}</span>
+                        <span class="text-danger">{{ $role->name }}</span>
                     </h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>

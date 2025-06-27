@@ -18,10 +18,10 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Status</th>
                             <th>Permissions</th>
-                            <th>Related roles</th>
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
@@ -40,8 +40,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @foreach($role->permissions as $permission)
-                                        <span class="badge badge-info">{{ $permission->name }}</span>
+                                    {{--  from Accessors in Model  --}}
+                                    @foreach($role->permissions as $key => $value)
+                                        <span class="badge badge-info">{{ $value }}</span>
                                     @endforeach
                                 </td>
                                 <td>{{ $role->created_at->diffForHumans() }}</td>
@@ -50,6 +51,10 @@
                                        class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
+                                    <a href="{{ route('admin.roles.edit',$role->id) }}"
+                                            class="btn btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     <a href="#" data-toggle="modal" data-target="#change_status_{{ $role->id }}" class="btn btn-warning">
                                         @if ($role->status == 'active')
                                             <i class="fas fa-ban"></i>
@@ -57,9 +62,9 @@
                                             <i class="fas fa-play"></i>
                                         @endif
                                     </a>
-                                    <a href="" class="btn btn-info">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+{{--                                    <a href="" class="btn btn-info">--}}
+{{--                                        <i class="fas fa-eye"></i>--}}
+{{--                                    </a>--}}
                                 </td>
                             </tr>
                             {{-- Delete & changeStatus Popup--}}
@@ -67,7 +72,7 @@
                             @include('admin.roles.change_status')
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center alert alert-danger">No Roles found</td>
+                                <td colspan="6" class="text-center alert alert-danger">No Roles found</td>
                             </tr>
                         @endforelse
                         </tbody>

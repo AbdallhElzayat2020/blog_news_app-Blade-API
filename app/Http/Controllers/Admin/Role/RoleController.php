@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Role\RoleRequest;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -12,9 +13,18 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::paginate(8);
+
+        $roles = Role::when($request->keyword, function (Builder $query) {
+            $query->where('role_name', 'like', '%' . request()->keyword . '%');
+
+        })->when(request()->status, function (Builder $query) {
+            $query->where('status', request()->status);
+
+        })->orderBy(request('sort_by', 'id'), request('order_by', 'desc'))
+            ->paginate(request('limit_by', 5))->withQueryString();
+
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -32,26 +42,21 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $request->validated();
-        $role = Role::create([
-            'role_name' => $request->role_name,
-            'status' => $request->status,
-            'permissions' => json_encode($request->permissions),
-        ]);
+        try {
+            $role = Role::create([
+                'role_name' => $request->role_name,
+                'status' => $request->status,
+                'permissions' => json_encode($request->permissions),
+            ]);
 
-        if (!$role) {
+            if (!$role) {
+                return redirect()->back()->with('error', 'Role not created, please try again!');
+            }
+        } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'Role not created, please try again!');
         }
-        return redirect()->back()->with('success', 'Role created successfully!');
-//        return redirect()->route('admin.roles.index')->with('success', 'Role created successfully!');
+        return redirect()->route('admin.roles.index')->with('success', 'created successfully!');
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -59,15 +64,27 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RoleRequest $request, string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $request->validated();
+        try {
+            $role->update([
+                'role_name' => $request->role_name,
+                'status' => $request->status,
+                'permissions' => json_encode($request->permissions),
+            ]);
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'Role not updated, please try again!');
+        }
+        return redirect()->route('admin.roles.index')->with('success', 'updated successfully!');
     }
 
     /**
@@ -75,6 +92,36 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $role = Role::findOrFail($id);
+
+            if ($role->role_name == 'admin') {
+                return redirect()->back()->with('error', 'You cannot delete the admin role!');
+            }
+            if (!$role) {
+                return redirect()->back()->with('error', 'Failed to delete. Please try again.');
+            }
+            $role->delete();
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'Failed to delete. Please try again.');
+        }
+        return to_route('admin.roles.index')->with('success', 'deleted successfully.');
+    }
+
+    public function changeStatus(string $id)
+    {
+        $role = Role::findOrFail($id);
+        if ($role->status == 'active') {
+            $role->update([
+                'status' => 'inactive',
+            ]);
+            return redirect()->back()->with('success', 'blocked successfully');
+        } else {
+            $role->update([
+                'status' => 'active',
+            ]);
+            return redirect()->back()->with('success', 'Activated successfully');
+        }
     }
 }

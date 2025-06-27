@@ -68,13 +68,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::put('/update', 'update')->name('update');
     });
 
-    /* Setting Routes */
-    Route::resource('roles', RoleController::class);
-
     /* categories */
     Route::resource('admins', AdminController::class);
     Route::post('admins/block/status/{id}', [AdminController::class, 'changeStatus'])->name('admins.change-status');
-
+    
+    /* Roles Routes */
+    Route::resource('roles', RoleController::class);
+    Route::post('roles/block/status/{id}', [RoleController::class, 'changeStatus'])->name('roles.change-status');
 
     Route::get('dashboard', function () {
         return view('admin.index');

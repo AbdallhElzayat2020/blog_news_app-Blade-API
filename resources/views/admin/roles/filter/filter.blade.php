@@ -6,7 +6,7 @@
                 <div class="form-group">
                     <label for="sort_by">Sorting</label>
                     <select class="form-control" name="sort_by" id="sort_by">
-                        <option value="name" {{ request('sort_by') == 'name' ? 'selected' : '' }}>Name</option>
+                        <option value="role_name" {{ request('sort_by') == 'role_name' ? 'selected' : '' }}>Role name</option>
                         <option value="id" {{ request('sort_by') == 'id' ? 'selected' : '' }}>Id</option>
                         <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>Created_at
                         </option>
