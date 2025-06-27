@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\RelatedSite;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class CheckSettingServicesProvider extends ServiceProvider
@@ -22,6 +23,10 @@ class CheckSettingServicesProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Check if settings table exists before querying
+        if (!Schema::hasTable('settings')) {
+            return;
+        }
 
         $getSetting = Setting::firstOr(function () {
             return Setting::create([
@@ -50,6 +55,9 @@ class CheckSettingServicesProvider extends ServiceProvider
 
         $links = RelatedSite::select('name', 'url', 'id')->get();
 
+        if (!Schema::hasTable('categories')) {
+            return;
+        }
 
         view()->share([
             'getSetting' => $getSetting,

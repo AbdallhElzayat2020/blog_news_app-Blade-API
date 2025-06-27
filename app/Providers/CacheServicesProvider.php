@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class CacheServicesProvider extends ServiceProvider
@@ -21,6 +22,15 @@ class CacheServicesProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (!Schema::hasTable('settings')) {
+            return;
+        }
+
+        // Check if posts table exists before trying to query it
+        if (!Schema::hasTable('posts')) {
+            return;
+        }
+
         /* read_more_posts */
         if (!Cache::has('read_more_posts')) {
             $read_more_posts = Post::select('id', 'title', 'slug')->latest()->limit(10)->get();

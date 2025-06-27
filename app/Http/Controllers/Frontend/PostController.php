@@ -21,9 +21,9 @@ class PostController extends Controller
             $query->limit(3);
         }])->whereSlug($slug)->firstOrFail();
 
-        if (!$mainPost) {
-            abort(404, 'Post not found');
-        }
+//        if (!$mainPost) {
+//            abort(404, 'Post not found');
+//        }
 
         $category = $mainPost->category;
         $related_posts = $category->posts()
@@ -47,9 +47,9 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->firstOrFail();
 
-        if (!$post) {
-            abort(404, 'Post not found');
-        }
+//        if (!$post) {
+//            abort(404, 'Post not found');
+//        }
         $comments = $post->comments()->latest()->with('user')->get();
         return response()->json($comments);
     }

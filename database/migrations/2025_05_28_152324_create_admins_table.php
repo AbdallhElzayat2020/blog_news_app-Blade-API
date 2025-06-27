@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+            $table->foreignId('role_id')->nullable()->constrained('roles')->cascadeOnDelete();
             $table->timestamps();
             $table->rememberToken();
         });
