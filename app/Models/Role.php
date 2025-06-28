@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model
 {
@@ -13,6 +14,12 @@ class Role extends Model
     ];
 
     protected $table = 'roles';
+
+
+    public function admins(): HasMany
+    {
+        return $this->hasMany(Admin::class);
+    }
 
     // Accessor to decode JSON permissions
     public function getPermissionsAttribute($permissions)

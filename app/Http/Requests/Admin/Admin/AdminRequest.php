@@ -30,6 +30,7 @@ class AdminRequest extends FormRequest
             'password_confirmation' => ['required', 'same:password'],
             'phone' => ['nullable', 'string', 'min:10', 'max:20'],
             'status' => ['required', 'in:active,inactive'],
+            'role_id' => ['required', 'exists:roles,id'],
         ];
     }
 }

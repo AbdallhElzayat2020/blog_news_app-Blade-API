@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Admin\AdminRequest;
 use App\Models\Admin;
 use App\Models\Post;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -16,15 +17,16 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $admins = Admin::withCount(['posts'])->when($request->keyword, function (Builder $query) {
-            $query->where('name', 'like', '%' . request()->keyword . '%')
-                ->orWhere('email', 'like', '%' . request()->keyword . '%')
-                ->orWhere('username', 'like', '%' . request()->keyword . '%');
+        $admins = Admin::with('role')->where('id', '!=', auth()->guard('admin')->user()->id)
+            ->when($request->keyword, function (Builder $query) {
+                $query->where('name', 'like', '%' . request()->keyword . '%')
+                    ->orWhere('email', 'like', '%' . request()->keyword . '%')
+                    ->orWhere('username', 'like', '%' . request()->keyword . '%');
 
-        })->when(request()->status, function (Builder $query) {
-            $query->where('status', request()->status);
+            })->when(request()->status, function (Builder $query) {
+                $query->where('status', request()->status);
 
-        })->orderBy(request('sort_by', 'id'), request('order_by', 'desc'))
+            })->orderBy(request('sort_by', 'id'), request('order_by', 'desc'))
             ->paginate(request('limit_by', 5))->withQueryString();
 
         return view('admin.admins.index', compact('admins'));
@@ -35,7 +37,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admins.create');
+        $roles = Role::select(['id', 'role_name'])->get();
+        return view('admin.admins.create', compact('roles'));
     }
 
     /**
@@ -43,6 +46,7 @@ class AdminController extends Controller
      */
     public function store(AdminRequest $request)
     {
+//        return $request;
         $request->validated();
         $admin = Admin::create($request->validated());
         if (!$admin) {
@@ -64,15 +68,29 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $admin = Admin::with('role')->findOrFail($id);
+        $roles = Role::select(['id', 'role_name'])->get();
+        return view('admin.admins.edit', compact('admin', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminRequest $request, string $id)
     {
-        //
+        return $request;
+        $admin = Admin::findOrFail($id);
+        if (!$admin) {
+            return redirect()->back()->with('error', 'try again later');
+        }
+        $admin->update($request->except(['_token', '_method', 'password_confirmation']));
+        if ($request->password) {
+            $admin->update([
+                'password' => bcrypt($request->password),
+            ]);
+        }
+
+        return redirect()->route('admin.admins.index')->with('success', 'Updated successfully');
     }
 
     /**

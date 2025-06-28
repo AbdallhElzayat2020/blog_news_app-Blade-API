@@ -22,6 +22,7 @@
                             <th>Name</th>
                             <th>UserName</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Status</th>
                             <th>Created At</th>
                             <th>Actions</th>
@@ -35,6 +36,7 @@
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->username }}</td>
                                 <td>{{ $admin->email }}</td>
+                                <td>{{ $admin->role?->role_name ?? 'No Role' }}</td>
                                 <td>
                                     @if ($admin->status == 'active')
                                         <span class="badge badge-success">Active</span>
@@ -55,8 +57,8 @@
                                             <i class="fas fa-play"></i>
                                         @endif
                                     </a>
-                                    <a href="" class="btn btn-info">
-                                        <i class="fas fa-eye"></i>
+                                    <a href="{{ route('admin.admins.edit',$admin->id) }}" class="btn btn-info">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                 </td>
                             </tr>

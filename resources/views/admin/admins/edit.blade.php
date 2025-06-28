@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Create Admin')
+@section('title', 'Update Admin')
 @push('css')
     <style>
         /* General Styles */
@@ -207,16 +207,17 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{ url()->previous() }}" class="text-white my-3 btn btn-primary">
+        <a href="{{ url()->previous() }}" class="back-btn">
             <i class="fas fa-arrow-left"></i>
             Back to Admins
         </a>
 
         <div class="page-header">
-            <h1><i class="fas fa-user-shield mr-2"></i>Create New Admin</h1>
+            <h1><i class="fas fa-user-shield mr-2"></i>Edit Admin</h1>
         </div>
 
-        <form action="{{ route('admin.admins.store') }}" method="post">
+        <form action="{{ route('admin.admins.update',$admin->id) }}" method="post">
+            @method('PUT')
             @csrf
             <div class="form-card">
                 <div class="card-body">
@@ -229,7 +230,7 @@
                                        class="form-control @error('name') is-invalid @enderror"
                                        id="name"
                                        name="name"
-                                       value="{{ old('name') }}"
+                                       value="{{ old('name',$admin->name) }}"
                                        placeholder="Enter admin name">
                                 @error('name')
                                 <span class="text-danger">{{ $message }}</span>
@@ -245,7 +246,7 @@
                                        class="form-control @error('email') is-invalid @enderror"
                                        id="email"
                                        name="email"
-                                       value="{{ old('email') }}"
+                                       value="{{ old('email',$admin->email) }}"
                                        placeholder="Enter email address">
                                 @error('email')
                                 <span class="text-danger">{{ $message }}</span>
@@ -261,7 +262,7 @@
                                        class="form-control @error('username') is-invalid @enderror"
                                        id="username"
                                        name="username"
-                                       value="{{ old('username') }}"
+                                       value="{{ old('username',$admin->username) }}"
                                        placeholder="Enter username">
                                 @error('username')
                                 <span class="text-danger">{{ $message }}</span>
@@ -314,8 +315,12 @@
                                         name="status"
                                         id="status">
                                     <option value="">Select Status</option>
-                                    <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="active" {{ old('status',$admin->status) == 'active' ? 'selected' : '' }}>
+                                        Active
+                                    </option>
+                                    <option value="inactive" {{ old('status',$admin->status) == 'inactive' ? 'selected' : '' }}>
+                                        Inactive
+                                    </option>
                                 </select>
                                 @error('status')
                                 <span class="text-danger">{{ $message }}</span>
@@ -331,7 +336,9 @@
                                         id="role_id">
                                     <option value="">Select Role</option>
                                     @forelse($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                        <option @selected(old('role_id', $admin->role_id) == $role->id) value="{{$role->id}}">
+                                            {{$role->role_name}}
+                                        </option>
                                     @empty
                                         <option value="" disabled selected> No Roles</option>
                                     @endforelse
@@ -341,6 +348,7 @@
                                 @enderror
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Submit Button -->
