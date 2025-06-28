@@ -78,16 +78,12 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, string $id)
     {
-        return $request;
         $admin = Admin::findOrFail($id);
-        if (!$admin) {
-            return redirect()->back()->with('error', 'try again later');
-        }
+
         $admin->update($request->except(['_token', '_method', 'password_confirmation']));
+
         if ($request->password) {
-            $admin->update([
-                'password' => bcrypt($request->password),
-            ]);
+            $admin->update(['password' => bcrypt($request->password)]);
         }
 
         return redirect()->route('admin.admins.index')->with('success', 'Updated successfully');
@@ -98,19 +94,30 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $admin = Admin::findOrFail($id);
+
+            $deleted_admin = $admin->delete();
+            if (!$deleted_admin) {
+                return redirect()->route('admin.admins.index')->with('error', 'admin not deleted');
+            }
+
+            return redirect()->route('admin.admins.index')->with('success', 'deleted successfully');
+        } catch (\Exception $exception) {
+            return redirect()->route('admin.admins.index')->with('error', 'not deleted');
+        }
     }
 
     public function changeStatus(string $id)
     {
-        $post = Post::findOrFail($id);
-        if ($post->status == 'active') {
-            $post->update([
+        $admin = Admin::findOrFail($id);
+        if ($admin->status == 'active') {
+            $admin->update([
                 'status' => 'inactive',
             ]);
             return redirect()->back()->with('success', 'blocked successfully');
         } else {
-            $post->update([
+            $admin->update([
                 'status' => 'active',
             ]);
             return redirect()->back()->with('success', 'Activated successfully');

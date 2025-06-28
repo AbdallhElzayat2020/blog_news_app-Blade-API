@@ -95,9 +95,10 @@ class RoleController extends Controller
         try {
             $role = Role::findOrFail($id);
 
-            if ($role->role_name == 'admin') {
-                return redirect()->back()->with('error', 'You cannot delete the admin role!');
+            if ($role->admins->count() > 0) {
+                return redirect()->back()->with('error', 'Failed to delete. This role is assigned to one or more admins.');
             }
+
             if (!$role) {
                 return redirect()->back()->with('error', 'Failed to delete. Please try again.');
             }
@@ -112,6 +113,7 @@ class RoleController extends Controller
     public function changeStatus(string $id)
     {
         $role = Role::findOrFail($id);
+
         if ($role->status == 'active') {
             $role->update([
                 'status' => 'inactive',

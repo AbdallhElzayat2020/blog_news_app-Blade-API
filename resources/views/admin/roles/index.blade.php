@@ -22,6 +22,7 @@
                             <th>Name</th>
                             <th>Status</th>
                             <th>Permissions</th>
+                            <th>Related Admins</th>
                             <th>Created At</th>
                             <th>Actions</th>
                         </tr>
@@ -45,6 +46,7 @@
                                         <span class="badge badge-info">{{ $value }}</span>
                                     @endforeach
                                 </td>
+                                <td>{{$role->admins->count()}}</td>
                                 <td>{{ $role->created_at->diffForHumans() }}</td>
                                 <td>
                                     <a href="#" data-toggle="modal" data-target="#delete_role_{{ $role->id }}"
