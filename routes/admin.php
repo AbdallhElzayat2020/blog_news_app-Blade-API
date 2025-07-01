@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
+use App\Http\Controllers\Admin\HomeDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\Admin\AdminController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\Contact\ContactController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
+
 /* Public Routes */
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -47,6 +49,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 /* Protected Routes for Dashboard */
 Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])->group(function () {
+
+    /* Dashboard */
+    Route::get('dashboard', [HomeDashboardController::class, 'index'])->name('dashboard.index');
 
     /* users */
     Route::resource('users', UserController::class);
@@ -92,11 +97,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::put('/update', 'update')->name('update');
     });
 
-
-
-    Route::get('dashboard', function () {
-        return view('admin.index');
-    })->name('dashboard.index');
 
 });
 

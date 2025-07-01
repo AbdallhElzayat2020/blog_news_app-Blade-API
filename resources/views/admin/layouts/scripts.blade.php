@@ -21,5 +21,5 @@
 
 {{-- summernote Plugine --}}
 <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
-
+@livewireScripts
 @stack('js')

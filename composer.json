@@ -16,6 +16,8 @@
     "laravel/sanctum": "^4.0",
     "laravel/telescope": "^5.9",
     "laravel/tinker": "^2.10.1",
+    "laraveldaily/laravel-charts": "^0.2.3",
+    "livewire/livewire": "^3.6",
     "php-flasher/flasher-laravel": "^2.1",
     "predis/predis": "^2.0",
     "pusher/pusher-php-server": "^7.2"

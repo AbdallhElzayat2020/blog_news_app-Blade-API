@@ -23,6 +23,7 @@
     {{-- summernote Plugine --}}
 
     <link rel="stylesheet" href="{{asset('vendor/summernote/summernote-bs4.min.css')}}">
+    @livewireStyles
 
     @stack('css')
 </head>
