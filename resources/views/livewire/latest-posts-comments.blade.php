@@ -26,7 +26,6 @@
                                 <td>
                                     <a href="{{route('admin.posts.show',$post->id)}}">{{$post->title}}</a>
                                 </td>
-
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->comments_count}}</td>
                                 <td>
@@ -42,7 +41,6 @@
                                 <td colspan="4" class="text-center alert alert-info">No posts available</td>
                             </tr>
                         @endforelse
-
                         </tbody>
                     </table>
                 </div>
