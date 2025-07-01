@@ -13,6 +13,7 @@ class LoginController extends Controller
         return view('admin.layouts.auth.login');
     }
 
+
     public function handleLogin(Request $request)
     {
         $request->validate($this->filterData());

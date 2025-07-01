@@ -18,6 +18,10 @@ use App\Http\Controllers\Admin\Profile\ProfileController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
+    Route::fallback(function () {
+        return response()->view('errors.404');
+    });
+
     Route::controller(LoginController::class)->group(function () {
 
         Route::get('/login', 'showLoginForm')->name('show-login-form')->middleware('guest.admin');

@@ -56,55 +56,54 @@
                     </div>
 
                     <!-- Comment Section -->
-                    @if(auth('web')->user()->status != 'active')
-                        @auth
-                            @if($mainPost->comment_able == 'yes')
-                                <div class="comment-section">
-                                    <!-- Comment Input -->
-                                    <form method="post" id="commentForm">
-                                        @csrf
-                                        <div class="comment-input">
-                                            <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..."
-                                                   id="commentBox"/>
-                                            @auth
-                                                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                                            @endauth
-                                            <input type="hidden" name="post_id" value="{{$mainPost->id}}">
 
-                                            <button type="submit" id="addCommentBtn">Post</button>
-                                        </div>
-                                    </form>
+                    @auth
+                        @if($mainPost->comment_able == 'yes')
+                            <div class="comment-section">
+                                <!-- Comment Input -->
+                                <form method="post" id="commentForm">
+                                    @csrf
+                                    <div class="comment-input">
+                                        <input type="text" name="comment" value="{{old('comment')}}" placeholder="Add a comment..."
+                                               id="commentBox"/>
+                                        @auth
+                                            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                        @endauth
+                                        <input type="hidden" name="post_id" value="{{$mainPost->id}}">
 
-                                    <div style="display: none" id="error_msg" class="alert alert-danger">
-
+                                        <button type="submit" id="addCommentBtn">Post</button>
                                     </div>
-                                    <!-- Display Comments -->
-                                    <div class="comments">
-                                        @foreach($mainPost->comments as $comment)
-                                            <div class="comment">
-                                                <img src="{{asset($comment->user->avatar)}}" alt="User Image" class="comment-img"/>
-                                                <div class="comment-content">
-                                                    <span class="username">{{$comment->user->name}}</span>
-                                                    <p class="comment-text">{{$comment->comment}}</p>
-                                                </div>
+                                </form>
+
+                                <div style="display: none" id="error_msg" class="alert alert-danger">
+
+                                </div>
+                                <!-- Display Comments -->
+                                <div class="comments">
+                                    @foreach($mainPost->comments as $comment)
+                                        <div class="comment">
+                                            <img src="{{asset($comment->user->avatar)}}" alt="User Image" class="comment-img"/>
+                                            <div class="comment-content">
+                                                <span class="username">{{$comment->user->name}}</span>
+                                                <p class="comment-text">{{$comment->comment}}</p>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                    @endforeach
 
-                                        <!-- Add more comments here for demonstration -->
-                                    </div>
+                                    <!-- Add more comments here for demonstration -->
+                                </div>
 
-                                    <!-- Show More Button -->
-                                    @if($mainPost->comments->count() > 2)
-                                        <button id="showMoreBtn" class="show-more-btn">Show more</button>
-                                    @endif
-                                </div>
-                            @else
-                                <div class="alert alert-info">
-                                    <a href="{{ route('login') }}">Login</a> to access comments
-                                </div>
-                            @endif
-                        @endauth
-                    @endif
+                                <!-- Show More Button -->
+                                @if($mainPost->comments->count() > 2)
+                                    <button id="showMoreBtn" class="show-more-btn">Show more</button>
+                                @endif
+                            </div>
+                        @else
+                            <div class="alert alert-info">
+                                <a href="{{ route('login') }}">Login</a> to access comments
+                            </div>
+                        @endif
+                    @endauth
 
 
                     <!-- Related News -->

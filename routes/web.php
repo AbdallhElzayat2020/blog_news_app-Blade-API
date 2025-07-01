@@ -24,6 +24,11 @@ Route::group(
     ],
     function () {
 
+
+        Route::fallback(function () {
+            return response()->view('errors.404');
+        });
+
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
         /* contact Routes */
