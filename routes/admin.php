@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Post\PostController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Admin\AdminController;
 use App\Http\Controllers\Admin\Role\RoleController;
+use App\Http\Controllers\Admin\Contact\ContactController;
 
 /* Public Routes */
 
@@ -71,10 +72,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
     /* categories */
     Route::resource('admins', AdminController::class);
     Route::post('admins/block/status/{id}', [AdminController::class, 'changeStatus'])->name('admins.change-status');
-    
+
     /* Roles Routes */
     Route::resource('roles', RoleController::class);
     Route::post('roles/block/status/{id}', [RoleController::class, 'changeStatus'])->name('roles.change-status');
+
+
+    /* =================== Contact Routes ==================== */
+    Route::controller(ContactController::class)->prefix('contact')->as('contact.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('show/{id}', 'show')->name('show');
+
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
 
     Route::get('dashboard', function () {
         return view('admin.index');

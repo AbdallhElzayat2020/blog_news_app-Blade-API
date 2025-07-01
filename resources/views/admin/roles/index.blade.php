@@ -64,9 +64,6 @@
                                             <i class="fas fa-play"></i>
                                         @endif
                                     </a>
-{{--                                    <a href="" class="btn btn-info">--}}
-{{--                                        <i class="fas fa-eye"></i>--}}
-{{--                                    </a>--}}
                                 </td>
                             </tr>
                             {{-- Delete & changeStatus Popup--}}

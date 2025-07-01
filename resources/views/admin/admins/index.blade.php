@@ -47,17 +47,17 @@
                                 <td>{{ $admin->created_at->diffForHumans() }}</td>
                                 <td>
                                     <a href="#" data-toggle="modal" data-target="#delete_admin_{{ $admin->id }}"
-                                       class="btn btn-danger">
+                                       class="btn btn-danger mx-1">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="#" data-toggle="modal" data-target="#change_status_{{ $admin->id }}" class="btn btn-warning">
+                                    <a href="#" data-toggle="modal" data-target="#change_status_{{ $admin->id }}" class="btn btn-warning mx-1">
                                         @if ($admin->status == 'active')
                                             <i class="fas fa-ban"></i>
                                         @else
                                             <i class="fas fa-play"></i>
                                         @endif
                                     </a>
-                                    <a href="{{ route('admin.admins.edit',$admin->id) }}" class="btn btn-info">
+                                    <a href="{{ route('admin.admins.edit',$admin->id) }}" class="btn btn-info mx-1">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </td>
@@ -76,7 +76,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.container-fluid -->
 @endsection

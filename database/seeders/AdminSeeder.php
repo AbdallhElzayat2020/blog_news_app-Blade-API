@@ -21,9 +21,10 @@ class AdminSeeder extends Seeder
             'username' => 'superadmin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
-            'phone' => '01212484233',
+            'phone' => '123456789',
             'avatar' => fake()->imageUrl(),
             'status' => fake()->randomElement(['active', 'inactive']),
+            'role_id' => 1,
             'created_at' => $date,
             'updated_at' => $date,
         ]);

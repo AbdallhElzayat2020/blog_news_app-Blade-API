@@ -288,7 +288,7 @@
                     <div class="form-group mt-4">
                         <button type="submit" class="submit-btn">
                             <i class="fas fa-save"></i>
-                            Create
+                            Update
                         </button>
                     </div>
                 </div>

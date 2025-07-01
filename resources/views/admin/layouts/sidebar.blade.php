@@ -21,11 +21,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Pages
-    </div>
-
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categories"
            aria-expanded="true" aria-controls="categories">
@@ -109,16 +104,16 @@
         </div>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.contact.index') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Contacts</span></a>
+    </li>
 
 
-    <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.settings.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>

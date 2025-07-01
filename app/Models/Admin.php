@@ -59,6 +59,11 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function hasPermission($permission): bool
+    {
+        return in_array($permission, $this->role->permissions ?? []);
+    }
     /*
     ================================
     Scopes
