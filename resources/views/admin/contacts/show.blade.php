@@ -60,7 +60,7 @@
                                         <i class="fas fa-user-tag text-primary mr-1"></i>
                                         Name
                                     </label>
-                                    <input disabled type="text" class="form-control bg-light border-0 shadow-sm"
+                                    <input readonly  type="text" class="form-control bg-light border-0 shadow-sm"
                                            value="{{ old('name', $contact->name) }}">
                                 </div>
 
@@ -69,7 +69,7 @@
                                         <i class="fas fa-envelope text-primary mr-1"></i>
                                         Email Address
                                     </label>
-                                    <input disabled type="email" class="form-control bg-light border-0 shadow-sm"
+                                    <input readonly  type="email" class="form-control bg-light border-0 shadow-sm"
                                            value="{{ old('email', $contact->email) }}">
                                 </div>
 
@@ -78,7 +78,7 @@
                                         <i class="fas fa-phone text-primary mr-1"></i>
                                         Phone Number
                                     </label>
-                                    <input disabled type="tel" class="form-control bg-light border-0 shadow-sm"
+                                    <input readonly  type="tel" class="form-control bg-light border-0 shadow-sm"
                                            value="{{ old('phone', $contact->phone) }}">
                                 </div>
                             </div>
@@ -101,8 +101,8 @@
                                         <i class="fas fa-comment-alt text-success mr-1"></i>
                                         Message Text
                                     </label>
-                                    <textarea disabled class="form-control bg-light border-0 shadow-sm"
-                                              rows="8" style="resize: none;">{{ $contact->body }}</textarea>
+                                    <textarea readonly  class="form-control bg-light border-0 shadow-sm"
+                                              rows="8" style="resize: none;">{{ $contact->message }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                 <!-- Action Buttons -->
                 <div class="mt-4 pt-3 border-top">
                     <div class="d-flex justify-content-end">
-                        <a href="#" data-toggle="modal" data-target="#delete_user_{{$contact->id}}"
+                        <a href="#" data-toggle="modal" data-target="#delete_contact_{{$contact->id}}"
                            class="btn btn-danger mx-1 btn-icon-split">
                             <span class="icon text-white">
                                 <i class="fas fa-trash"></i>
