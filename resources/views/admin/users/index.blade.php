@@ -50,11 +50,12 @@
                                        class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="#" data-toggle="modal" data-target="#change_status_{{ $user->id }}" class="btn btn-warning">
+                                    <a href="#" data-toggle="modal" title="change_status" data-target="#change_status_{{ $user->id }}"
+                                       class="btn {{ $user->status == 'active' ? 'btn-warning' : 'btn-success' }}">
                                         @if ($user->status == 'active')
-                                            <i class="fas fa-ban"></i>
+                                            <i class="fas fa-ban"></i> Block
                                         @else
-                                            <i class="fas fa-play"></i>
+                                            <i class="fas fa-play"></i> Activate
                                         @endif
                                     </a>
                                     <a href="{{ route('admin.users.show',$user->id) }}" class="btn btn-info">

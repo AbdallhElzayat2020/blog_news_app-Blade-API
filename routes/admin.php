@@ -55,7 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
 
     /* users */
     Route::resource('users', UserController::class);
-    Route::post('user/block/status/{id}', [UserController::class, 'changeStatus'])->name('users.change-status');
+    Route::patch('users/{id}/change-status', [UserController::class, 'changeStatus'])->name('users.changeStatus');
 
     /* categories */
     Route::resource('categories', CategoryController::class);

@@ -52,6 +52,11 @@ Route::group(
 
         /* search   */
         Route::match(['get', 'post'], 'search', SearchController::class)->name('search');
+
+        /* waiting  */
+        Route::get('/waiting', function () {
+            return view('frontend.wait');
+        })->name('waiting');
     }
 );
 
@@ -61,10 +66,10 @@ Route::group(
  *   Protected Routes for User
  *  =======================
  */
-Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['auth', 'verified', 'check_user_status'])->group(function () {
 
     /* Dashboard && profile */
-    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
+    Route::controller(ProfileController::class)->prefix('profile')->middleware(['check_user_status'])->group(function () {
         Route::get('/', 'index')->name('profile');
         Route::post('/store', 'store')->name('post.store');
         Route::delete('/delete/{id}', 'destroy')->name('profile.delete');
@@ -77,14 +82,14 @@ Route::prefix('account/dashboard')->name('frontend.dashboard.')->middleware(['au
     });
 
     /* Settings */
-    Route::controller(SettingController::class)->prefix('settings')->name('settings.')->group(function () {
+    Route::controller(SettingController::class)->prefix('settings')->middleware(['check_user_status'])->name('settings.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/update', 'update')->name('update');
         Route::post('change-password', 'changePassword')->name('change-password');
     });
 
     /*  Notifications */
-    Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
+    Route::controller(NotificationController::class)->prefix('notifications')->middleware(['check_user_status'])->name('notifications.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/mark-all-read', 'markAllRead')->name('mark-all-read');
         Route::delete('/delete', 'delete')->name('delete');

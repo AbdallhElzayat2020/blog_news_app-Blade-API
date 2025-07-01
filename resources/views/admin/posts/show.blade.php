@@ -711,7 +711,7 @@
                                         </div>
                                         @auth('admin')
                                             <div class="comment-actions">
-                                                <form action="{{ route('admin.delete.comment',$post->id) }}"
+                                                <form action="{{ route('admin.delete.comment',$comment->id) }}"
                                                       method="POST" style="display: inline;"
                                                       onsubmit="return confirm('Are you sure you want to delete this comment?');">
                                                     @csrf

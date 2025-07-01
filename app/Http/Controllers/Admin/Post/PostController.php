@@ -189,21 +189,11 @@ class PostController extends Controller
     public function deleteComment(string $id)
     {
         $comment = Comment::findOrFail($id);
-
-        if (! Auth::guard('admin')->check()) {
-            if (Auth::id() !== $comment->user_id) {
-                return back()->with('error', 'غير مسموح لك بحذف هذا التعليق.');
-            }
+        if (!$comment) {
+            return redirect()->back()->with('error', 'Comment not found');
         }
 
-        try {
-            DB::beginTransaction();
-            $comment->delete();
-            DB::commit();
-            return back()->with('success', 'تم حذف التعليق بنجاح.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'فشل الحذف، حاول لاحقاً.');
-        }
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully');
     }
 }

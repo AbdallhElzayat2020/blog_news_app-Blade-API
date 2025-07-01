@@ -2,9 +2,9 @@
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('admin.users.change-status', $user->id) }}" method="post">
+            <form action="{{ route('admin.users.changeStatus', $user->id) }}" method="post">
                 @csrf
-                @method('POST')
+                @method('PATCH')
                 <div class="modal-header">
                     <h5 class="modal-title">
                         Are you want to change Status for This User

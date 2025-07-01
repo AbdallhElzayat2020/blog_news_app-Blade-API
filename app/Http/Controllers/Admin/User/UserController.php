@@ -90,6 +90,7 @@ class UserController extends Controller
     public function changeStatus($id)
     {
         $user = User::findOrFail($id);
+
         if ($user->status == 'active') {
             $user->update([
                 'status' => 'inactive',
