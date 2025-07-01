@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Admin\AdminController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\Contact\ContactController;
-
+use App\Http\Controllers\Admin\Profile\ProfileController;
 /* Public Routes */
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -85,6 +85,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
 
         Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
+
+    /* =================== profile Routes ==================== */
+    Route::controller(ProfileController::class)->prefix('profile')->as('profile.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::put('/update', 'update')->name('update');
+    });
+
 
 
     Route::get('dashboard', function () {
