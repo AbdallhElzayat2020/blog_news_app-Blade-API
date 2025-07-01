@@ -8,10 +8,11 @@
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         </div>
 
-        <!-- Content Row -->
-        @livewire('reports')
 
-        <!-- Content Row -->
+        {{-- Reports row --}}
+        @livewire('reports')
+        {{-- Reports row --}}
+
 
         <div class="row">
 
@@ -89,7 +90,9 @@
             </div>
         </div>
 
+        {{--  Posts && Comments row--}}
         @livewire('latest-posts-comments')
+        {{--  Posts && Comments row--}}
 
     </div>
 @endsection
