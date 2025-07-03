@@ -16,6 +16,12 @@
                     <h4 class="text-center">Login to Your Account</h4>
                 </div>
                 <div class="card-body p-4 shadow rounded">
+                    @if ($errors->has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ $errors->first('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <div class="row g-2 mb-3">
                         <div class="col-md-6">
                             <a href="{{ route('auth.socialite.redirect','facebook') }}" class="btn btn-primary w-100"

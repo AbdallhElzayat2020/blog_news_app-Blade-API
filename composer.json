@@ -14,6 +14,7 @@
     "ichtrojan/laravel-otp": "^2.0",
     "laravel/framework": "^12.0",
     "laravel/sanctum": "^4.0",
+    "laravel/socialite": "^5.21",
     "laravel/telescope": "^5.9",
     "laravel/tinker": "^2.10.1",
     "laraveldaily/laravel-charts": "^0.2.3",
