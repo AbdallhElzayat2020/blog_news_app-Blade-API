@@ -110,6 +110,10 @@ class PostController extends Controller
                 ImageManager::uploadImage($request, $post);
             }
             DB::commit();
+            Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
+            Cache::forget('read_more_posts');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors('errors', $e->getMessage());

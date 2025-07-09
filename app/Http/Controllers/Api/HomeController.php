@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,34 +25,22 @@ class HomeController extends Controller
     public function getPosts()
     {
         $query = Post::query()
+            ->with(['user', 'category', 'admin'])
             ->activeUser()
             ->activeCategory()
-            ->with(['user', 'category'])
             ->active();
 
 
-        $posts = $query->latest()->get();
+        $all_posts = clone $query->latest()->get();
 
-        $latest_posts = $query->latest()->take(4)->get();
-
-
-        $categories = Category::all();
-        $category_with_posts = $categories->map(function (Category $category) {
-            $category->posts = $category->posts()->active()->latest()->take(4)->get();
-            return $category;
-        });
-
-        $most_read_posts = $query->orderBy('number_of_views', 'desc')->take(3)->get();
-
-        $oldest_posts = $query->oldest()->take(3)->get();
-
-        $popular_posts = $query->withCount(['comments'])
-            ->orderBy('comments_count', 'desc')
-            ->take(3)
-            ->get();
+        $latest_posts = $this->latestPosts(clone $query);
+        $most_read_posts = $this->mostReadPosts(clone $query);
+        $oldest_posts = $this->oldestPosts(clone $query);
+        $popular_posts = $this->popularPosts(clone $query);
+        $category_with_posts = $this->categoryWithPosts();
 
         return response()->json([
-            'all_posts' => $posts,
+            'all_posts' => PostResource::collection($all_posts),
 //            'latest_posts' => $latest_posts,
 //            'categories' => $categories,
 //            'category_with_posts' => $category_with_posts,
@@ -58,5 +48,37 @@ class HomeController extends Controller
 //            'oldest_posts' => $oldest_posts,
 //            'popular_posts' => $popular_posts,
         ]);
+    }
+
+    public function latestPosts(Builder $query)
+    {
+        return $query->latest()->take(4)->get();
+    }
+
+    public function mostReadPosts(Builder $query)
+    {
+        return $query->orderByDesc('number_of_views', 'desc')->take(4)->get();
+    }
+
+    public function oldestPosts(Builder $query)
+    {
+        return $query->oldest()->take(3)->get();
+    }
+
+    public function popularPosts(Builder $query)
+    {
+        return $query->withCount(['comments'])
+            ->orderBy('comments_count', 'desc')
+            ->take(3)
+            ->get();
+    }
+
+    public function categoryWithPosts()
+    {
+        $categories = Category::active()->get();
+        return $categories->map(function (Category $category) {
+            $category->posts = $category->posts()->active()->latest()->take(4)->get();
+            return $category;
+        });
     }
 }

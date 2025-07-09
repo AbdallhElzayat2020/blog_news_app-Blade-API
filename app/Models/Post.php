@@ -114,8 +114,10 @@ class Post extends Model
     #[Scope]
     protected function activeUser(Builder $query): Builder
     {
-        return $query->whereHas('user', function ($user) {
-            $user->whereStatus('active');
+        return $query->where(function (Builder $query) {
+            $query->whereHas('user', function ($user) {
+                $user->whereStatus('active');
+            })->orWhere('user_id', null);
         });
     }
 
