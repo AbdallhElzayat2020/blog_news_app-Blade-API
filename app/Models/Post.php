@@ -98,9 +98,32 @@ class Post extends Model
         return $this->belongsTo(Admin::class);
     }
 
+
+    /**
+     * ===================================
+     * Scope to filter active posts & User & Category
+     * ===================================
+     */
+
     #[Scope]
     protected function active(Builder $query): Builder
     {
         return $query->whereStatus('active');
+    }
+
+    #[Scope]
+    protected function activeUser(Builder $query): Builder
+    {
+        return $query->whereHas('user', function ($user) {
+            $user->whereStatus('active');
+        });
+    }
+
+    #[Scope]
+    protected function activeCategory(Builder $query): Builder
+    {
+        return $query->whereHas('category', function ($category) {
+            $category->whereStatus('active');
+        });
     }
 }

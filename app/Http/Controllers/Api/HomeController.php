@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     /**
      * Get posts for the API
-     * 
+     *
      * Retrieves various types of posts including:
      * - All active posts
      * - Latest posts (4)
@@ -19,16 +19,20 @@ class HomeController extends Controller
      * - Most read posts (3)
      * - Oldest posts (3)
      * - Popular posts based on comment count (3)
-     * 
-     * @return \Illuminate\Http\JsonResponse Returns popular posts as JSON
      */
     public function getPosts()
     {
-        $query = Post::query();
+        $query = Post::query()
+            ->activeUser()
+            ->activeCategory()
+            ->with(['user', 'category'])
+            ->active();
 
-        $posts = $query->active()->latest()->get();
+
+        $posts = $query->latest()->get();
 
         $latest_posts = $query->latest()->take(4)->get();
+
 
         $categories = Category::all();
         $category_with_posts = $categories->map(function (Category $category) {
@@ -45,6 +49,14 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return response()->json($popular_posts);
+        return response()->json([
+            'all_posts' => $posts,
+//            'latest_posts' => $latest_posts,
+//            'categories' => $categories,
+//            'category_with_posts' => $category_with_posts,
+//            'most_read_posts' => $most_read_posts,
+//            'oldest_posts' => $oldest_posts,
+//            'popular_posts' => $popular_posts,
+        ]);
     }
 }
