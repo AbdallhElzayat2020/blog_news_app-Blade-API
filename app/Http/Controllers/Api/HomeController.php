@@ -31,8 +31,7 @@ class HomeController extends Controller
             ->activeCategory()
             ->active();
 
-
-        $all_posts = clone $query->latest()->get();
+        $all_posts = clone $query->latest()->paginate(9);
 
         $latest_posts = $this->latestPosts(clone $query);
         $most_read_posts = $this->mostReadPosts(clone $query);
@@ -41,7 +40,7 @@ class HomeController extends Controller
         $category_with_posts = $this->categoryWithPosts();
 
         return response()->json([
-            'all_posts' => PostCollection::make($all_posts),
+            'all_posts' => (PostCollection::make($all_posts))->response()->getData(),
             //            'latest_posts' => $latest_posts,
             //            'categories' => $categories,
             //            'category_with_posts' => $category_with_posts,
@@ -56,9 +55,20 @@ class HomeController extends Controller
         return $query->latest()->take(4)->get();
     }
 
-    public function showPost()
+    public function showPost($slug)
     {
-        // TODO
+
+        $post = Post::whereSlug($slug)->active()->activeUser()->activeCategory()->with(['user', 'category'])->first();
+
+        if (!$post) {
+            return response()->json([
+                'message' => 'Post not found',
+                'status' => 404,
+            ], 404);
+        }
+        return response()->json([
+            'data' => PostResource::make($post),
+        ], 200);
     }
 
 

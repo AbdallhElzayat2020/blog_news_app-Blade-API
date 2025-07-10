@@ -19,20 +19,24 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         /** @var Post $this ->resource */
-        return [
+
+        $data = [
             'title' => $this->title,
             'slug' => $this->slug,
-            'description' => $this->description,
-            'number_of_views' => $this->number_of_views,
-            'comment_able' => $this->comment_able,
-            'publisher' => $this->user_id == null ? AdminResource::make($this->admin) : UserResource::make($this->user),
-            'meta_description' => $this->meta_description,
-            'meta_title' => $this->meta_title,
-            'post_url' => route('frontend.post.show', $this->slug),
-            'post_endpoint' => url('api/posts/show/' . $this->slug),
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
-            'category' => CategoryResource::make($this->category),
         ];
+
+        if ($request->is('api/posts/show/*')) {
+            $data['description'] = $this->description;
+            $data['comment_able'] = $this->comment_able;
+            $data['publisher'] = $this->user_id == null ? AdminResource::make($this->admin) : UserResource::make($this->user);
+            $data['meta_description'] = $this->meta_description;
+            $data['meta_title'] = $this->meta_title;
+            $data['number_of_views'] = $this->number_of_views;
+            $data['post_url'] = route('frontend.post.show', $this->slug);
+            $data['category'] = CategoryResource::make($this->category);
+        }
+        return $data;
     }
 }
