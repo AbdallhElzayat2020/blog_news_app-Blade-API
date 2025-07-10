@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
@@ -40,13 +41,13 @@ class HomeController extends Controller
         $category_with_posts = $this->categoryWithPosts();
 
         return response()->json([
-            'all_posts' => PostResource::collection($all_posts),
-//            'latest_posts' => $latest_posts,
-//            'categories' => $categories,
-//            'category_with_posts' => $category_with_posts,
-//            'most_read_posts' => $most_read_posts,
-//            'oldest_posts' => $oldest_posts,
-//            'popular_posts' => $popular_posts,
+            'all_posts' => PostCollection::make($all_posts),
+            //            'latest_posts' => $latest_posts,
+            //            'categories' => $categories,
+            //            'category_with_posts' => $category_with_posts,
+            //            'most_read_posts' => $most_read_posts,
+            //            'oldest_posts' => $oldest_posts,
+            //            'popular_posts' => $popular_posts,
         ]);
     }
 
