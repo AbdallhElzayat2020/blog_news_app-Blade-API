@@ -56,6 +56,15 @@ class HomeController extends Controller
         return $query->latest()->take(4)->get();
     }
 
+    public function showPost()
+    {
+        // TODO
+    }
+
+
+    /**
+     * Helper methods to retrieve various types of posts
+     */
     public function mostReadPosts(Builder $query)
     {
         return $query->orderByDesc('number_of_views', 'desc')->take(4)->get();
