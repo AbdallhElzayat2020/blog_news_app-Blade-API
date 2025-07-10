@@ -18,7 +18,14 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
-            'category' => $this->category->name,
+            'number_of_views' => $this->number_of_views,
+            'comment_able' => $this->comment_able,
+            'publisher' => $this->user_id == null ? $this->admin->name : $this->user->name,
+            'meta_description' => $this->meta_description,
+            'meta_title' => $this->meta_title,
+            'status' => $this->status,
+            'created_at' => $this->created_at->format('Y-m-d h:m a'),
+            'category' => CategoryResource::make($this->category),
         ];
     }
 }
