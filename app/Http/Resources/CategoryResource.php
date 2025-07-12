@@ -15,12 +15,19 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         /** @var \App\Models\Category $this ->resource */
-        return [
-            'category_name' => $this->name,
-            'category_slug' => $this->slug,
+
+
+        $data = [
+            'name' => $this->name,
+            'slug' => $this->slug,
             'status' => $this->status,
-            'created_date' => $this->created_at->format('y-m-d'),
-            'posts' => PostResource::collection($this->posts),
+            'created_at' => $this->created_at->format('Y-m-d h:m a'),
         ];
+
+        if (!$request->is('api/posts/show/*')) {
+            $data['posts'] = PostResource::collection($this->posts);
+        }
+
+        return $data;
     }
 }

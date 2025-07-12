@@ -25,7 +25,6 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'status' => $this->status,
-//            'post_image' => asset($this->images()->first()->path),
             'post_images' => ImageResource::collection($this->images),
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
         ];
