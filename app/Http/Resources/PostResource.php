@@ -18,12 +18,15 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         /** @var Post $this ->resource */
 
         $data = [
             'title' => $this->title,
             'slug' => $this->slug,
             'status' => $this->status,
+//            'post_image' => asset($this->images()->first()->path),
+            'post_images' => ImageResource::collection($this->images),
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
         ];
 
@@ -37,6 +40,7 @@ class PostResource extends JsonResource
             $data['post_url'] = route('frontend.post.show', $this->slug);
             $data['category'] = CategoryResource::make($this->category);
         }
+
         return $data;
     }
 }

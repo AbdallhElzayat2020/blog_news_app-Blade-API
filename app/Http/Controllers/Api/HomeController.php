@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
@@ -26,7 +28,7 @@ class HomeController extends Controller
     public function getPosts()
     {
         $query = Post::query()
-            ->with(['user', 'category', 'admin'])
+            ->with(['user', 'category', 'admin', 'images'])
             ->activeUser()
             ->activeCategory()
             ->active();
@@ -40,13 +42,12 @@ class HomeController extends Controller
         $category_with_posts = $this->categoryWithPosts();
 
         return response()->json([
-            'all_posts' => (PostCollection::make($all_posts))->response()->getData(),
-            //            'latest_posts' => $latest_posts,
-            //            'categories' => $categories,
-            //            'category_with_posts' => $category_with_posts,
-            //            'most_read_posts' => $most_read_posts,
-            //            'oldest_posts' => $oldest_posts,
-            //            'popular_posts' => $popular_posts,
+            'all_posts' => (PostCollection::make($all_posts))->response()->getData(true),
+            'latest_posts' => PostCollection::make($latest_posts),
+            'category_with_posts' => CategoryCollection::make($category_with_posts),
+            'most_read_posts' => PostCollection::make($most_read_posts),
+            'oldest_posts' => PostCollection::make($oldest_posts),
+            'popular_posts' => PostCollection::make($popular_posts),
         ]);
     }
 
@@ -58,7 +59,13 @@ class HomeController extends Controller
     public function showPost($slug)
     {
 
-        $post = Post::whereSlug($slug)->active()->activeUser()->activeCategory()->with(['user', 'category'])->first();
+        $post = Post::whereSlug($slug)->with(['user', 'category'])
+            ->withCount('comments')
+            ->active()
+            ->activeUser()
+            ->activeCategory()
+            ->with(['user', 'category'])
+            ->first();
 
         if (!$post) {
             return response()->json([
@@ -66,9 +73,13 @@ class HomeController extends Controller
                 'status' => 404,
             ], 404);
         }
+
+        $post->increment('number_of_views');
+
         return response()->json([
             'data' => PostResource::make($post),
         ], 200);
+
     }
 
 

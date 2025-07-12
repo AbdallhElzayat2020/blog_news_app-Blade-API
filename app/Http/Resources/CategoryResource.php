@@ -14,11 +14,13 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var \App\Models\Category $this ->resource */
         return [
             'category_name' => $this->name,
             'category_slug' => $this->slug,
             'status' => $this->status,
             'created_date' => $this->created_at->format('y-m-d'),
+            'posts' => PostResource::collection($this->posts),
         ];
     }
 }

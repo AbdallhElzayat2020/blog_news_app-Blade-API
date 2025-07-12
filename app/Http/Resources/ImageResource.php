@@ -14,6 +14,9 @@ class ImageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        /** @var \App\Models\Image $this ->resource */
+        return [
+            'path' => asset($this->path),
+        ];
     }
 }

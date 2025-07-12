@@ -14,6 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var \App\Models\User $this->resource */
 
         return [
             'user_name' => $this->name,
