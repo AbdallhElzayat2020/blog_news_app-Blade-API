@@ -26,10 +26,8 @@ class HomeController extends Controller
      */
     public function getPosts()
     {
-
-
         $query = Post::query()
-            ->with(['user', 'category', 'admin', 'images'])
+            ->with(['user:name,status,id', 'category:name,id,status', 'admin:name,status,id', 'images:path,id,post_id'])
             ->activeUser()
             ->activeCategory()
             ->active();
@@ -85,6 +83,7 @@ class HomeController extends Controller
     public function latestPosts(Builder $query)
     {
         $popular_posts = $query->latest()->take(4)->get();
+
         if (!$popular_posts) {
             apiResponse(404, 'No posts found', null);
         }
