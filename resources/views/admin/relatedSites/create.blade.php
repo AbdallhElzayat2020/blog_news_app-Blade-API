@@ -22,8 +22,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="url"> url</label>
-                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter  url" value="{{ old('url') }}">
+                        <label for="url">url</label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter url" value="{{ old('url') }}">
                         @error('url')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
