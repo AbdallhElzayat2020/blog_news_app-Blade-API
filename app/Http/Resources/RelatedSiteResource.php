@@ -14,6 +14,10 @@ class RelatedSiteResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        /** @var \App\Models\RelatedSite $this ->resource */
+        return [
+            'name' => $this->name,
+            'url' => $this->url,
+        ];
     }
 }

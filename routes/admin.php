@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\Password\ForgetPasswordController;
 use App\Http\Controllers\Admin\HomeDashboardController;
+use App\Http\Controllers\Admin\Setting\RelatedSitesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\Password\ResetPasswordController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -77,6 +78,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::get('/', 'index')->name('index');
         Route::put('/update', 'update')->name('update');
     });
+
+    /* Related Sites */
+    Route::resource('/related-sites', RelatedSitesController::class);
 
     /* categories */
     Route::resource('admins', AdminController::class);
