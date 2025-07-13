@@ -1,61 +1,389 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Detailed Analysis of Blog & News System Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Overview
 
-## About Laravel
+This is a comprehensive **Laravel 12** project for a blog and news management system with a separate admin dashboard. The project supports two
+distinct systems for regular users and administrators, with an API interface for external interactions.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📦 Libraries and Tools Used
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Core Libraries:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel Framework 12.0** - Main framework
+- **Laravel Sanctum 4.0** - API authentication
+- **Laravel Socialite 5.21** - Social media login
+- **Laravel Telescope 5.9** - Application monitoring and tracking
+- **Livewire 3.6** - Interactive interface development without JavaScript
+- **Eloquent Sluggable 12.0** - SEO-friendly URL generation
 
-## Learning Laravel
+### Additional Libraries:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Laravel OTP 2.0** - One-time password system
+- **Laravel Charts 0.2.3** - Chart generation
+- **PHP Flasher 2.1** - Alert messages
+- **Predis 2.0** - Redis client
+- **Pusher 7.2** - Real-time communication
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Development Tools:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Laravel Breeze 2.3** - Basic authentication system
+- **Laravel Debugbar 3.15** - Debug toolbar
+- **Laravel Pint 1.13** - Code formatting
+- **Pest 3.8** - Testing framework
 
-## Laravel Sponsors
+## ️ Project Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Models
 
-### Premium Partners
+#### Users
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```php
+- User: Regular users
+- Admin: Administrators
+- Role: Roles and permissions
+```
 
-## Contributing
+#### Content
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```php
+- Post: Articles and news
+- Category: Categories
+- Comment: Comments
+- Image: Images
+```
 
-## Code of Conduct
+#### System
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```php
+- Setting: Website settings
+- Contact: Contact messages
+- NewsSubscriber: Newsletter subscribers
+- RelatedSite: Related sites
+```
 
-## Security Vulnerabilities
+### 2. Model Relationships
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+User -> Posts (One-to-Many)
+User -> Comments (One-to-Many)
+Post -> Category (Many-to-One)
+Post -> Comments (One-to-Many)
+Post -> Images (One-to-Many)
+Admin -> Posts (One-to-Many)
+Admin -> Role (Many-to-One)
+```
 
-## License
+## 🛣️ Routing System
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 1. Frontend Routes
+
+#### Public Routes:
+
+```php
+GET / - Homepage
+GET /contact - Contact page
+POST /contact/store - Submit contact form
+POST /news-subscribers - Newsletter subscription
+GET /category-post/{slug} - Display category posts
+GET /post/show/{slug} - Display post
+GET /search - Search functionality
+```
+
+#### Protected Routes (for authenticated users):
+
+```php
+GET /account/dashboard/profile - User profile
+POST /account/dashboard/profile/store - Update profile
+GET /account/dashboard/settings - User settings
+POST /account/dashboard/settings/update - Update settings
+GET /account/dashboard/notifications - Notifications
+```
+
+#### Comment Routes:
+
+```php
+GET /post/comments/{slug} - Display comments
+POST /post/comments/store - Add comment
+```
+
+### 2. Admin Routes
+
+#### Authentication Routes:
+
+```php
+GET /admin/login - Login page
+POST /admin/handle/login - Handle login
+POST /admin/logout - Logout
+GET /admin/password/forgot-password - Forgot password
+POST /admin/password/forgot-password - Send reset link
+GET /admin/password/show-otp-form/{email} - OTP form
+POST /admin/password/verify-otp-form - Verify OTP
+```
+
+#### Content Management Routes:
+
+```php
+GET /admin/dashboard - Main dashboard
+GET /admin/users - User management
+GET /admin/categories - Category management
+GET /admin/posts - Post management
+GET /admin/contacts - Contact message management
+GET /admin/settings - Website settings
+GET /admin/admins - Admin management
+GET /admin/roles - Role management
+```
+
+### 3. API Routes
+
+```php
+GET /api/posts - Get all posts
+GET /api/posts/show/{slug} - Get specific post
+GET /api/settings - Get website settings
+GET /api/related-sites - Get related sites
+```
+
+### 4. Authentication Routes
+
+```php
+GET /register - Registration page
+POST /register - Handle registration
+GET /login - Login page
+POST /login - Handle login
+GET /forgot-password - Forgot password
+POST /forgot-password - Send reset link
+GET /reset-password/{token} - Reset password
+POST /reset-password - Handle password reset
+```
+
+## 🛠️ Authentication and Security System
+
+### 1. Multi-Guard Authentication
+
+- **Regular Users Guard**: `web`
+- **Admin Guard**: `admin`
+- **API Guard**: `sanctum`
+
+### 2. Email Verification
+
+```php
+User implements MustVerifyEmail
+```
+
+### 3. OTP System for Admins
+
+- Uses `ichtrojan/laravel-otp` library
+- Sends OTP via email
+- Verifies OTP before password reset
+
+### 4. Security Middleware
+
+```php
+- CheckUserStatusMiddleware: Check user status
+- AdminAuthMiddleware: Check admin permissions
+- RedirectIfAuthenticated: Redirect authenticated users
+```
+
+## 🎨 User Interfaces
+
+### 1. Frontend Interface
+
+- **Design**: Modern and responsive design
+- **Libraries**: Bootstrap, jQuery, Slick Slider
+- **Components**: Livewire for real-time interaction
+
+### 2. Admin Dashboard
+
+- **Design**: SB Admin 2 Theme
+- **Libraries**: Chart.js, DataTables, Summernote
+- **Features**: Charts, interactive tables, rich text editor
+
+## 📋 Database Structure
+
+### Main Tables:
+
+1. **users** - Regular users
+2. **admins** - Administrators
+3. **roles** - Roles and permissions
+4. **posts** - Articles and news
+5. **categories** - Categories
+6. **comments** - Comments
+7. **images** - Images
+8. **settings** - Website settings
+9. **contacts** - Contact messages
+10. **news_subscribers** - Newsletter subscribers
+11. **related_sites** - Related sites
+
+## 🚀 Advanced Features
+
+### 1. Notification System
+
+```php
+- NewCommentNotification: New comment notifications
+- SendOtpNotification: OTP notifications
+```
+
+### 2. Image Management
+
+```php
+- ImageManager: Upload and save image management
+- Multiple image support for posts
+- Individual image deletion
+```
+
+### 3. Search System
+
+- Search in posts and categories
+- Advanced search support
+
+### 4. Comment System
+
+- Nested comments
+- Comment management from admin panel
+- Comment deletion
+
+### 5. Category System
+
+- Nested categories
+- Category status management
+- Category post display
+
+## 📱 API Features
+
+### Available Endpoints:
+
+1. **Get Posts**: `GET /api/posts`
+2. **Show Post**: `GET /api/posts/show/{slug}`
+3. **Website Settings**: `GET /api/settings`
+4. **Related Sites**: `GET /api/related-sites`
+
+### Unified Response Format:
+
+```php
+{
+    "message": "Response message",
+    "status": 200,
+    "data": {
+        // Requested data
+    }
+}
+```
+
+## 🔧 Additional Features
+
+### 1. Role and Permission System
+
+- Custom roles for administrators
+- Specific permissions for each role
+- Permission verification
+
+### 2. Newsletter System
+
+- Newsletter subscription
+- Email sending functionality
+
+### 3. Contact System
+
+- Contact form for visitors
+- Message management from admin panel
+
+### 4. Settings System
+
+- General website settings
+- Logo and title management
+- Social media settings
+
+## 🛠️ Development and Monitoring Tools
+
+### 1. Laravel Telescope
+
+- Monitor requests and responses
+- Track errors and exceptions
+- Database monitoring
+
+### 2. Laravel Debugbar
+
+- Debug toolbar in development environment
+- Performance and memory monitoring
+
+### 3. Laravel Charts
+
+- Create charts for reports
+- User and content statistics
+
+## 📋 System Requirements
+
+### Basic Requirements:
+
+- PHP 8.2+
+- Composer
+- MySQL/PostgreSQL
+- Redis (optional for caching)
+- Node.js & NPM
+
+### Installation and Setup:
+
+```bash
+composer install
+npm install
+php artisan migrate
+php artisan db:seed
+php artisan key:generate
+```
+
+## 🔄 Workflow
+
+### 1. Regular User Workflow:
+
+1. Register/Login
+2. Browse posts and categories
+3. Add comments
+4. Manage profile
+5. Subscribe to newsletter
+
+### 2. Admin Workflow:
+
+1. Login to admin dashboard
+2. Manage users and content
+3. Review comments and messages
+4. Manage settings
+5. View reports and statistics
+
+## 🎯 Key Features Summary
+
+### For Users:
+
+- User registration and authentication
+- Browse posts and categories
+- Add comments and interact
+- Manage personal profile
+- Newsletter subscription
+- Search functionality
+
+### For Administrators:
+
+- Complete content management
+- User management
+- Comment moderation
+- Website settings
+- Analytics and reports
+- Role-based access control
+
+### Technical Features:
+
+- RESTful API
+- Real-time notifications
+- Image management
+- SEO-friendly URLs
+- Responsive design
+- Security features
+
+This project provides a comprehensive system for managing blogs and news with modern user interfaces, a powerful admin system, and advanced features
+for interaction and monitoring.
+
+## After installing project, run theis commands
+
+composer install
+npm install
+php artisan migrate
+php artisan db:seed
+php artisan key:generate

@@ -30,7 +30,7 @@ class ViewServicesProvider extends ServiceProvider
 
 //        Cache::forget('latest_posts');
 
-        $categories = Category::withCount('posts')->latest()->select('name', 'id', 'slug')->limit(10)->get();
+        $categories = Category::active()->withCount('posts')->latest()->select('name', 'id', 'slug')->limit(10)->get();
 
         // Share the latest and popular posts with all views
         view()->share([
