@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications\Admin;
+namespace App\Notifications;
 
 use Ichtrojan\Otp\Otp;
 use Illuminate\Bus\Queueable;
@@ -8,13 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendOtpNotification extends Notification
+class SendOtpVerifyUserEmail extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
 
     public $otp;
 
@@ -33,7 +30,9 @@ class SendOtpNotification extends Notification
         return ['mail'];
     }
 
-
+    /**
+     * Get the mail representation of the notification.
+     */
     public function toMail(object $notifiable): MailMessage
     {
         $otp = $this->otp->generate($notifiable->email, 'numeric', 8, 10);

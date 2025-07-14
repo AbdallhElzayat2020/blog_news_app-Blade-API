@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Notifications\SendOtpVerifyUserEmail;
 use App\Utils\ImageManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class RegisterController extends Controller
     {
         try {
             DB::beginTransaction();
+            
             $user = $this->createUser($request);
 
             if (!$user->save()) {
@@ -35,6 +37,9 @@ class RegisterController extends Controller
 
             $token = $user->createToken('register_token')->plainTextToken;
 
+
+            $user->notify(new SendOtpVerifyUserEmail());
+
             DB::commit();
             return apiResponse(201, 'User created Successfully', ['token' => $token]);
         } catch (\Exception $exception) {
@@ -44,7 +49,7 @@ class RegisterController extends Controller
         }
     }
 
-    public function createUser($request)
+    protected function createUser($request)
     {
         return User::create([
             'name' => $request->name,
