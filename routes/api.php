@@ -31,8 +31,9 @@ Route::post('contact/store', [ContactController::class, 'storeContact']);
 
 Route::controller(LoginController::class)->prefix('auth')->group(function () {
     Route::post('/login', 'login');
-    Route::post('/logout', 'logout');
+    Route::delete('/logout', 'logout')->middleware('auth:sanctum');
 });
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return auth()->user();

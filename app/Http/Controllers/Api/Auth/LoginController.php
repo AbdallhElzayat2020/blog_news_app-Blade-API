@@ -15,24 +15,25 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email', 'max:100'],
-            'password' => ['required', 'min:8'],
+            'password' => ['required', 'min:8', 'max:80'],
         ]);
 
         $user = User::whereEmail($request->email)->first();
-
         if ($user && Hash::check($request->password, $user->password)) {
 
-            $token = $user->createToken('login_user', [], now()->addMinutes(1))->plainTextToken;
-
-            return apiResponse(200, 'Login successfully', ['token' => $token]);
+            $token = $user->createToken('login_token', [], now()->addMinutes(120))->plainTextToken;
+            return apiResponse(200, 'login successfully', ['token' => $token]);
         }
-
-        return apiResponse(400, 'Login failed', ['error' => 'Invalid credentials']);
+        return apiResponse(400, 'invalid credentials');
 
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        return $request;
+        $user = Auth::user();
+
+        $user->currentAccessToken()->delete();
+
+        return apiResponse(200, 'logout successfully');
     }
 }
