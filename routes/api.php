@@ -10,20 +10,27 @@ use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ContactController;
 
-Route::get('posts/{keyword?}', [HomeController::class, 'getPosts']);
 
-Route::get('posts/show/{slug}', [HomeController::class, 'showPost']);
+Route::controller(HomeController::class)->prefix('posts')->group(function () {
+    Route::get('/{keyword?}', 'getPosts');
+    Route::get('/show/{slug}', 'showPost');
+    Route::get('/comments/{slug}', 'getPostComments');
+});
 
-Route::get('settings', [SettingController::class, 'getSettings']);
 
-Route::get('related-sites', [SettingController::class, 'relatedSites']);
-
-Route::get('posts/comments/{slug}', [HomeController::class, 'getPostComments']);
+Route::controller(SettingController::class)->group(function () {
+    Route::get('settings', 'getSettings');
+    Route::get('related-sites', 'relatedSites');
+});
 
 
 // Category routes
-Route::get('categories', [CategoryController::class, 'getCategories']);
-Route::get('categories/{slug}/posts', [CategoryController::class, 'getCategoryPosts']);
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('categories', 'getCategories');
+    Route::get('categories/{slug}/posts', 'getCategoryPosts');
+});
+
 
 /* contact */
 Route::post('contact/store', [ContactController::class, 'storeContact']);
@@ -31,14 +38,17 @@ Route::post('contact/store', [ContactController::class, 'storeContact']);
 
 /* Protected Routes */
 
-Route::prefix('auth')->group(function () {
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::delete('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
-    Route::post('/register', [RegisterController::class, 'register']);
+Route::prefix('auth')->controller(LoginController::class)->group(function () {
+    Route::post('/login', 'login');
+    Route::delete('/logout', 'logout')->middleware('auth:sanctum');
+    Route::post('/register', 'register');
 });
 
-Route::post('auth/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware('auth:sanctum');
-Route::get('auth/email/resend', [VerifyEmailController::class, 'resendOtp'])->middleware('auth:sanctum');
+
+Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
+    Route::post('/verify', 'verifyEmail');
+    Route::get('/resend', 'resendOtp');
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return auth()->user();
