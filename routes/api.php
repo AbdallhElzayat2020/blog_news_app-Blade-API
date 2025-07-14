@@ -16,44 +16,40 @@ Route::controller(HomeController::class)->prefix('posts')->group(function () {
     Route::get('/comments/{slug}', 'getPostComments');
 });
 
-/* Settings Routes */
+// ======================== Settings Routes ========================
 Route::controller(SettingController::class)->group(function () {
     Route::get('settings', 'getSettings');
     Route::get('related-sites', 'relatedSites');
 });
 
-
-/*
-======================
-*Category routes
-======================
- */
+// ======================== Categories Routes ========================
 Route::controller(CategoryController::class)->group(function () {
     Route::get('categories', 'getCategories');
     Route::get('categories/{slug}/posts', 'getCategoryPosts');
 });
 
-
-/* contact */
+// ======================== Contact Routes ========================
 Route::post('contact/store', [ContactController::class, 'storeContact']);
 
 
 /*
- * =====================
+ * ===================================================
  * Protected Routes
- * =====================
+ * ===================================================
  * */
-/* Auth Routes */
+
+// ======================== Register Routes ========================
+Route::post('auth/register', [RegisterController::class, 'register']);
+
+
+// ======================== Login Logout Routes ========================
 Route::prefix('auth')->controller(LoginController::class)->group(function () {
     Route::post('/login', 'login');
     Route::delete('/logout', 'logout')->middleware('auth:sanctum');
 
 });
-Route::post('auth/register', [RegisterController::class, 'register']);
 
-/*
- * Verify email
-*/
+// ======================== Verify email Routes ========================
 Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
     Route::post('/verify', 'verifyEmail');
     Route::get('/resend', 'resendOtp');
