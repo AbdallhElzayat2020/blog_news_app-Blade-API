@@ -12,3 +12,4 @@ Route::get('settings', [SettingController::class, 'getSettings']);
 
 Route::get('related-sites', [SettingController::class, 'relatedSites']);
 
+Route::get('posts/comments/{slug}', [HomeController::class, 'getPostComments']);

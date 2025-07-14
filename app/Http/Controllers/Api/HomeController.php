@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CommentCollection;
+use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
@@ -68,6 +70,24 @@ class HomeController extends Controller
         $post->increment('number_of_views');
 
         return apiResponse(200, null, PostResource::make($post));
+    }
+
+    public function getPostComments($slug)
+    {
+        $post = Post::active()
+            ->activeUser()
+            ->activeCategory()
+            ->whereSlug($slug)
+            ->first();
+        if (!$post) {
+            return apiResponse(404, 'Post not found', null);
+        }
+        $comments = $post->comments;
+        if (!$comments) {
+            return apiResponse(404, 'No comments found for this post', null);
+        }
+        return apiResponse(200, 'this post comments', CommentCollection::make($comments));
+
     }
 
 
