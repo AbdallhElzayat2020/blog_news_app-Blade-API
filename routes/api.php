@@ -10,22 +10,24 @@ use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ContactController;
 
-
 Route::controller(HomeController::class)->prefix('posts')->group(function () {
     Route::get('/{keyword?}', 'getPosts');
     Route::get('/show/{slug}', 'showPost');
     Route::get('/comments/{slug}', 'getPostComments');
 });
 
-
+/* Settings Routes */
 Route::controller(SettingController::class)->group(function () {
     Route::get('settings', 'getSettings');
     Route::get('related-sites', 'relatedSites');
 });
 
 
-// Category routes
-
+/*
+======================
+*Category routes
+======================
+ */
 Route::controller(CategoryController::class)->group(function () {
     Route::get('categories', 'getCategories');
     Route::get('categories/{slug}/posts', 'getCategoryPosts');
@@ -36,15 +38,22 @@ Route::controller(CategoryController::class)->group(function () {
 Route::post('contact/store', [ContactController::class, 'storeContact']);
 
 
-/* Protected Routes */
-
+/*
+ * =====================
+ * Protected Routes
+ * =====================
+ * */
+/* Auth Routes */
 Route::prefix('auth')->controller(LoginController::class)->group(function () {
     Route::post('/login', 'login');
     Route::delete('/logout', 'logout')->middleware('auth:sanctum');
-    Route::post('/register', 'register');
+
 });
+Route::post('auth/register', [RegisterController::class, 'register']);
 
-
+/*
+ * Verify email
+*/
 Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
     Route::post('/verify', 'verifyEmail');
     Route::get('/resend', 'resendOtp');
