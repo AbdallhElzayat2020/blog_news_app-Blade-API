@@ -15,7 +15,7 @@ class PostCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => PostResource::collection($this->collection),
+            'posts' => PostResource::collection($this->collection),
             'count_posts' => $this->collection->count(),
         ];
     }

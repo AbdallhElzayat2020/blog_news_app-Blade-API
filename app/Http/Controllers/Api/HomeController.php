@@ -34,6 +34,12 @@ class HomeController extends Controller
             ->activeCategory()
             ->active();
 
+        // make search for all posts if the keyword is exists
+        if (request()->query('keyword')) {
+            $keyword = request()->query('keyword');
+            $query->where('title', 'like', '%' . $keyword . '%');
+        }
+
         $all_posts = clone $query->latest()->paginate(9);
 
         $latest_posts = $this->latestPosts(clone $query);
@@ -70,6 +76,11 @@ class HomeController extends Controller
         $post->increment('number_of_views');
 
         return apiResponse(200, null, PostResource::make($post));
+    }
+
+    public function search()
+    {
+        // TODO
     }
 
     public function getPostComments($slug)
