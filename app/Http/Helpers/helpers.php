@@ -6,8 +6,8 @@ if (!function_exists('apiResponse')) {
     function apiResponse($status, $message = null, $data = null): \Illuminate\Http\JsonResponse
     {
         $response = [
-            'message' => $message,
             'status' => $status,
+            'message' => $message,
         ];
 
         if ($data !== null) {

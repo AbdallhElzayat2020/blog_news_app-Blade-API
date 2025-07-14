@@ -22,14 +22,15 @@ class SettingController extends Controller
         return apiResponse('200', SettingsResource::make($settings));
     }
 
-
     public function relatedSites()
     {
-        $relatedSites = RelatedSite::select(['name', 'url'])->first();
+        $relatedSites = RelatedSite::select(['name', 'url'])->latest()->get();
+
         if (!$relatedSites) {
             return apiResponse(404, 'Related sites is empty');
         }
-        return apiResponse(200, null, RelatedSiteResource::make($relatedSites));
+
+        return apiResponse(200, null, RelatedSiteResource::collection($relatedSites));
     }
 
 }

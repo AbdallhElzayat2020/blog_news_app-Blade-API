@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\HomeController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
@@ -23,3 +25,15 @@ Route::get('categories/{slug}/posts', [CategoryController::class, 'getCategoryPo
 
 /* contact */
 Route::post('contact/store', [ContactController::class, 'storeContact']);
+
+
+/* Protected Routes */
+
+Route::controller(LoginController::class)->prefix('auth')->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return auth()->user();
+});
