@@ -21,7 +21,7 @@ class ImageManager
             }
         }
 
-        // upload single image
+        // upload single image for User avatar
         if ($request->hasFile('avatar')) {
 
             $image = $request->file('avatar');

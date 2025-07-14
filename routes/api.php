@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,9 +30,10 @@ Route::post('contact/store', [ContactController::class, 'storeContact']);
 
 /* Protected Routes */
 
-Route::controller(LoginController::class)->prefix('auth')->group(function () {
-    Route::post('/login', 'login');
-    Route::delete('/logout', 'logout')->middleware('auth:sanctum');
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::delete('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('/register', [RegisterController::class, 'register']);
 });
 
 
