@@ -24,7 +24,7 @@ class CategoryResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
         ];
 
-        if (!$request->is('api/posts/show/*')) {
+        if (!$request->is('api/posts/show/*') && !$request->is('api/categories')) {
             $data['posts'] = PostResource::collection($this->posts);
         }
 
