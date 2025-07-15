@@ -26,6 +26,7 @@ class PostResource extends JsonResource
             'slug' => $this->slug,
             'status' => $this->status,
             'post_images' => ImageResource::collection($this->images),
+            'publisher' => $this->user_id == null ? AdminResource::make($this->admin) : UserResource::make($this->user),
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
         ];
 
@@ -36,7 +37,6 @@ class PostResource extends JsonResource
             $data['meta_description'] = $this->meta_description;
             $data['meta_title'] = $this->meta_title;
             $data['number_of_views'] = $this->number_of_views;
-            $data['post_url'] = route('frontend.post.show', $this->slug);
             $data['category'] = CategoryResource::make($this->category);
         }
 

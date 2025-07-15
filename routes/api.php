@@ -6,11 +6,13 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\RelatedNewsController;
 
 Route::controller(HomeController::class)->prefix('posts')->group(function () {
     Route::get('/{keyword?}', 'getPosts');
@@ -43,16 +45,8 @@ Route::controller(ResetPasswordController::class)->group(function () {
     Route::post('reset-password', 'resetPassword');
 });
 
-
-/*
- * ===================================================
- * Protected Routes
- * ===================================================
- * */
-
 // ======================== Register Routes ========================
 Route::post('auth/register', [RegisterController::class, 'register']);
-
 
 // ======================== Login Logout Routes ========================
 Route::prefix('auth')->controller(LoginController::class)->group(function () {
@@ -60,12 +54,17 @@ Route::prefix('auth')->controller(LoginController::class)->group(function () {
     Route::delete('/logout', 'logout')->middleware('auth:sanctum');
 });
 
-// ======================== Verify email Routes ========================
+// ======================== Verify resend email Routes ========================
 Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
     Route::post('/verify', 'verifyEmail');
     Route::get('/resend', 'resendOtp');
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return auth()->user();
+// ======================== Related news Routes ========================
+Route::controller(RelatedNewsController::class)->prefix('related-news')->group(function () {
+    Route::get('/', 'index');
+});
+
+Route::middleware('auth:sanctum')->get('/get/user', function (Request $request) {
+    return UserResource::make($request->user());
 });

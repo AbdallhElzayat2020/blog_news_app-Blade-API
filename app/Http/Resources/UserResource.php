@@ -14,12 +14,19 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var \App\Models\User $this->resource */
-
-        return [
+        /** @var \App\Models\User $this ->resource */
+        $data = [
             'user_name' => $this->name,
-            'joined_at' => $this->created_at->diffForHumans(),
             'status' => $this->status,
         ];
+
+        if ($request->is('api/get/user')) {
+            $data['email'] = $this->email;
+            $data['phone'] = $this->phone;
+            $data['image'] = asset($this->avatar);
+        }
+
+        return $data;
+
     }
 }

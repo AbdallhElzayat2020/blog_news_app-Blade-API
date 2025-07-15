@@ -36,7 +36,7 @@ class ResetPasswordController extends Controller
         $otp = $this->otp->validate($request->email, $request->token);
 
         if (!$otp->status) {
-            return apiResponse(400, 'Invalid OTP');
+            return apiResponse(401, 'Invalid OTP');
         }
 
         $user->update([

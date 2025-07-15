@@ -14,10 +14,9 @@ class AdminResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var \App\Models\Admin $this->resource */
+        /** @var \App\Models\Admin $this ->resource */
         return [
             'user_name' => 'Super Admin',
-            'joined_at' => $this->created_at->diffForHumans(),
             'user_status' => $this->status,
         ];
     }

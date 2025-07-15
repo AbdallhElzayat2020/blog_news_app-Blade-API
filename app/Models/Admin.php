@@ -24,6 +24,7 @@ class Admin extends Authenticatable
         'status',
         'remember_token',
         'role_id',
+        'created_at',
     ];
 
     /**

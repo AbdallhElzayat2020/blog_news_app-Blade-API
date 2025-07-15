@@ -14,6 +14,9 @@ class RelatedSiteCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'related_sites' => RelatedSiteResource::collection($this->collection),
+            'count' => $this->collection->count(),
+        ];
     }
 }
