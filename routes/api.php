@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
@@ -31,6 +33,16 @@ Route::controller(CategoryController::class)->group(function () {
 // ======================== Contact Routes ========================
 Route::post('contact/store', [ContactController::class, 'storeContact']);
 
+// ======================== ForgetPassword Routes ========================
+Route::controller(ForgetPasswordController::class)->group(function () {
+    Route::post('forget-password/email', 'forgetPassword');
+});
+
+// ======================== ResetPassword Routes ========================
+Route::controller(ResetPasswordController::class)->group(function () {
+    Route::post('reset-password', 'resetPassword');
+});
+
 
 /*
  * ===================================================
@@ -46,7 +58,6 @@ Route::post('auth/register', [RegisterController::class, 'register']);
 Route::prefix('auth')->controller(LoginController::class)->group(function () {
     Route::post('/login', 'login');
     Route::delete('/logout', 'logout')->middleware('auth:sanctum');
-
 });
 
 // ======================== Verify email Routes ========================
