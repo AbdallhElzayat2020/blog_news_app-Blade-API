@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Account\PostController;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -74,4 +75,10 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
     /*  Account setting  */
     Route::put('update-settings/{user_id}', [ProfileController::class, 'updateSettings']);
     Route::put('change-password/{user_id}', [ProfileController::class, 'changePassword']);
+
+    // account/posts
+    Route::controller(PostController::class)->prefix('posts')->group(function () {
+        Route::get('/', 'getPosts');
+    });
+
 });
