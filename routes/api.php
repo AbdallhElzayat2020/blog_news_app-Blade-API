@@ -73,4 +73,5 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
 
     /*  Account setting  */
     Route::put('update-settings/{user_id}', [ProfileController::class, 'updateSettings']);
+    Route::put('change-password/{user_id}', [ProfileController::class, 'changePassword']);
 });

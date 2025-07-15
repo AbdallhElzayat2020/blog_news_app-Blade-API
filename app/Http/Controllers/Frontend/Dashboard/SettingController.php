@@ -57,8 +57,8 @@ class SettingController extends Controller
     private function filterPasswordRequest()
     {
         return [
-            'current_password' => ['required', 'string', 'min:8', 'current_password'],
-            'password' => ['required', 'confirmed', 'string', 'min:8', 'different:current_password'],
+            'current_password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'confirmed', 'string', 'min:8'],
             'password_confirmation' => ['required', 'string', 'min:8'],
         ];
     }
