@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\RelatedNewsController;
+use App\Http\Controllers\Api\Account\ProfileController;
 
 Route::controller(HomeController::class)->prefix('posts')->group(function () {
     Route::get('/{keyword?}', 'getPosts');
@@ -65,6 +66,11 @@ Route::controller(RelatedNewsController::class)->prefix('related-news')->group(f
     Route::get('/', 'index');
 });
 
-Route::middleware('auth:sanctum')->get('/get/user', function (Request $request) {
-    return UserResource::make($request->user());
+Route::middleware('auth:sanctum')->prefix('account')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return new UserResource($request->user());
+    });
+
+    /*  Account setting  */
+    Route::put('update-settings/{user_id}', [ProfileController::class, 'updateSettings']);
 });

@@ -20,10 +20,14 @@ class UserResource extends JsonResource
             'status' => $this->status,
         ];
 
-        if ($request->is('api/get/user')) {
+        if ($request->is('api/account/user')) {
             $data['email'] = $this->email;
             $data['phone'] = $this->phone;
-            $data['image'] = asset($this->avatar);
+            $data['city'] = $this->city;
+            $data['country'] = $this->country;
+            $data['street'] = $this->street;
+            $data['bio'] = $this->bio;
+            $data['avatar'] = asset($this->avatar);
         }
 
         return $data;

@@ -25,7 +25,11 @@ class ImageManager
         if ($request->hasFile('avatar')) {
 
             $image = $request->file('avatar');
+
+            self::deleteImageLocal($user->avatar);
+
             $filename = self::generateImageName($image);
+
             $path = self::storeImageLocal($image, 'users', $filename);
 
             $user->update([
