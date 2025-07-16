@@ -16,6 +16,7 @@ class UserResource extends JsonResource
     {
         /** @var \App\Models\User $this ->resource */
         $data = [
+            'user_id' => $this->id,
             'user_name' => $this->name,
             'status' => $this->status,
         ];

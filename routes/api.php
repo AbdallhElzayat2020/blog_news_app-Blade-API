@@ -76,9 +76,11 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
     Route::put('update-settings/{user_id}', [ProfileController::class, 'updateSettings']);
     Route::put('change-password/{user_id}', [ProfileController::class, 'changePassword']);
 
-    // account/posts
+    // account/posts/
     Route::controller(PostController::class)->prefix('posts')->group(function () {
-        Route::get('/', 'getPosts');
+        Route::get('/', 'getUserPosts');
+        Route::post('store/post', 'createUserPost');
+        Route::delete('delete/post/{id}', 'deleteUserPost');
     });
 
 });

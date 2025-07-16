@@ -28,6 +28,7 @@ class PostResource extends JsonResource
             'post_images' => ImageResource::collection($this->images),
             'publisher' => $this->user_id == null ? AdminResource::make($this->admin) : UserResource::make($this->user),
             'created_at' => $this->created_at->format('Y-m-d h:m a'),
+            'category_name' => $this->category->name,
         ];
 
         if ($request->is('api/posts/show/*')) {
