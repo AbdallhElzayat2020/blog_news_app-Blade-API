@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use function App\Http\Helpers\apiResponse;
 
 class CheckUserStatusMiddleware
 {

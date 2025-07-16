@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Admin\AdminAuthMiddleware;
 use App\Http\Middleware\Admin\RedirectIfAuthenticated;
+use App\Http\Middleware\CheckUserEmailVerifyApi;
 use App\Http\Middleware\CheckUserStatusMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -29,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.admin' => AdminAuthMiddleware::class,
             'guest.admin' => RedirectIfAuthenticated::class,
             'check_user_status' => CheckUserStatusMiddleware::class,
+            'verify_email' => CheckUserEmailVerifyApi::class,
         ]);
 
         // make middleware global for all routes

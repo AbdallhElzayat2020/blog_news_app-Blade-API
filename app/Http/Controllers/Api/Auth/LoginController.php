@@ -18,6 +18,8 @@ class LoginController extends Controller
             'password' => ['required', 'min:8', 'max:80'],
         ]);
 
+
+
         $user = User::whereEmail($request->email)->first();
         if ($user && Hash::check($request->password, $user->password)) {
 

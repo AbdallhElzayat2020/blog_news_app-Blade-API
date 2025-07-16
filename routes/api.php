@@ -57,7 +57,7 @@ Route::prefix('auth')->controller(LoginController::class)->group(function () {
 });
 
 // ======================== Verify resend email Routes ========================
-Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
+Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware(['auth:sanctum'])->group(function () {
     Route::post('/verify', 'verifyEmail')->middleware('throttle:verify');
     Route::get('/resend', 'resendOtp')->middleware('throttle:resendOtp');
 });
@@ -67,7 +67,7 @@ Route::controller(RelatedNewsController::class)->prefix('related-news')->group(f
     Route::get('/', 'index');
 });
 
-Route::middleware('auth:sanctum')->prefix('account')->group(function () {
+Route::middleware(['auth:sanctum', 'verify_email'])->prefix('account')->group(function () {
 
     Route::get('/user', function (Request $request) {
         return new UserResource($request->user());
