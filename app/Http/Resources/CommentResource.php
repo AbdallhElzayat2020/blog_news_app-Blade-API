@@ -19,7 +19,8 @@ class CommentResource extends JsonResource
         return [
             'comment' => $this->comment,
             'user_name' => $this->user->name,
-            'user_image' => $this->user->avatar,
+            'user_image' => asset($this->user->avatar),
+            'created_at' => $this->created_at->diffForHumans(),
         ];
     }
 }

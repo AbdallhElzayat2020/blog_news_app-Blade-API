@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
         Route::get('/', 'getUserPosts');
         Route::post('store/post', 'createUserPost');
         Route::delete('delete/post/{id}', 'deleteUserPost');
+        Route::get('post/{id}/comments', 'getPostComments');
     });
 
 });

@@ -22,6 +22,7 @@ class PostResource extends JsonResource
         /** @var Post $this ->resource */
 
         $data = [
+            'post_id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'status' => $this->status,

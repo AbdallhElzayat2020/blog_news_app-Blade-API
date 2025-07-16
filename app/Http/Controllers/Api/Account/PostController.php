@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Account;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Dashboard\PostRequest;
+use App\Http\Resources\CommentCollection;
 use App\Http\Resources\PostCollection;
 use App\Models\Post;
 use App\Utils\ImageManager;
@@ -95,6 +96,25 @@ class PostController extends Controller
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
+
+
+    public function getPostComments($id)
+    {
+
+
+        $user = auth()->user();
+        $post = $user->posts()->where('id', $id)->first();
+        if (!$post) {
+            return apiResponse(404, 'Post not found');
+        }
+        $comments = $post->comments()->latest()->whereStatus('active')->get();
+        if ($comments->isEmpty()) {
+            return apiResponse(404, 'No comments found for this post');
+        }
+        return apiResponse(200, 'Post Comments', CommentCollection::make($comments));
+
+    }
+
 
     public function commentAble($request)
     {
