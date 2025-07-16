@@ -7,7 +7,9 @@ use App\Http\Requests\Frontend\Dashboard\PostRequest;
 use App\Http\Requests\Frontend\Dashboard\UpdatePostRequest;
 use App\Http\Resources\CommentCollection;
 use App\Http\Resources\PostCollection;
+use App\Models\Comment;
 use App\Models\Post;
+use App\Notifications\NewCommentNotification;
 use App\Utils\ImageManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,11 +123,13 @@ class PostController extends Controller
     public function updateUserPost(UpdatePostRequest $request, $id)
     {
         $request->validated();
-        $post = Post::find($id);
+        $user = auth()->user();
+        $post = $user->posts()->where('id', $id)->first();
+
         if (!$post) {
             return apiResponse(404, 'Post not found');
         }
-        $user = Auth::user();
+
         if ($user->id !== $post->user_id) {
             return apiResponse(403, 'You are not authorized to update this post.');
         }
@@ -153,6 +157,41 @@ class PostController extends Controller
             DB::rollBack();
             return apiResponse(500, $e->getMessage());
         }
+    }
+
+
+    function storeComment(Request $request)
+    {
+        $request->validate($this->validateComment($request));
+
+        $post = Post::find($request->post_id);
+
+        $comment = $post->comments()->create([
+            'comment' => $request->comment,
+            'user_id' => auth()->user()->id,
+            'ip_address' => $request->ip(),
+        ]);
+
+        if (!$comment->save()) {
+            return apiResponse(400, 'Failed to add comment try again later');
+        }
+
+        // get post and user for sent notification
+//        $user = $post->user;
+//        $user->notify(new NewCommentNotification($comment, $post));
+
+//        $comment->load('user');
+
+        return apiResponse(200, 'Comment added successfully!');
+    }
+
+
+    public function validateComment($request)
+    {
+        return [
+            'comment' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'sometimes','exists:users,id'],
+        ];
     }
 
 

@@ -82,7 +82,11 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
         Route::post('store/post', 'createUserPost');
         Route::delete('delete/post/{id}', 'deleteUserPost');
         Route::put('update/post/{id}', 'updateUserPost');
+
         Route::get('post/{id}/comments', 'getPostComments');
+        // store comment
+        Route::post('comments/store', 'storeComment');
     });
+
 
 });
