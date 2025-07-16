@@ -65,7 +65,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $user = Auth::user();
         if ($user->id !== $post->user_id) {
-            abort(403, 'You are not authorized to delete this post.');
+            return apiResponse(403, 'You are not authorized to delete this post.');
         }
 
         if (!$post) {
@@ -74,9 +74,7 @@ class PostController extends Controller
 
         try {
             DB::beginTransaction();
-
             ImageManager::deleteImages($post);
-
             $post->delete();
 
             // Clear relevant cache
