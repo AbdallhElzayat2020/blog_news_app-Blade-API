@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Account;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Dashboard\PostRequest;
+use App\Http\Requests\Frontend\Dashboard\UpdatePostRequest;
 use App\Http\Resources\CommentCollection;
 use App\Http\Resources\PostCollection;
 use App\Models\Post;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use function App\Http\Helpers\apiResponse;
 
 class PostController extends Controller
@@ -113,6 +115,44 @@ class PostController extends Controller
         }
         return apiResponse(200, 'Post Comments', CommentCollection::make($comments));
 
+    }
+
+
+    public function updateUserPost(UpdatePostRequest $request, $id)
+    {
+        $request->validated();
+        $post = Post::find($id);
+        if (!$post) {
+            return apiResponse(404, 'Post not found');
+        }
+        $user = Auth::user();
+        if ($user->id !== $post->user_id) {
+            return apiResponse(403, 'You are not authorized to update this post.');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $this->commentAble($request);
+
+            $post->update($request->except('images'));
+
+            ImageManager::deleteImages($post);
+            ImageManager::uploadImage($request, $post);
+
+            DB::commit();
+
+            Cache::forget('read_more_posts');
+            Cache::forget('popular_posts');
+            Cache::forget('latest_posts');
+            Cache::forget('read_more_posts');
+
+            return apiResponse(200, 'Post updated successfully!');
+        } catch (\Exception $e) {
+            Log::error('error from updateUserPost: ' . $e->getMessage());
+            DB::rollBack();
+            return apiResponse(500, $e->getMessage());
+        }
     }
 
 
