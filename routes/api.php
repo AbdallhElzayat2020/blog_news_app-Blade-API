@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\RelatedNewsController;
 use App\Http\Controllers\Api\Account\ProfileController;
 
 Route::controller(HomeController::class)->prefix('posts')->group(function () {
-    Route::get('/{keyword?}', 'getPosts');
+    Route::get('/{keyword?}', 'getPosts')->middleware('throttle:getPosts');
     Route::get('/show/{slug}', 'showPost');
     Route::get('/comments/{slug}', 'getPostComments');
 });
@@ -35,31 +35,31 @@ Route::controller(CategoryController::class)->group(function () {
 });
 
 // ======================== Contact Routes ========================
-Route::post('contact/store', [ContactController::class, 'storeContact']);
+Route::post('contact/store', [ContactController::class, 'storeContact'])->middleware('throttle:contact');
 
 // ======================== ForgetPassword Routes ========================
 Route::controller(ForgetPasswordController::class)->group(function () {
-    Route::post('forget-password/email', 'forgetPassword');
+    Route::post('forget-password/email', 'forgetPassword')->middleware('throttle:forgetPassword');
 });
 
 // ======================== ResetPassword Routes ========================
-Route::controller(ResetPasswordController::class)->group(function () {
+Route::controller(ResetPasswordController::class)->middleware('throttle:resetPassword')->group(function () {
     Route::post('reset-password', 'resetPassword');
 });
 
 // ======================== Register Routes ========================
-Route::post('auth/register', [RegisterController::class, 'register']);
+Route::post('auth/register', [RegisterController::class, 'register'])->middleware('throttle:register');
 
 // ======================== Login Logout Routes ========================
 Route::prefix('auth')->controller(LoginController::class)->group(function () {
-    Route::post('/login', 'login');
+    Route::post('/login', 'login')->middleware('throttle:login');
     Route::delete('/logout', 'logout')->middleware('auth:sanctum');
 });
 
 // ======================== Verify resend email Routes ========================
 Route::controller(VerifyEmailController::class)->prefix('auth/email')->middleware('auth:sanctum')->group(function () {
-    Route::post('/verify', 'verifyEmail');
-    Route::get('/resend', 'resendOtp');
+    Route::post('/verify', 'verifyEmail')->middleware('throttle:verify');
+    Route::get('/resend', 'resendOtp')->middleware('throttle:resendOtp');
 });
 
 // ======================== Related news Routes ========================
@@ -68,6 +68,7 @@ Route::controller(RelatedNewsController::class)->prefix('related-news')->group(f
 });
 
 Route::middleware('auth:sanctum')->prefix('account')->group(function () {
+
     Route::get('/user', function (Request $request) {
         return new UserResource($request->user());
     });
@@ -83,8 +84,8 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
         Route::delete('delete/post/{id}', 'deleteUserPost');
         Route::put('update/post/{id}', 'updateUserPost');
 
+        // comment Routes
         Route::get('post/{id}/comments', 'getPostComments');
-        // store comment
         Route::post('comments/store', 'storeComment');
     });
 
