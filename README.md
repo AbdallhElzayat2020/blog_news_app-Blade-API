@@ -1,3 +1,11 @@
+<img width="1920" height="1806" alt="setting" src="https://github.com/user-attachments/assets/893d603f-ee42-440f-a65c-9a3ab2ab4c1a" />
+
+
+<img width="1920" height="1383" alt="show_post" src="https://github.com/user-attachments/assets/9a4a9b88-e124-4ed9-8361-1456f712631c" />
+
+<img width="1908" height="1035" alt="Postman_docs" src="https://github.com/user-attachments/assets/6435dc49-229f-47df-8c2e-784d557612dc" />
+
+
 # 🚀 Blog & News Management System
 
 A comprehensive **Laravel 12nd news management system with advanced features including user authentication, admin dashboard, API endpoints, social login, real-time notifications, and more.
