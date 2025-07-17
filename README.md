@@ -1,8 +1,11 @@
+<img width="940" height="788" alt="Mockup" src="https://github.com/user-attachments/assets/b95ba1a5-3433-43ed-8416-2462bd1eb807" />
+
+<img width="1920" height="1486" alt="Home" src="https://github.com/user-attachments/assets/2e4b1a07-436c-4d0e-aab7-88fe6570f771" />
+<img width="1916" height="861" alt="roles" src="https://github.com/user-attachments/assets/dddbafa1-b156-49c1-a865-385b7fa8a475" />
+<img width="1918" height="947" alt="posts" src="https://github.com/user-attachments/assets/9eb8c685-c228-42c6-b110-f7d23b9b3ee4" />
+<img width="1920" height="1476" alt="edit_blog" src="https://github.com/user-attachments/assets/c6f9f1eb-c3e4-4454-bc1d-e465dfd9e853" />
 <img width="1920" height="1806" alt="setting" src="https://github.com/user-attachments/assets/893d603f-ee42-440f-a65c-9a3ab2ab4c1a" />
-
-
 <img width="1920" height="1383" alt="show_post" src="https://github.com/user-attachments/assets/9a4a9b88-e124-4ed9-8361-1456f712631c" />
-
 <img width="1908" height="1035" alt="Postman_docs" src="https://github.com/user-attachments/assets/6435dc49-229f-47df-8c2e-784d557612dc" />
 
 
