@@ -7,13 +7,9 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Notifications\SendOtpVerifyUserEmail;
 use App\Utils\ImageManager;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
 use function App\Http\Helpers\apiResponse;
 
 
@@ -24,7 +20,7 @@ class RegisterController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             $user = $this->createUser($request);
 
             if (!$user->save()) {
@@ -36,7 +32,6 @@ class RegisterController extends Controller
             }
 
             $token = $user->createToken('register_token')->plainTextToken;
-
 
             $user->notify(new SendOtpVerifyUserEmail());
 
