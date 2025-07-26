@@ -51,6 +51,7 @@ class ForgetPasswordController extends Controller
             'email' => ['required', 'email', 'exists:admins,email'],
             'otp' => ['required', 'min:8', 'max:8', 'string']
         ]);
+
         $otp = $this->otp2->validate($request->email, $request->otp);
         if (!$otp->status) {
             return redirect()->back()->with(['error' => 'Invalid OTP, please try again.']);

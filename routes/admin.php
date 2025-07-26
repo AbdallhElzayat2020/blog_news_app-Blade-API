@@ -38,7 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
             Route::post('/forgot-password', 'sendResetLinkEmail')->name('password.email');
 
-            Route::get('show-otp-form/{email}', 'showOtpForm')->name('show-otp-form');
+            Route::get('show-otp-form/{email}', action: 'showOtpForm')->name('show-otp-form');
             Route::post('verify-otp-form', 'verifyOtpForm')->name('verify-otp-form');
         });
 
@@ -47,7 +47,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/reset-password/{email}', 'showResetPasswordForm')->name('show-reset-password-form');
             Route::post('/reset-password', 'ResetPassword')->name('reset-password');
         });
-
     });
 });
 
@@ -104,8 +103,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'auth.admin'])
         Route::get('/', 'index')->name('index');
         Route::put('/update', 'update')->name('update');
     });
-
-
 });
 
 
